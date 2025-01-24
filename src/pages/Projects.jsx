@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 import Background from '../components/Background/Background';
 
 const Projects = () => {
@@ -344,7 +344,7 @@ const Projects = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className=" bg-wh dark:bg-surface p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group"
+      className=" bg-[#f9f9f9] dark:bg-surface p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group"
     >
       {/* Banner */}
       {project.banner && (

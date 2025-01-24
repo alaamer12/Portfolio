@@ -1,70 +1,83 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from '../../hooks/useTheme';
 
 const ProjectCard = ({ title, description, image, darkImage, tags, github, demo, delay }) => {
   const { isDark } = useTheme();
-  
+  const displayImage = darkImage && isDark ? darkImage : image;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
       viewport={{ once: true }}
-      transition={{ delay }}
-      whileHover={{ y: -5 }}
-      className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl overflow-hidden shadow-xl"
+      className="bg-[#e6e6e6] dark:bg-surface dark:bg-surface-dark rounded-xl p-6 shadow-md dark:shadow-lg hover:shadow-xl transition-all border border-gray-100 dark:border-none group"
     >
-      <div className="relative aspect-video overflow-hidden">
-        <img
-          src={isDark && darkImage ? darkImage : image}
-          alt={title}
-          className="w-full h-full object-cover transform transition-transform duration-300 group-hover:scale-105"
-        />
-      </div>
-      
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-          {title}
-        </h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">
-          {description}
-        </p>
-        
-        <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-sm bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
+      <div className="flex flex-col sm:flex-row gap-6">
+        {/* Left side - Image */}
+        <div className="flex-shrink-0 flex justify-center sm:justify-start">
+          <motion.div 
+            className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <img
+              src={displayImage}
+              alt={title}
+              className="w-auto h-auto max-w-[80%] max-h-[80%] object-contain"
+            />
+          </motion.div>
         </div>
-        
-        <div className="flex space-x-4">
-          {github && (
-            <motion.a
-              href={github}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light"
-            >
-              <FaGithub className="w-6 h-6" />
-            </motion.a>
-          )}
-          {demo && (
-            <motion.a
-              href={demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1 }}
-              className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light"
-            >
-              <FaExternalLinkAlt className="w-5 h-5" />
-            </motion.a>
-          )}
+
+        {/* Right side - Content */}
+        <div className="flex-grow text-center sm:text-left">
+          <h3 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900 dark:text-text-light group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
+            {title}
+          </h3>
+
+          <p className="text-sm sm:text-base text-gray-600 dark:text-text-light/70 mb-4 group-hover:text-gray-800 dark:group-hover:text-text-light/90 transition-colors">
+            {description}
+          </p>
+
+          <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-4">
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 text-sm rounded-full bg-gray-50 dark:bg-primary-light/5 text-gray-700 dark:text-primary-light/80 group-hover:bg-primary/10 dark:group-hover:bg-primary-light/10 group-hover:text-primary dark:group-hover:text-primary-light transition-all"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex justify-center sm:justify-start space-x-4">
+            {github && (
+              <motion.a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 dark:text-text-light/70 hover:text-primary dark:hover:text-primary-light transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaGithub className="text-xl" />
+              </motion.a>
+            )}
+            {demo && (
+              <motion.a
+                href={demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 dark:text-text-light/70 hover:text-primary dark:hover:text-primary-light transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <FaExternalLinkAlt className="text-xl" />
+              </motion.a>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>
@@ -98,12 +111,13 @@ const Projects = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
           viewport={{ once: true }}
           className="text-center mb-12 group"
         >
           <motion.h2 
-            className="text-4xl font-bold text-gray-900 dark:text-white mb-4 inline-block"
+            className="text-4xl font-bold text-text dark:text-text-light mb-4 inline-block"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
@@ -112,7 +126,7 @@ const Projects = () => {
             </span>
           </motion.h2>
           <motion.p 
-            className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto transition-colors duration-300"
+            className="text-text/70 dark:text-text-light/70 max-w-2xl mx-auto transition-colors duration-300"
             whileHover={{ scale: 1.05, color: '#ffffff' }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >

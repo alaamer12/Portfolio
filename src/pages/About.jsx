@@ -11,7 +11,7 @@ const SkillCard = memo(({ Icon, name, level, description }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     whileHover={{ scale: 1.05 }}
-    className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl"
+    className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl"
   >
     <div className="flex items-center space-x-4">
       <Icon className="w-8 h-8 text-primary dark:text-primary-light" />
@@ -37,7 +37,7 @@ const ExperienceCard = memo(({ title, company, period, description, technologies
     className="relative pl-8 pb-8 border-l-2 border-primary dark:border-primary-light"
   >
     <div className="absolute w-4 h-4 bg-primary dark:bg-primary-light rounded-full -left-[9px] top-0" />
-    <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
+    <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
       <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
       <div className="mt-2 text-primary dark:text-primary-light font-semibold">{company}</div>
       <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">{period}</div>
@@ -244,7 +244,7 @@ const About = () => {
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
               Education
             </h2>
-            <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
+            <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Bachelor of Computer Science
               </h3>

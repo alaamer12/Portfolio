@@ -1,25 +1,22 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 const THEME_KEY = 'portfolio-theme';
 
-const ThemeContext = createContext();
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
+const defaultContextValue = {
+  isDark: true,
+  toggleTheme: () => {},
 };
 
+export const ThemeContext = createContext(defaultContextValue);
+
+/**
+ * Returns the initial theme value from local storage.
+ * If no value is found, defaults to dark theme.
+ */
 const getInitialTheme = () => {
+  if (typeof window === 'undefined') return true;
   const savedTheme = localStorage.getItem(THEME_KEY);
-  // If there's a saved theme, use it
-  if (savedTheme) {
-    return savedTheme === 'dark';
-  }
-  // Otherwise, default to dark theme
-  return true;
+  return savedTheme ? savedTheme === 'dark' : true;
 };
 
 export const ThemeProvider = ({ children }) => {
@@ -27,6 +24,8 @@ export const ThemeProvider = ({ children }) => {
 
   // Memoize theme change handler
   const handleThemeChange = useCallback((dark) => {
+    if (typeof window === 'undefined') return;
+    
     if (dark) {
       document.documentElement.classList.add('dark');
       localStorage.setItem(THEME_KEY, 'dark');
@@ -40,7 +39,7 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     handleThemeChange(isDark);
 
-    // Set initial dark theme class
+    // Set initial dark theme class if not set
     if (!localStorage.getItem(THEME_KEY)) {
       document.documentElement.classList.add('dark');
       localStorage.setItem(THEME_KEY, 'dark');
@@ -48,9 +47,9 @@ export const ThemeProvider = ({ children }) => {
 
     // Listen for system theme changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleSystemThemeChange = (e) => {
+    const handleSystemThemeChange = () => {
       if (!localStorage.getItem(THEME_KEY)) {
-        setIsDark(true); // Default to dark theme even on system change
+        setIsDark(true);
       }
     };
 
@@ -63,13 +62,13 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   // Memoize context value
-  const contextValue = useMemo(() => ({
+  const value = useMemo(() => ({
     isDark,
     toggleTheme
   }), [isDark, toggleTheme]);
 
   return (
-    <ThemeContext.Provider value={contextValue}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
