@@ -2,29 +2,36 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const ShimmerEffect = () => {
-  const variants = {
-    hidden: {
-      x: "-100%",
-      opacity: 0
-    },
-    visible: {
-      x: "100%",
-      opacity: [0, 1, 0],
-      transition: {
-        duration: 1,
-        ease: "easeInOut",
-        times: [0, 0.5, 1]
-      }
-    }
-  };
+  // Custom easing function for fast-slow-fast effect
+  const customEase = [0.22, 1, 0.36, 1];
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <motion.div
+      className="absolute inset-0 overflow-hidden rounded-3xl"
+      initial="hidden"
+      whileHover="visible"
+    >
       <motion.div
-        variants={variants}
-        className="w-[120%] h-full absolute top-0 -left-[20%] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+        variants={{
+          hidden: {
+            x: "-100%",
+            opacity: 0,
+            skewX: "-70deg"
+          },
+          visible: {
+            x: "200%",
+            opacity: [0, 0.85, 0],
+            skewX: "-70deg",
+            transition: {
+              duration: 1.15,
+              ease: customEase,
+              times: [0, 0.5, 1]
+            }
+          }
+        }}
+        className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent"
       />
-    </div>
+    </motion.div>
   );
 };
 

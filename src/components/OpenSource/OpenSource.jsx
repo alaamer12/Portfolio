@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-import { FaPython, FaGithub } from 'react-icons/fa';
+import { FaPython, FaGithub, FaArrowRight } from 'react-icons/fa';
 
 const packages = [
   {
@@ -46,10 +47,10 @@ const PackageCard = ({ pkg, index }) => {
     >
       <div className="flex items-center mb-4">
         <FaPython className="text-accent text-2xl mr-2" />
-        <h3 className="text-xl font-bold text-white">{pkg.name}</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white">{pkg.name}</h3>
       </div>
       
-      <p className="text-gray-300 mb-4">{pkg.description}</p>
+      <p className="text-gray-600 dark:text-gray-300 mb-4">{pkg.description}</p>
       
       <div className="flex space-x-4">
         <a
@@ -90,8 +91,8 @@ const OpenSource = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-white mb-6">Open Source Contributions</h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">Open Source Contributions</h2>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Creator of multiple Python packages available on PyPI, focusing on developer productivity and system reliability.
           </p>
         </motion.div>
@@ -108,15 +109,18 @@ const OpenSource = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-12 text-center"
         >
-          <a
-            href="https://github.com/alaamer12"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary-light rounded-full text-white transition-colors"
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <FaGithub className="mr-2" />
-            View More on GitHub
-          </a>
+            <Link
+              to="/projects"
+              className="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary-light rounded-full text-white transition-colors"
+            >
+              <FaArrowRight className="mr-2" />
+              See More!
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </section>

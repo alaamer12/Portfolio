@@ -15,7 +15,7 @@ const LandingPage = () => {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 100);
 
     return () => clearTimeout(timer);
   }, []);
@@ -45,7 +45,7 @@ const LandingPage = () => {
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
       <Background />
-      <div className="relative z-10 w-full">
+      <div className="relative z-10 w-full pt-24 pb-16">
         <AnimatePresence mode='wait'>
           {isLoading ? (
             <Loading />
@@ -59,7 +59,6 @@ const LandingPage = () => {
                   <OpenSource />
                 </div>
               </div>
-              
               {/* Scroll to top button */}
               <motion.button
                 initial={{ opacity: 0 }}

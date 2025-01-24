@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import heroImage from '../../../assets/hero.png';
+import heroImage from '/images/hero.png';
 import ShimmerEffect from './ShimmerEffect';
 
 const StatBox = ({ number, text, delay, color }) => (
@@ -14,13 +14,13 @@ const StatBox = ({ number, text, delay, color }) => (
     whileTap={{ scale: 0.95 }}
   >
     <motion.div 
-      className={`text-4xl font-bold ${color} transition-all duration-300 group-hover:text-strawberry dark:group-hover:text-strawberry-light`}
+      className={`text-4xl font-bold ${color} transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-white`}
       whileHover={{ y: -2 }}
     >
-      {number}
+      {number}+
     </motion.div>
     <motion.div 
-      className="text-sm text-text dark:text-text-light transition-all duration-300 group-hover:text-cherry-pie dark:group-hover:text-cherry-pie-light"
+      className="text-sm text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-600 dark:group-hover:text-gray-400"
       whileHover={{ y: 2 }}
     >
       {text}
@@ -48,7 +48,7 @@ const Hero = () => {
                 </span>
               </span>
             </h1>
-            <h2 className="text-2xl md:text-3xl text-text dark:text-text-light font-light">
+            <h2 className="text-2xl md:text-3xl text-gray-700 dark:text-gray-300 font-light">
               Python and Backend Expert
             </h2>
             
@@ -57,19 +57,19 @@ const Hero = () => {
                 number="200+" 
                 text="GitHub Repositories" 
                 delay={0.2} 
-                color="text-primary"
+                color="text-gray-900 dark:text-white"
               />
               <StatBox 
                 number="85%" 
                 text="Python Projects" 
                 delay={0.4} 
-                color="text-accent"
+                color="text-gray-900 dark:text-white"
               />
               <StatBox 
                 number="10+" 
                 text="PyPI Packages" 
                 delay={0.6} 
-                color="text-primary"
+                color="text-gray-900 dark:text-white"
               />
             </div>
 
@@ -78,7 +78,7 @@ const Hero = () => {
                 href="https://github.com/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-3xl text-text dark:text-text-light hover:text-primary dark:hover:text-primary transition-colors"
+                className="text-3xl text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -88,7 +88,7 @@ const Hero = () => {
                 href="https://linkedin.com/in/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-3xl text-text dark:text-text-light hover:text-primary dark:hover:text-primary transition-colors"
+                className="text-3xl text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >

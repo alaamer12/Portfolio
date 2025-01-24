@@ -17,6 +17,15 @@
   * {
     @apply transition-colors duration-300;
   }
+
+  /* Selection styles */
+  ::selection {
+    @apply bg-primary/30 dark:bg-primary/40 text-text-light dark:text-text;
+  }
+  
+  ::-moz-selection {
+    @apply bg-primary/30 dark:bg-primary/40 text-text-light dark:text-text;
+  }
 }
 
 /* Custom scrollbar */
