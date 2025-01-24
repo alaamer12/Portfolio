@@ -41,9 +41,6 @@ export default {
           dark: '#990033',
         }
       },
-      cursor: {
-        'none': 'none',
-      },
       zIndex: {
         '-1': '-1',
         '1': '1',

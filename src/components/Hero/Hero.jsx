@@ -9,7 +9,7 @@ const StatBox = ({ number, text, delay, color }) => (
     initial={{ opacity: 0, scale: 0.5 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.5, delay }}
-    className="text-center group cursor-none"
+    className="text-center group"
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.95 }}
   >
@@ -78,7 +78,7 @@ const Hero = () => {
                 href="https://github.com/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-3xl text-text dark:text-text-light hover:text-primary dark:hover:text-primary transition-colors cursor-none"
+                className="text-3xl text-text dark:text-text-light hover:text-primary dark:hover:text-primary transition-colors"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -88,7 +88,7 @@ const Hero = () => {
                 href="https://linkedin.com/in/yourusername"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-3xl text-text dark:text-text-light hover:text-primary dark:hover:text-primary transition-colors cursor-none"
+                className="text-3xl text-text dark:text-text-light hover:text-primary dark:hover:text-primary transition-colors"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
