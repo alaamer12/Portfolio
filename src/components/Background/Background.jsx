@@ -1,11 +1,28 @@
 import React from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import styles from './Background.module.css';
 
 const Background = () => {
   const { isDark } = useTheme();
 
+  // Define theme-specific colors for shapes
+  const shapeColors = {
+    '--shape1-color': isDark ? '#ff6b6b80' : '#ff6b6b40',
+    '--shape2-color': isDark ? '#4ecdc480' : '#4ecdc440',
+    '--shape3-color': isDark ? '#ffe66d80' : '#ffe66d40',
+    '--shape4-color': isDark ? '#6c5ce780' : '#6c5ce740',
+  };
+
   return (
     <div className="absolute top-0 left-0 w-screen min-h-screen bg-background-light dark:bg-background transition-colors duration-300">
+      {/* Animated Background Shapes */}
+      <div className={styles['background-shapes']} style={shapeColors}>
+        <div className={`${styles.shape} ${styles['shape-1']}`}></div>
+        <div className={`${styles.shape} ${styles['shape-2']}`}></div>
+        <div className={`${styles.shape} ${styles['shape-3']}`}></div>
+        <div className={`${styles.shape} ${styles['shape-4']}`}></div>
+      </div>
+
       {/* Gradient background */}
       <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-strawberry/10 via-transparent to-cherry-pie/10 dark:from-strawberry-dark/20 dark:to-cherry-pie-dark/20" />
 
