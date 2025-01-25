@@ -1,0 +1,43 @@
+# www.robotstxt.org/
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://amrmuhamed.com/sitemap.xml
+
+# Optimize crawling
+Crawl-delay: 5
+
+# Block sensitive areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /drafts/
+Disallow: /*.json$
+Disallow: /*?*
+Disallow: /*/search
+Disallow: /*/login
+Disallow: /*/logout
+
+# Allow specific files
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /sitemap.xml$
+Allow: /robots.txt$
+Allow: /favicon.ico$
+
+# Social Media Bots
+User-agent: Twitterbot
+Allow: /
+Allow: /static/images/
+
+User-agent: facebookexternalhit
+Allow: /
+Allow: /static/images/

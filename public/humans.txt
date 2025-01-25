@@ -1,0 +1,12 @@
+/* TEAM */
+Developer: Amr Muhamed
+Contact: amrmuhamed86@example.com
+GitHub: @alaamer12
+LinkedIn: @alaamer12
+Location: Cairo, Egypt
+
+/* SITE */
+Last update: 2025/01/25
+Standards: HTML5, CSS3, ES6+
+Components: React, Vite, Tailwind CSS
+Software: VS Code, Git

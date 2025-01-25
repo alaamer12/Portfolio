@@ -1,67 +1,67 @@
 .background-shapes {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  overflow: hidden;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    overflow: hidden;
 }
 
 .shape {
-  position: absolute;
-  filter: blur(80px);
-  opacity: 0.4;
-  animation: float 20s infinite;
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: float 20s infinite;
 }
 
 .shape-1 {
-  background: var(--shape1-color, #ff6b6b);
-  width: 300px;
-  height: 300px;
-  top: -150px;
-  left: -150px;
-  animation-delay: -2s;
+    background: var(--shape1-color, #ff6b6b);
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+    animation-delay: -2s;
 }
 
 .shape-2 {
-  background: var(--shape2-color, #4ecdc4);
-  width: 400px;
-  height: 400px;
-  top: 60%;
-  right: -200px;
-  animation-delay: -5s;
+    background: var(--shape2-color, #4ecdc4);
+    width: 400px;
+    height: 400px;
+    top: 60%;
+    right: -200px;
+    animation-delay: -5s;
 }
 
 .shape-3 {
-  background: var(--shape3-color, #ffe66d);
-  width: 200px;
-  height: 200px;
-  bottom: 10%;
-  left: 20%;
-  animation-delay: -7s;
+    background: var(--shape3-color, #ffe66d);
+    width: 200px;
+    height: 200px;
+    bottom: 10%;
+    left: 20%;
+    animation-delay: -7s;
 }
 
 .shape-4 {
-  background: var(--shape4-color, #6c5ce7);
-  width: 250px;
-  height: 250px;
-  top: 20%;
-  right: 20%;
-  animation-delay: -11s;
+    background: var(--shape4-color, #6c5ce7);
+    width: 250px;
+    height: 250px;
+    top: 20%;
+    right: 20%;
+    animation-delay: -11s;
 }
 
 @keyframes float {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) rotate(120deg) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
-  }
-  100% {
-    transform: translate(0, 0) rotate(360deg) scale(1);
-  }
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) rotate(120deg) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+    }
 }
