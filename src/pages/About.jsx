@@ -4,27 +4,70 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaDownload } from 're
 import { SiPython, SiReact, SiDjango, SiDocker, SiPostgresql } from 'react-icons/si';
 import Background from '../components/Background/Background';
 
+// Memoize static data
+const SKILLS_DATA = [
+  {
+    Icon: SiPython,
+    name: 'Python',
+    level: 95,
+    description: 'Expert in Python development with extensive experience in automation, data processing, and backend development.',
+    url: 'https://www.python.org/'
+  },
+  {
+    Icon: SiDjango,
+    name: 'Django',
+    level: 90,
+    description: 'Proficient in building scalable web applications using Django and Django REST Framework.',
+    url: 'https://www.djangoproject.com/'
+  },
+  {
+    Icon: SiReact,
+    name: 'React',
+    level: 85,
+    description: 'Strong frontend development skills with React, including modern hooks and state management.',
+    url: 'https://reactjs.org/'
+  },
+  {
+    Icon: SiDocker,
+    name: 'Docker',
+    level: 80,
+    description: 'Experienced in containerization and orchestration using Docker and Docker Compose.',
+    url: 'https://www.docker.com/'
+  },
+  {
+    Icon: SiPostgresql,
+    name: 'PostgreSQL',
+    level: 85,
+    description: 'Expert in database design, optimization, and management with PostgreSQL.',
+    url: 'https://www.postgresql.org/'
+  }
+];
+
 // Memoize static components
-const SkillCard = memo(({ Icon, name, level, description }) => (
+const SkillCard = memo(({ Icon, name, level, description, url }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     whileHover={{ scale: 1.05 }}
-    className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl"
+    className="bg-[#e6e6e6]/10 cursor-pointer dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl"
   >
-    <div className="flex items-center space-x-4">
+    <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
       <Icon className="w-8 h-8 text-primary dark:text-primary-light" />
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <span className="hover:underline">
+            {name}
+          </span>
+        </h3>
         <div className="mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-          <div 
+          <div
             className="bg-primary dark:bg-primary-light h-2 rounded-full transition-all duration-500"
             style={{ width: `${level}%` }}
           />
         </div>
       </div>
-    </div>
+    </a>
     <p className="mt-4 text-gray-600 dark:text-gray-300">{description}</p>
   </motion.div>
 ));
@@ -37,14 +80,14 @@ const ExperienceCard = memo(({ title, company, period, description, technologies
     className="relative pl-8 pb-8 border-l-2 border-primary dark:border-primary-light"
   >
     <div className="absolute w-4 h-4 bg-primary dark:bg-primary-light rounded-full -left-[9px] top-0" />
-    <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
+    <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
       <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
       <div className="mt-2 text-primary dark:text-primary-light font-semibold">{company}</div>
       <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">{period}</div>
       <p className="mt-4 text-gray-700 dark:text-gray-300">{description}</p>
       <div className="mt-4 flex flex-wrap gap-2">
         {technologies.map((tech, index) => (
-          <span 
+          <span
             key={index}
             className="px-3 py-1 text-sm bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light rounded-full"
           >
@@ -55,40 +98,6 @@ const ExperienceCard = memo(({ title, company, period, description, technologies
     </div>
   </motion.div>
 ));
-
-// Memoize static data
-const SKILLS_DATA = [
-  {
-    Icon: SiPython,
-    name: 'Python',
-    level: 95,
-    description: 'Expert in Python development with extensive experience in automation, data processing, and backend development.'
-  },
-  {
-    Icon: SiDjango,
-    name: 'Django',
-    level: 90,
-    description: 'Proficient in building scalable web applications using Django and Django REST Framework.'
-  },
-  {
-    Icon: SiReact,
-    name: 'React',
-    level: 85,
-    description: 'Strong frontend development skills with React, including modern hooks and state management.'
-  },
-  {
-    Icon: SiDocker,
-    name: 'Docker',
-    level: 80,
-    description: 'Experienced in containerization and orchestration using Docker and Docker Compose.'
-  },
-  {
-    Icon: SiPostgresql,
-    name: 'PostgreSQL',
-    level: 85,
-    description: 'Expert in database design, optimization, and management with PostgreSQL.'
-  }
-];
 
 const EXPERIENCE_DATA = [
   {
@@ -147,8 +156,9 @@ const About = () => {
               About Me
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Passionate software developer with 5+ years of experience in building scalable web applications
-              and solving complex problems with elegant solutions.
+              Enthusiastic developer with a passion for open-source projects and a growing portfolio of 
+              contributions. I've been fortunate to work on various personal and collaborative projects, 
+              while also managing my own small business. Always eager to learn and improve my skills.
             </p>
           </motion.div>
 
@@ -160,14 +170,14 @@ const About = () => {
             className="flex flex-wrap justify-center gap-6 mb-16"
           >
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:amrmuhamed86@example.com"
               className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
             >
               <FaEnvelope className="w-5 h-5" />
-              <span>your.email@example.com</span>
+              <span>amrmuhamed86@example.com</span>
             </a>
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/alaamer12"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
@@ -176,7 +186,7 @@ const About = () => {
               <span>GitHub</span>
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://linkedin.com/in/alaamer12"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
@@ -244,20 +254,22 @@ const About = () => {
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
               Education
             </h2>
-            <div className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
+            <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
+            <a href='https://fci.bu.edu.eg/' arget="_blank" rel="noopener noreferrer" > 
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Bachelor of Computer Science
               </h3>
-              <div className="mt-2 text-primary dark:text-primary-light font-semibold">
-                Your University Name
-              </div>
+              <a href='https://fci.bu.edu.eg/' arget="_blank" rel="noopener noreferrer"  className="mt-2 text-primary dark:text-primary-light font-semibold">
+                BFCAI
+              </a>
               <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                2014 - 2018
+                2023 - 2026
               </div>
               <p className="mt-4 text-gray-700 dark:text-gray-300">
                 Graduated with honors. Specialized in Software Engineering and Artificial Intelligence.
                 Completed multiple research projects in machine learning and data analysis.
               </p>
+            </a>
             </div>
           </motion.section>
         </div>

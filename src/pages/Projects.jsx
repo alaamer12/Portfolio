@@ -1,429 +1,206 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import Background from '../components/Background/Background';
+import { getProjectsData } from '../data/projects';
+import { FaFire } from 'react-icons/fa';
+import { IoSparkles } from 'react-icons/io5';
+import { BsClock } from 'react-icons/bs';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Projects = () => {
   const { isDark } = useTheme();
   const baseUrl = '';
 
-  const trueFamilyProjects = [
-    {
-      title: 'true-core',
-      description: 'The foundation of the True ecosystem. A comprehensive Python library providing essential utilities, design patterns, and core functionality that powers all True family packages.',
-      tags: ['Python', 'Core Library', 'Utilities', 'Foundation'],
-      github: 'https://github.com/yourusername/true-core',
-      demo: 'https://pypi.org/project/true-core',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Implements core design patterns and architectural components',
-        'Provides extensive utility functions for common programming tasks',
-        'Features robust error handling and logging mechanisms',
-        'Includes comprehensive type hints and documentation',
-        'Supports both synchronous and asynchronous operations'
-      ]
-    },
-    {
-      title: 'true-blobs',
-      description: 'Advanced binary large object (BLOB) handling library with optimized storage, compression, and streaming capabilities.',
-      tags: ['Python', 'Binary Data', 'Storage', 'Compression'],
-      github: 'https://github.com/yourusername/true-blobs',
-      demo: 'https://pypi.org/project/true-blobs',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Efficient streaming of large binary objects',
-        'Multiple compression algorithm support',
-        'Chunked upload and download capabilities',
-        'Automatic memory management for large files',
-        'Integration with various storage backends'
-      ]
-    },
-    {
-      title: 'true-caching',
-      description: 'High-performance caching solution with support for multiple backends, intelligent cache invalidation, and distributed caching.',
-      tags: ['Python', 'Caching', 'Performance', 'Redis'],
-      github: 'https://github.com/yourusername/true-caching',
-      demo: 'https://pypi.org/project/true-caching',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Supports multiple caching backends, including Redis and Memcached',
-        'Intelligent cache invalidation with automatic cache expiration',
-        'Distributed caching for high-availability and scalability',
-        'Comprehensive cache statistics and monitoring',
-        'Easy integration with popular frameworks and libraries'
-      ]
-    },
-    {
-      title: 'true-colorspace',
-      description: 'Color manipulation and conversion library supporting multiple color spaces, color matching, and palette generation.',
-      tags: ['Python', 'Color Processing', 'Image Processing'],
-      github: 'https://github.com/yourusername/true-colorspace',
-      demo: 'https://pypi.org/project/true-colorspace',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Supports multiple color spaces, including RGB, CMYK, and Lab',
-        'Color matching and conversion with high accuracy',
-        'Palette generation and color palette manipulation',
-        'Comprehensive color space conversion and manipulation',
-        'Easy integration with popular image processing libraries'
-      ]
-    },
-    {
-      title: 'true-compression',
-      description: 'Advanced compression algorithms and utilities for efficient data compression and decompression.',
-      tags: ['Python', 'Compression', 'Data Processing'],
-      github: 'https://github.com/yourusername/true-compression',
-      demo: 'https://pypi.org/project/true-compression',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Supports multiple compression algorithms, including gzip, zlib, and lzma',
-        'Efficient data compression and decompression',
-        'Comprehensive compression utilities and tools',
-        'Easy integration with popular data processing libraries',
-        'High-performance compression and decompression'
-      ]
-    },
-    {
-      title: 'true-enumeration',
-      description: 'Enhanced enumeration types with additional functionality, type safety, and serialization support.',
-      tags: ['Python', 'Type System', 'Enums'],
-      github: 'https://github.com/yourusername/true-enumeration',
-      demo: 'https://pypi.org/project/true-enumeration',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Enhanced enumeration types with additional functionality',
-        'Type safety and serialization support',
-        'Comprehensive enumeration utilities and tools',
-        'Easy integration with popular type checking libraries',
-        'High-performance enumeration operations'
-      ]
-    },
-    {
-      title: 'true-generating',
-      description: 'Code generation toolkit for creating boilerplate code, documentation, and test cases automatically.',
-      tags: ['Python', 'Code Generation', 'Automation'],
-      github: 'https://github.com/yourusername/true-generating',
-      demo: 'https://pypi.org/project/true-generating',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Automated code generation for boilerplate code',
-        'Documentation generation and formatting',
-        'Test case generation and execution',
-        'Comprehensive code generation utilities and tools',
-        'Easy integration with popular development tools'
-      ]
-    },
-    {
-      title: 'true-logging',
-      description: 'Advanced logging system with structured logging, log rotation, and multiple output formats support.',
-      tags: ['Python', 'Logging', 'Monitoring'],
-      github: 'https://github.com/yourusername/true-logging',
-      demo: 'https://pypi.org/project/true-logging',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Structured logging with customizable log formats',
-        'Log rotation and retention policies',
-        'Multiple output formats support, including JSON and CSV',
-        'Comprehensive logging utilities and tools',
-        'Easy integration with popular monitoring tools'
-      ]
-    },
-    {
-      title: 'true-monorepo',
-      description: 'Monorepo management tools for maintaining multiple packages with shared dependencies and versioning.',
-      tags: ['Python', 'Monorepo', 'Package Management'],
-      github: 'https://github.com/yourusername/true-monorepo',
-      demo: 'https://pypi.org/project/true-monorepo',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Monorepo management tools for multiple packages',
-        'Shared dependencies and versioning management',
-        'Comprehensive monorepo utilities and tools',
-        'Easy integration with popular package managers',
-        'High-performance monorepo operations'
-      ]
-    },
-    {
-      title: 'true-pipelines',
-      description: 'Data processing pipeline framework for building efficient and scalable data transformation workflows.',
-      tags: ['Python', 'Data Processing', 'ETL'],
-      github: 'https://github.com/yourusername/true-pipelines',
-      demo: 'https://pypi.org/project/true-pipelines',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Data processing pipeline framework for efficient workflows',
-        'Scalable data transformation and processing',
-        'Comprehensive pipeline utilities and tools',
-        'Easy integration with popular data processing libraries',
-        'High-performance pipeline operations'
-      ]
-    },
-    {
-      title: 'true-profanity',
-      description: 'Content moderation and profanity filtering with support for multiple languages and custom dictionaries.',
-      tags: ['Python', 'Content Moderation', 'NLP'],
-      github: 'https://github.com/yourusername/true-profanity',
-      demo: 'https://pypi.org/project/true-profanity',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Content moderation and profanity filtering',
-        'Support for multiple languages and custom dictionaries',
-        'Comprehensive moderation utilities and tools',
-        'Easy integration with popular NLP libraries',
-        'High-performance moderation operations'
-      ]
-    },
-    {
-      title: 'true-session',
-      description: 'Session management library with secure session handling, storage backends, and authentication support.',
-      tags: ['Python', 'Security', 'Authentication'],
-      github: 'https://github.com/yourusername/true-session',
-      demo: 'https://pypi.org/project/true-session',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Secure session handling and management',
-        'Multiple storage backends support, including Redis and Memcached',
-        'Authentication support with customizable authentication mechanisms',
-        'Comprehensive session utilities and tools',
-        'Easy integration with popular security libraries'
-      ]
-    },
-    {
-      title: 'true-storage',
-      description: 'Unified storage interface for multiple storage backends with advanced features like versioning and encryption.',
-      tags: ['Python', 'Storage', 'Cloud'],
-      github: 'https://github.com/yourusername/true-storage',
-      demo: 'https://pypi.org/project/true-storage',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Unified storage interface for multiple backends',
-        'Advanced features like versioning and encryption',
-        'Comprehensive storage utilities and tools',
-        'Easy integration with popular cloud storage providers',
-        'High-performance storage operations'
-      ]
-    },
-    {
-      title: 'true-svg',
-      description: 'SVG manipulation and generation library with support for animations and dynamic content.',
-      tags: ['Python', 'SVG', 'Graphics'],
-      github: 'https://github.com/yourusername/true-svg',
-      demo: 'https://pypi.org/project/true-svg',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'SVG manipulation and generation',
-        'Support for animations and dynamic content',
-        'Comprehensive SVG utilities and tools',
-        'Easy integration with popular graphics libraries',
-        'High-performance SVG operations'
-      ]
-    },
-    {
-      title: 'true-translation',
-      description: 'Internationalization and localization framework with automatic translation and format handling.',
-      tags: ['Python', 'i18n', 'l10n'],
-      github: 'https://github.com/yourusername/true-translation',
-      demo: 'https://pypi.org/project/true-translation',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Internationalization and localization framework',
-        'Automatic translation and format handling',
-        'Comprehensive translation utilities and tools',
-        'Easy integration with popular i18n libraries',
-        'High-performance translation operations'
-      ]
-    },
-    {
-      title: 'true-types',
-      description: 'Enhanced type system with runtime type checking, validation, and serialization capabilities.',
-      tags: ['Python', 'Type System', 'Validation'],
-      github: 'https://github.com/yourusername/true-types',
-      demo: 'https://pypi.org/project/true-types',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Enhanced type system with runtime type checking',
-        'Validation and serialization capabilities',
-        'Comprehensive type utilities and tools',
-        'Easy integration with popular type checking libraries',
-        'High-performance type operations'
-      ]
+  // Memoize the sorted projects to prevent unnecessary re-sorting
+  const { trueFamilyProjects, utilityProjects, businessProjects } = useMemo(() => {
+    const { trueFamilyProjects: unsortedTrueFamilyProjects, utilityProjects: unsortedUtilityProjects, businessProjects: unsortedBusinessProjects } = getProjectsData(baseUrl, isDark);
+
+    // Badge priority for sorting
+    const badgePriority = {
+      'hot': 0,
+      'new': 1,
+      'coming soon': 2,
+      'none': 3
+    };
+
+    // Sort function for projects
+    const sortProjects = (projects) => {
+      return [...projects].sort((a, b) => {
+        return badgePriority[a.badge || 'none'] - badgePriority[b.badge || 'none'];
+      });
+    };
+
+    return {
+      trueFamilyProjects: sortProjects(unsortedTrueFamilyProjects),
+      utilityProjects: sortProjects(unsortedUtilityProjects),
+      businessProjects: sortProjects(unsortedBusinessProjects)
+    };
+  }, [baseUrl, isDark]);
+
+  // Memoize getBadgeContent to prevent unnecessary re-renders
+  const getBadgeContent = useCallback((badge) => {
+    switch (badge) {
+      case 'hot':
+        return {
+          icon: <FaFire className="mr-1" />,
+          text: 'HOT',
+          className: 'bg-gradient-to-r from-orange-500 to-red-500 backdrop-blur-md bg-opacity-90'
+        };
+      case 'new':
+        return {
+          icon: <IoSparkles className="mr-1" />,
+          text: 'NEW',
+          className: 'bg-gradient-to-r from-blue-400 to-cyan-400 backdrop-blur-md bg-opacity-90'
+        };
+      case 'coming soon':
+        return {
+          icon: <BsClock className="mr-1" />,
+          text: 'SOON',
+          className: 'bg-gradient-to-r from-violet-400 to-purple-500 backdrop-blur-md bg-opacity-90'
+        };
+      default:
+        return null;
     }
-  ];
+  }, []);
 
-  const utilityProjects = [
-    {
-      title: 'fastapi-utilities',
-      description: 'A comprehensive collection of utilities and extensions for FastAPI framework. Includes advanced routing, middleware, authentication, and performance optimization tools.',
-      tags: ['Python', 'FastAPI', 'Web Development', 'API', 'Middleware', 'Authentication'],
-      github: 'https://github.com/yourusername/fastapi-utilities',
-      demo: 'https://pypi.org/project/fastapi-utilities',
-      type: 'npm',
-      icon: isDark ? `${baseUrl}/images/dark_true_core_icon.png` : `${baseUrl}/images/light_true_core_icon.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Advanced routing and middleware tools',
-        'Authentication and authorization mechanisms',
-        'Performance optimization and caching tools',
-        'Comprehensive utilities and tools for FastAPI development',
-        'Easy integration with popular FastAPI libraries'
-      ]
-    }
-  ];
+  // Memoize ProjectCard to prevent unnecessary re-renders
+  const ProjectCard = useCallback(({ project }) => {
+    const badgeContent = getBadgeContent(project.badge);
+    
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className={`bg-[#f5f4f4] dark:bg-surface p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group ${!project.available ? 'opacity-75' : ''}`}
+      >
+        {/* Badge */}
+        {badgeContent && (
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className={`absolute top-2 sm:top-4 right-2 sm:right-4 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[0.65rem] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 shadow-lg text-white ${badgeContent.className} hover:scale-105 transition-transform duration-200 backdrop-blur-sm`}
+          >
+            <span className="text-[0.65rem] sm:text-sm">{badgeContent.icon}</span>
+            <span className="tracking-wide uppercase">{badgeContent.text}</span>
+          </motion.div>
+        )}
 
-  const businessProjects = [
-    {
-      title: 'Tealim',
-      description: 'Revolutionary E-learning cross-platform solution that transforms online education.',
-      tags: ['React', 'Python', 'FastAPI', 'Mobile', 'AI', 'Education', 'Cross-platform'],
-      github: 'https://github.com/yourusername/tealim',
-      demo: 'https://tealim.com',
-      type: 'web',
-      icon: `${baseUrl}/images/tealim.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Interactive content creation and real-time collaboration',
-        'AI-powered personalization and comprehensive analytics',
-        'Cross-platform solution for seamless learning experiences',
-        'Built with modern technologies for scalability and performance',
-        'Easy integration with popular e-learning platforms'
-      ]
-    },
-    {
-      title: 'Snippets',
-      description: 'Innovative E-market platform for trading code snippets and ready-to-use solutions.',
-      tags: ['React', 'Node.js', 'TypeScript', 'E-commerce', 'Developer Tools'],
-      github: 'https://github.com/yourusername/snippets',
-      demo: 'https://snippets.com',
-      type: 'web',
-      icon: `${baseUrl}/images/tealim.png`,
-      banner: `${baseUrl}/tealim.svg`,
-      details: [
-        'Automated testing and version control integration',
-        'Secure payment processing and monetization tools',
-        'Sustainable ecosystem for code reuse and collaboration',
-        'Built with modern technologies for scalability and performance',
-        'Easy integration with popular developer tools'
-      ]
-    }
-  ];
-
-  const ProjectCard = ({ project }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className=" bg-wh dark:bg-surface p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group"
-    >
-      {/* Banner */}
-      {project.banner && (
-        <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
-          <img
-            src={project.banner}
-            alt=""
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-
-      {/* Content */}
-      <div className="relative z-10">
-        <div className="flex items-center gap-4 mb-4">
-          {project.icon && (
-            <img
-              src={project.icon}
-              alt={`${project.title} icon`}
-              className="w-12 h-12 object-contain"
+        {/* Banner */}
+        {project.banner && (
+          <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
+            <LazyLoadImage
+              src={project.banner}
+              alt=""
+              effect="blur"
+              className="w-full h-full object-cover"
+              threshold={300}
+              wrapperClassName="w-full h-full"
             />
-          )}
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
-        </div>
+          </div>
+        )}
 
-        <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-        
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 text-sm bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        {/* Content */}
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+            {project.icon && (
+              <LazyLoadImage
+                src={project.icon}
+                alt={`${project.title} icon`}
+                effect="blur"
+                className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
+                threshold={300}
+                wrapperClassName="w-10 h-10 sm:w-12 sm:h-12"
+              />
+            )}
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
+          </div>
 
-        <div className="space-y-2 mb-4">
-          {project.details.map((detail, index) => (
-            <div key={index} className="flex items-start">
-              <span className="text-primary dark:text-primary-light mr-2">•</span>
-              <p className="text-gray-600 dark:text-gray-300">{detail}</p>
-            </div>
-          ))}
-        </div>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">{project.description}</p>
+          
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+            {project.tags.map((tag, index) => (
+              <span
+                key={index}
+                className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
 
-        <div className="flex gap-4">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-colors"
-          >
-            View on GitHub
-          </a>
-          <a
-            href={project.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-full transition-colors"
-          >
-            Live Demo
-          </a>
-        </div>
-      </div>
-    </motion.div>
-  );
+          <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
+            {project.details.map((detail, index) => (
+              <div key={index} className="flex items-start">
+                <span className="text-primary dark:text-primary-light mr-2">•</span>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{detail}</p>
+              </div>
+            ))}
+          </div>
 
-  const ProjectSection = ({ title, projects }) => (
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+            {(project.badge === 'hot' || project.badge === 'new') ? (
+              <>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white text-sm sm:text-base rounded-full transition-colors text-center"
+                >
+                  View on GitHub
+                </a>
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white text-sm sm:text-base rounded-full transition-colors text-center"
+                >
+                  Live Demo
+                </a>
+              </>
+            ) : (
+              <>
+                <button
+                  disabled
+                  className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm sm:text-base rounded-full cursor-not-allowed opacity-60 text-center"
+                >
+                  View on GitHub
+                </button>
+                <button
+                  disabled
+                  className="px-4 py-2 bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-sm sm:text-base rounded-full cursor-not-allowed opacity-60 text-center"
+                >
+                  Live Demo
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    );
+  }, [getBadgeContent]);
+
+  // Memoize ProjectSection to prevent unnecessary re-renders
+  const ProjectSection = useCallback(({ title, projects }) => (
     <div className="mb-16">
       <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">{title}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 auto-rows-fr">
         {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <ProjectCard project={project} />
+          </motion.div>
         ))}
       </div>
     </div>
-  );
+  ), [ProjectCard]);
 
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
@@ -438,10 +215,41 @@ const Projects = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="space-y-8 sm:space-y-12 md:space-y-16"
           >
             <ProjectSection title="Business Projects" projects={businessProjects} />
             <ProjectSection title="True Family Projects" projects={trueFamilyProjects} />
             <ProjectSection title="Utility Projects" projects={utilityProjects} />
+          </motion.div>
+
+          {/* View More Projects Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-12 sm:mt-16 flex justify-center"
+          >
+            <a
+              href="https://github.com/alaamer12"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-base sm:text-lg font-semibold"
+            >
+              <span>View More Projects on GitHub</span>
+              <svg
+                className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </a>
           </motion.div>
         </div>
       </div>

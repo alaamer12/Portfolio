@@ -30,7 +30,7 @@ const SkillBar = ({ skill }) => {
   );
 };
 
-const SkillCard = ({ Icon, name, level, title, description }) => {
+const SkillCard = ({ Icon, name, level, title, description, url }) => {
   if (Icon && level !== undefined) {
     // Technical skill card with icon and progress bar
     return (
@@ -41,7 +41,7 @@ const SkillCard = ({ Icon, name, level, title, description }) => {
         whileHover={{ scale: 1.05 }}
         className="bg-white dark:bg-gray-800 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
       >
-        <div className="flex items-center space-x-4">
+        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
           <Icon className="w-8 h-8 text-primary dark:text-primary-light" />
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
@@ -52,7 +52,7 @@ const SkillCard = ({ Icon, name, level, title, description }) => {
               />
             </div>
           </div>
-        </div>
+        </a>
       </motion.div>
     );
   }
@@ -72,16 +72,16 @@ const SkillCard = ({ Icon, name, level, title, description }) => {
   );
 };
 
-const SkillChip = ({ skill }) => (
+const SkillChip = ({ skill, url }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     whileInView={{ opacity: 1, scale: 1 }}
     whileHover={{ scale: 1.05 }}
     className="inline-flex items-center px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600"
   >
-    <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
+    <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-gray-800 dark:text-gray-200">
       {skill}
-    </span>
+    </a>
   </motion.div>
 );
 
@@ -107,16 +107,24 @@ const skills = [
 ];
 
 const mainSkills = [
-  { Icon: SiPython, name: 'Python', level: 90 },
-  { Icon: SiReact, name: 'React', level: 85 },
-  { Icon: SiDjango, name: 'Django', level: 88 },
-  { Icon: SiDocker, name: 'Docker', level: 80 },
-  { Icon: SiPostgresql, name: 'PostgreSQL', level: 85 }
+  { Icon: SiPython, name: 'Python', level: 90, url: 'https://www.python.org/' },
+  { Icon: SiReact, name: 'React', level: 85, url: 'https://reactjs.org/' },
+  { Icon: SiDjango, name: 'Django', level: 88, url: 'https://www.djangoproject.com/' },
+  { Icon: SiDocker, name: 'Docker', level: 80, url: 'https://www.docker.com/' },
+  { Icon: SiPostgresql, name: 'PostgreSQL', level: 85, url: 'https://www.postgresql.org/' }
 ];
 
 const otherSkills = [
-  'JavaScript', 'TypeScript', 'Node.js', 'Express', 'MongoDB',
-  'Git', 'AWS', 'REST APIs', 'GraphQL', 'TailwindCSS'
+  { name: 'JavaScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+  { name: 'TypeScript', url: 'https://www.typescriptlang.org/' },
+  { name: 'Node.js', url: 'https://nodejs.org/' },
+  { name: 'Express', url: 'https://expressjs.com/' },
+  { name: 'MongoDB', url: 'https://www.mongodb.com/' },
+  { name: 'Git', url: 'https://git-scm.com/' },
+  { name: 'AWS', url: 'https://aws.amazon.com/' },
+  { name: 'REST APIs', url: 'https://restfulapi.net/' },
+  { name: 'GraphQL', url: 'https://graphql.org/' },
+  { name: 'TailwindCSS', url: 'https://tailwindcss.com/' }
 ];
 
 const Skills = () => {
@@ -146,7 +154,7 @@ const Skills = () => {
         animate={inView ? "visible" : "hidden"}
         className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
       >
-        <h2 className="text-4xl font-bold text-center mb-16 text-gray-900 dark:text-white">
+        <h2 className="text-4xl font-bold text-center mb-16 text-gray-900 dark:text-[#f1f1f1]">
           Technical Expertise
         </h2>
         
@@ -183,7 +191,7 @@ const Skills = () => {
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {otherSkills.map((skill, index) => (
-              <SkillChip key={index} skill={skill} />
+              <SkillChip key={index} skill={skill.name} url={skill.url} />
             ))}
           </div>
         </div>

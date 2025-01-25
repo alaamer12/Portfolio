@@ -75,7 +75,7 @@ const Hero = () => {
 
             <div className="flex justify-center lg:justify-start space-x-4">
               <motion.a
-                href="https://github.com/yourusername"
+                href="https://github.com/alaamer12"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-3xl text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
@@ -85,7 +85,7 @@ const Hero = () => {
                 <FaGithub />
               </motion.a>
               <motion.a
-                href="https://linkedin.com/in/yourusername"
+                href="https://linkedin.com/in/alaamer12"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-3xl text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
@@ -118,9 +118,10 @@ const Hero = () => {
               }}
             />
             <motion.div
-              className="relative group"
+              className="relative group cursor-pointer"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
+              onClick={() => window.location.href = '/about'}
             >
               <div className="relative overflow-hidden rounded-3xl">
                 <img

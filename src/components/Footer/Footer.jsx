@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border-t border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div className="flex flex-col items-center space-y-6">
           {/* Copyright */}
           <div className="text-gray-600 dark:text-gray-300">
             © {currentYear} Amr Muhamed. All rights reserved.
@@ -17,7 +17,7 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex space-x-6">
             <motion.a
-              href="https://github.com/yourusername"
+              href="https://github.com/alaamer12"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
@@ -26,7 +26,7 @@ const Footer = () => {
               <FaGithub className="w-6 h-6" />
             </motion.a>
             <motion.a
-              href="https://linkedin.com/in/yourusername"
+              href="https://linkedin.com/in/alaamer12"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
@@ -35,7 +35,7 @@ const Footer = () => {
               <FaLinkedin className="w-6 h-6" />
             </motion.a>
             <motion.a
-              href="mailto:your.email@example.com"
+              href="mailto:amrmuhamed86@example.com"
               whileHover={{ scale: 1.1 }}
               className="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
             >
@@ -45,9 +45,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="text-sm text-gray-600 dark:text-gray-300">
-            <a href="/privacy" className="hover:text-primary dark:hover:text-primary-light transition-colors">Privacy Policy</a>
+            <a href="/about" className="hover:text-primary dark:hover:text-primary-light transition-colors">About</a>
             <span className="mx-2">·</span>
-            <a href="/terms" className="hover:text-primary dark:hover:text-primary-light transition-colors">Terms of Service</a>
+            <a href="/projects" className="hover:text-primary dark:hover:text-primary-light transition-colors">Projects</a>
           </div>
         </div>
       </div>
