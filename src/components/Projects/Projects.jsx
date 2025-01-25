@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { useTheme } from '../../context/ThemeContext';
+import { OptimizedBlock } from '../OptimizedMillion';
 
 const ProjectCard = ({ title, description, image, darkImage, tags, github, demo, delay }) => {
   const { isDark } = useTheme();
@@ -135,7 +136,9 @@ const Projects = () => {
 
         <div className="grid cursor-pointer grid-cols-1 gap-6">
           {projects.map((project, index) => (
-            <ProjectCard key={index} {...project} />
+            <OptimizedBlock key={project.title} enableCache={true} threshold={20}>
+              <ProjectCard key={index} {...project} />
+            </OptimizedBlock>
           ))}
         </div>
       </div>

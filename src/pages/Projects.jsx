@@ -1,4 +1,4 @@
-import {  useMemo, useCallback  } from "react";
+import { useMemo, useCallback } from "react";
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import Background from '../components/Background/Background';
@@ -9,6 +9,8 @@ import { IoSparkles } from 'react-icons/io5';
 import { BsClock } from 'react-icons/bs';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { OptimizedBlock, OptimizedLoop } from '../components/OptimizedMillion';
+
 const Projects = () => {
   const { isDark } = useTheme();
   const baseUrl = '';
@@ -169,24 +171,17 @@ const Projects = () => {
       </motion.div>
     );
   }, [getBadgeContent]);
-  // Memoize ProjectSection to prevent unnecessary re-renders
-  const ProjectSection = useCallback(({ title, projects }) => (
-    <div className="mb-16">
-      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">{title}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 auto-rows-fr">
-        {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <ProjectCard project={project} />
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  ), [ProjectCard]);
+  // Memoize the project card render function
+  const renderProjectCard = useCallback((project, index) => (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      <ProjectCard project={project} />
+    </motion.div>
+  ), []);
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
       <SEO
@@ -198,20 +193,53 @@ const Projects = () => {
       <Background />
       <div className="relative z-10 w-full py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
+          <OptimizedBlock className="mb-12">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">All Projects</h1>
-          </div>
+          </OptimizedBlock>
+          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="space-y-8 sm:space-y-12 md:space-y-16"
           >
-            <ProjectSection title="Business Projects" projects={businessProjects} />
-            <ProjectSection title="True Family Projects" projects={trueFamilyProjects} />
-            <ProjectSection title="Utility Projects" projects={utilityProjects} />
+            <OptimizedBlock className="mb-16">
+              <div className="mb-16">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Business Projects</h2>
+                <OptimizedLoop
+                  items={businessProjects}
+                  renderItem={renderProjectCard}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 auto-rows-fr"
+                  enableCache={true}
+                />
+              </div>
+            </OptimizedBlock>
+
+            <OptimizedBlock className="mb-16">
+              <div className="mb-16">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">True Family Projects</h2>
+                <OptimizedLoop
+                  items={trueFamilyProjects}
+                  renderItem={renderProjectCard}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 auto-rows-fr"
+                  enableCache={true}
+                />
+              </div>
+            </OptimizedBlock>
+
+            <OptimizedBlock className="mb-16">
+              <div className="mb-16">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Utility Projects</h2>
+                <OptimizedLoop
+                  items={utilityProjects}
+                  renderItem={renderProjectCard}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 auto-rows-fr"
+                  enableCache={true}
+                />
+              </div>
+            </OptimizedBlock>
           </motion.div>
-          {/* View More Projects Button */}
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -245,4 +273,5 @@ const Projects = () => {
     </div>
   );
 };
+
 export default Projects;

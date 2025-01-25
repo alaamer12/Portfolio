@@ -4,6 +4,7 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaDownload, FaSpinner
 import { SiPython, SiReact, SiDjango, SiDocker, SiPostgresql } from 'react-icons/si';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
+import { OptimizedBlock, OptimizedLoop } from '../components/OptimizedMillion';
 const ResumeDownloadButton = memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const handleClick = useCallback(() => {
@@ -125,7 +126,7 @@ const ExperienceCard = memo(({ title, company, period, description, technologies
 ));
 const EXPERIENCE_DATA = [
   {
-    title: 'Senior Backend Developer',
+    title: 'Junior Backend Developer',
     company: 'Tech Solutions Inc.',
     period: '2021 - Present',
     description: 'Leading the backend development team in building scalable microservices architecture. Implemented CI/CD pipelines and improved system performance by 40%.',
@@ -149,19 +150,27 @@ const EXPERIENCE_DATA = [
 const About = () => {
   // Memoize sections to prevent unnecessary re-renders
   const renderSkillsSection = useMemo(() => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {SKILLS_DATA.map((skill, index) => (
+    <OptimizedLoop
+      items={SKILLS_DATA}
+      renderItem={(skill, index) => (
         <SkillCard key={index} {...skill} />
-      ))}
-    </div>
+      )}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      enableCache={true}
+    />
   ), []);
+
   const renderExperienceSection = useMemo(() => (
-    <div className="space-y-6">
-      {EXPERIENCE_DATA.map((exp, index) => (
+    <OptimizedLoop
+      items={EXPERIENCE_DATA}
+      renderItem={(exp, index) => (
         <ExperienceCard key={index} {...exp} />
-      ))}
-    </div>
+      )}
+      className="space-y-6"
+      enableCache={true}
+    />
   ), []);
+
   return (
     <>
       <SEO
@@ -215,126 +224,132 @@ const About = () => {
         <Background />
         <div className="relative z-10 w-full pt-24 pb-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header Section */}
-            <header className="text-center mb-16">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                  About Me
-                </h1>
-                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                  Enthusiastic developer with a passion for open-source projects and a growing portfolio of 
-                  contributions. I've been fortunate to work on various personal and collaborative projects, 
-                  while also managing my own small business. Always eager to learn and improve my skills.
-                </p>
-              </motion.div>
-            </header>
-            {/* Contact Information */}
-            <section aria-label="Contact Information" className="mb-16">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex flex-wrap justify-center gap-6"
-              >
-                <a
-                  href="mailto:amrmuhamed86@example.com"
-                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+            <OptimizedBlock className="mb-16" id="header-section">
+              <header className="text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                 >
-                  <FaEnvelope className="w-5 h-5" />
-                  <span>amrmuhamed86@example.com</span>
-                </a>
-                <a
-                  href="https://github.com/alaamer12"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+                  <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    About Me
+                  </h1>
+                  <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    Enthusiastic developer with a passion for open-source projects and a growing portfolio of 
+                    contributions. I've been fortunate to work on various personal and collaborative projects, 
+                    while also managing my own small business. Always eager to learn and improve my skills.
+                  </p>
+                </motion.div>
+              </header>
+            </OptimizedBlock>
+            <OptimizedBlock className="mb-16" id="contact-section">
+              <section aria-label="Contact Information" className="mb-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex flex-wrap justify-center gap-6"
                 >
-                  <FaGithub className="w-5 h-5" />
-                  <span>GitHub</span>
-                </a>
-                <a
-                  href="https://linkedin.com/in/alaamer12"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
-                >
-                  <FaLinkedin className="w-5 h-5" />
-                  <span>LinkedIn</span>
-                </a>
-                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                  <FaMapMarkerAlt className="w-5 h-5" />
-                  <span>Cairo, Egypt</span>
-                </div>
-              </motion.div>
-            </section>
-            {/* Download Resume Button */}
-            <section aria-label="Resume Download" className="text-center mb-16">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                <ResumeDownloadButton />
-              </motion.div>
-            </section>
-            {/* Skills Section */}
-            <section aria-label="Skills and Expertise" className="mb-16">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-              >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-                  Skills & Expertise
-                </h2>
-                {renderSkillsSection}
-              </motion.div>
-            </section>
-            {/* Experience Section */}
-            <section aria-label="Professional Experience" className="mb-16">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-                  Professional Experience
-                </h2>
-                {renderExperienceSection}
-              </motion.div>
-            </section>
-            {/* Education Section */}
-            <section aria-label="Education" className="mt-16">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-                  Education
-                </h2>
-                <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
-                  <a href='https://fci.bu.edu.eg/' target="_blank" rel="noopener noreferrer" > 
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                      Bachelor of Computer Science
-                    </h3>
-                    <a href='https://fci.bu.edu.eg/' target="_blank" rel="noopener noreferrer"  className="mt-2 text-primary dark:text-primary-light font-semibold">
-                      BFCAI
-                    </a>
-                    <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                      2023 - 2026
-                    </div>
-                    <p className="mt-4 text-gray-700 dark:text-gray-300">
-                      Graduated with honors. Specialized in Software Engineering and Artificial Intelligence.
-                      Completed multiple research projects in machine learning and data analysis.
-                    </p>
+                  <a
+                    href="mailto:amrmuhamed86@example.com"
+                    className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+                  >
+                    <FaEnvelope className="w-5 h-5" />
+                    <span>amrmuhamed86@example.com</span>
                   </a>
-                </div>
-              </motion.div>
-            </section>
+                  <a
+                    href="https://github.com/alaamer12"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+                  >
+                    <FaGithub className="w-5 h-5" />
+                    <span>GitHub</span>
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/alaamer12"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+                  >
+                    <FaLinkedin className="w-5 h-5" />
+                    <span>LinkedIn</span>
+                  </a>
+                  <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                    <FaMapMarkerAlt className="w-5 h-5" />
+                    <span>Cairo, Egypt</span>
+                  </div>
+                </motion.div>
+              </section>
+            </OptimizedBlock>
+            <OptimizedBlock className="mb-16" id="resume-section">
+              <section aria-label="Resume Download" className="text-center mb-16">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <ResumeDownloadButton />
+                </motion.div>
+              </section>
+            </OptimizedBlock>
+            <OptimizedBlock className="mb-16" id="skills-section">
+              <section aria-label="Skills and Expertise" className="mb-16">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                    Skills & Expertise
+                  </h2>
+                  {renderSkillsSection}
+                </motion.div>
+              </section>
+            </OptimizedBlock>
+            <OptimizedBlock className="mb-16" id="experience-section">
+              <section aria-label="Professional Experience" className="mb-16">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                    Professional Experience
+                  </h2>
+                  {renderExperienceSection}
+                </motion.div>
+              </section>
+            </OptimizedBlock>
+            <OptimizedBlock className="mt-16" id="education-section">
+              <section aria-label="Education" className="mt-16">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                    Education
+                  </h2>
+                  <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        Bachelor of Computer Science
+                      </h3>
+                      <a href='https://fci.bu.edu.eg/' target="_blank" rel="noopener noreferrer" className="mt-2 text-primary dark:text-primary-light font-semibold hover:underline">
+                        BFCAI
+                      </a>
+                      <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        2023 - 2026
+                      </div>
+                      <p className="mt-4 text-gray-700 dark:text-gray-300">
+                        Graduated with honors. Specialized in Software Engineering and Artificial Intelligence.
+                        Completed multiple research projects in machine learning and data analysis.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </section>
+            </OptimizedBlock>
           </div>
         </div>
       </div>

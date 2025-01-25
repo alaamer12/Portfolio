@@ -3,10 +3,12 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { compression } from 'vite-plugin-compression2';
+import million from 'million/compiler';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    million.vite({ auto: true }),
     react({
       babel: {
         plugins: [

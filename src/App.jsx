@@ -8,6 +8,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import { OptimizedBlock } from './components/OptimizedMillion';
 // Route configurations
 const ROUTES = {
   HOME: {
@@ -49,28 +50,33 @@ const SEOHelmet = memo(({ title, description, pathname }) => (
 // Memoized page wrapper
 const PageWrapper = memo(({ children }) => {
   const location = useLocation();
-  const route = Object.values(ROUTES).find(r => r.path === location.pathname) || ROUTES.HOME;
+  const route = Object.values(ROUTES).find(r => r.path === location.pathname) || ROUTES.NOT_FOUND;
+
   return (
-    <>
-      <SEOHelmet
-        title={route.title}
-        description={route.description}
-        pathname={location.pathname}
-      />
-      <Navbar />
-      <main className="min-h-screen pt-16">
-        {location.pathname !== '/' && <Breadcrumb />}
-        {children}
-      </main>
-      <Footer />
-    </>
+    <OptimizedBlock enableCache={true} threshold={20}>
+      <div className="flex flex-col min-h-screen">
+        <SEOHelmet 
+          title={route.title}
+          description={route.description}
+          pathname={location.pathname}
+        />
+        <Navbar />
+        <Breadcrumb />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
+      </div>
+    </OptimizedBlock>
   );
 });
 // Route component with error boundary
 const RouteWithErrorBoundary = memo(({ Component }) => (
-  <ErrorBoundary>
-    <Component />
-  </ErrorBoundary>
+  <OptimizedBlock enableCache={true} threshold={20}>
+    <ErrorBoundary>
+      <Component />
+    </ErrorBoundary>
+  </OptimizedBlock>
 ));
 const App = () => (
   <ErrorBoundary>

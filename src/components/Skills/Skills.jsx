@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { SiPython, SiReact, SiDjango, SiDocker, SiPostgresql } from 'react-icons/si';
+import { OptimizedBlock } from '../OptimizedMillion';
 
 const SkillBar = ({ skill }) => {
   const [ref, inView] = useInView({
@@ -160,14 +161,18 @@ const Skills = () => {
         {/* Skill Bars */}
         <div className="space-y-8">
           {skills.map((skill, index) => (
-            <SkillBar key={index} skill={skill} />
+            <OptimizedBlock key={skill.name} enableCache={true} threshold={20}>
+              <SkillBar key={index} skill={skill} />
+            </OptimizedBlock>
           ))}
         </div>
         
         {/* Skill Areas */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
           {skillsData.map((skill, index) => (
-            <SkillCard key={index} title={skill.title} description={skill.description} />
+            <OptimizedBlock key={skill.title} enableCache={true} threshold={20}>
+              <SkillCard key={index} title={skill.title} description={skill.description} />
+            </OptimizedBlock>
           ))}
         </div>
 
@@ -178,7 +183,9 @@ const Skills = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {mainSkills.map((skill, index) => (
-              <SkillCard key={index} {...skill} />
+              <OptimizedBlock key={index} enableCache={true} threshold={20}>
+                <SkillCard key={index} {...skill} />
+              </OptimizedBlock>
             ))}
           </div>
         </div>
@@ -190,7 +197,9 @@ const Skills = () => {
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
             {otherSkills.map((skill, index) => (
-              <SkillChip key={index} skill={skill.name} url={skill.url} />
+              <OptimizedBlock key={index} enableCache={true} threshold={20}>
+                <SkillChip key={index} skill={skill.name} url={skill.url} />
+              </OptimizedBlock>
             ))}
           </div>
         </div>

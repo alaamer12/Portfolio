@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import heroImage from '/images/hero.png';
 import ShimmerEffect from './ShimmerEffect';
+import { OptimizedBlock } from '../OptimizedMillion';
 
-const StatBox = ({ number, text, delay, color }) => (
+const StatBox = ({ number, text, delay, color, hoverColor }) => (
   <motion.div
     initial={{ opacity: 0, scale: 0.5 }}
     animate={{ opacity: 1, scale: 1 }}
@@ -13,13 +14,13 @@ const StatBox = ({ number, text, delay, color }) => (
     whileTap={{ scale: 0.95 }}
   >
     <motion.div 
-      className={`text-4xl font-bold ${color} transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-white`}
+      className={`text-4xl font-bold ${color} transition-all duration-300 group-hover:${hoverColor}`}
       whileHover={{ y: -2 }}
     >
       {number}+
     </motion.div>
     <motion.div 
-      className="text-sm text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-600 dark:group-hover:text-gray-400"
+      className={`text-sm text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:${hoverColor}`}
       whileHover={{ y: 2 }}
     >
       {text}
@@ -28,6 +29,30 @@ const StatBox = ({ number, text, delay, color }) => (
 );
 
 const Hero = () => {
+  const stats = [
+    { 
+      number: "200+", 
+      text: "GitHub Repositories", 
+      delay: 0.1,
+      color: "text-gray-900 dark:text-white",
+      hoverColor: "text-primary dark:text-primary-light"
+    },
+    { 
+      number: "85%", 
+      text: "Python Projects", 
+      delay: 0.25,
+      color: "text-gray-900 dark:text-white",
+      hoverColor: "text-strawberry dark:text-strawberry-light"
+    },
+    { 
+      number: "10+", 
+      text: "PyPI Packages", 
+      delay: 0.4,
+      color: "text-gray-900 dark:text-white",
+      hoverColor: "text-cherry-pie dark:text-cherry-pie-light"
+    }
+  ];
+
   return (
     <section className="w-full min-h-screen flex items-center justify-center py-20">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,25 +76,18 @@ const Hero = () => {
               Python and Backend Expert
             </h2>
             
-            <div className="flex justify-center lg:justify-start space-x-16">
-              <StatBox 
-                number="200+" 
-                text="GitHub Repositories" 
-                delay={0.2} 
-                color="text-gray-900 dark:text-white"
-              />
-              <StatBox 
-                number="85%" 
-                text="Python Projects" 
-                delay={0.4} 
-                color="text-gray-900 dark:text-white"
-              />
-              <StatBox 
-                number="10+" 
-                text="PyPI Packages" 
-                delay={0.6} 
-                color="text-gray-900 dark:text-white"
-              />
+            <div className="flex justify-center lg:justify-start space-x-16 cursor-default">
+              {stats.map((stat) => (
+                <OptimizedBlock key={stat.text} enableCache={true} threshold={20} className="mr-5">
+                  <StatBox 
+                    number={stat.number}
+                    text={stat.text}
+                    delay={stat.delay}
+                    color={stat.color}
+                    hoverColor={stat.hoverColor}
+                  />
+                </OptimizedBlock>
+              ))}
             </div>
 
             <div className="flex justify-center lg:justify-start space-x-4">

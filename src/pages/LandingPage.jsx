@@ -3,11 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
+import { OptimizedBlock } from '../components/OptimizedMillion';
+
 // Lazy load components
 const Hero = lazy(() => import('../components/Hero/Hero'));
 const Skills = lazy(() => import('../components/Skills/Skills'));
 const Projects = lazy(() => import('../components/Projects/Projects'));
 const OpenSource = lazy(() => import('../components/OpenSource/OpenSource'));
+
 // Memoize scroll button for better performance
 const ScrollToTopButton = memo(({ isVisible, onClick }) => (
   <motion.button
@@ -32,75 +35,73 @@ const ScrollToTopButton = memo(({ isVisible, onClick }) => (
     </svg>
   </motion.button>
 ));
+
 const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    // Reduced initial loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 50);
     return () => clearTimeout(timer);
   }, []);
-  // Memoized scroll handler
+
   const toggleVisibility = useCallback(() => {
     const shouldBeVisible = window.pageYOffset > 300;
     if (shouldBeVisible !== isVisible) {
       setIsVisible(shouldBeVisible);
     }
   }, [isVisible]);
+
   useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    window.addEventListener('scroll', toggleVisibility);
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, [toggleVisibility]);
-  // Memoized scroll to top function
+
   const scrollToTop = useCallback(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
   }, []);
-  // Memoized content component
-  const Content = memo(() => (
-    <div className="w-full mx-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Suspense fallback={<Loading />}>
-          <Hero />
-        </Suspense>
-        <Suspense fallback={<Loading />}>
-          <Skills />
-        </Suspense>
-        <Suspense fallback={<Loading />}>
-          <Projects />
-        </Suspense>
-        <Suspense fallback={<Loading />}>
-          <OpenSource />
-        </Suspense>
-      </div>
-    </div>
-  ));
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="relative min-h-screen w-screen overflow-x-hidden">
+    <>
       <SEO
         title="Home"
         description="Welcome to my portfolio! I'm Amr Muhamed, a Full Stack Developer specializing in creating modern web applications with React and Django. Explore my work and experience."
         type="website"
         image="/home-og.png"
       />
-      <Background />
-      <div className="relative z-10 w-full pt-24 pb-16">
-        <AnimatePresence mode='wait'>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <>
-              <Content />
-              <ScrollToTopButton isVisible={isVisible} onClick={scrollToTop} />
-            </>
-          )}
-        </AnimatePresence>
+      <div className="relative min-h-screen w-screen overflow-x-hidden">
+        <Background />
+        <div className="relative z-10 w-full pt-24 pb-16">
+          <AnimatePresence mode='wait'>
+            <Suspense fallback={<Loading />}>
+              <OptimizedBlock id="hero-section">
+                <Hero />
+              </OptimizedBlock>
+              <OptimizedBlock id="skills-section">
+                <Skills />
+              </OptimizedBlock>
+              <OptimizedBlock id="projects-section">
+                <Projects />
+              </OptimizedBlock>
+              <OptimizedBlock id="opensource-section">
+                <OpenSource />
+              </OptimizedBlock>
+            </Suspense>
+            <ScrollToTopButton isVisible={isVisible} onClick={scrollToTop} />
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
+
 export default memo(LandingPage);
