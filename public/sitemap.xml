@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://amrmuhamed.com/</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://amrmuhamed.com/home-og.png</image:loc>
+      <image:title>Amr Muhamed - Full Stack Developer</image:title>
+      <image:caption>Portfolio Homepage of Amr Muhamed</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://amrmuhamed.com/about</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://amrmuhamed.com/about-og.png</image:loc>
+      <image:title>About Amr Muhamed</image:title>
+      <image:caption>Learn about my journey and expertise</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://amrmuhamed.com/projects</loc>
+    <lastmod>2025-01-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://amrmuhamed.com/projects-og.png</image:loc>
+      <image:title>My Projects Portfolio</image:title>
+      <image:caption>Explore my latest projects and contributions</image:caption>
+    </image:image>
+  </url>
+</urlset>

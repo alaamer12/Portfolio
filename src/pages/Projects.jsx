@@ -2,6 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import Background from '../components/Background/Background';
+import SEO from '../components/SEO/SEO';
 import { getProjectsData } from '../data/projects';
 import { FaFire } from 'react-icons/fa';
 import { IoSparkles } from 'react-icons/io5';
@@ -204,6 +205,12 @@ const Projects = () => {
 
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
+      <SEO
+        title="Projects"
+        description="Explore my portfolio of web development projects, featuring React, Django, and modern web technologies. View my latest work and technical achievements."
+        type="website"
+        image="/projects-og.png"
+      />
       <Background />
       <div className="relative z-10 w-full py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

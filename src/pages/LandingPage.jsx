@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense, useCallback, memo } from 'r
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
+import SEO from '../components/SEO/SEO';
 
 // Lazy load components
 const Hero = lazy(() => import('../components/Hero/Hero'));
@@ -90,6 +91,12 @@ const LandingPage = () => {
 
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
+      <SEO
+        title="Home"
+        description="Welcome to my portfolio! I'm Amr Muhamed, a Full Stack Developer specializing in creating modern web applications with React and Django. Explore my work and experience."
+        type="website"
+        image="/home-og.png"
+      />
       <Background />
       <div className="relative z-10 w-full pt-24 pb-16">
         <AnimatePresence mode='wait'>

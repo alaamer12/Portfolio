@@ -3,12 +3,19 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Background from '../components/Background/Background';
 import { FaHome, FaSearch } from 'react-icons/fa';
+import SEO from '../components/SEO/SEO';
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
+      <SEO
+        title="404 - Page Not Found"
+        description="Sorry, the page you're looking for doesn't exist. Return to the homepage to explore my portfolio."
+        type="website"
+        image="/404-og.png"
+      />
       <Background />
       <div className="relative z-10 w-full min-h-screen flex items-center justify-center p-4">
         <motion.div
