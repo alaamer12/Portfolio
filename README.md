@@ -47,16 +47,16 @@ git clone https://github.com/alaamer12/portfolio.git
 cd portfolio
 
 # Install dependencies
-npm install
+bun install
 
 # Start development server
-npm run dev
+bun run dev
 
 # Build for production
-npm run build
+bun run build
 
 # Preview production build
-npm run preview
+bun run preview
 ```
 
 ## 🛠️ Tech Stack
