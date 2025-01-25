@@ -1,13 +1,11 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import {  memo, useCallback, useMemo, useState  } from "react";
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaDownload, FaSpinner } from 'react-icons/fa';
 import { SiPython, SiReact, SiDjango, SiDocker, SiPostgresql } from 'react-icons/si';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
-
 const ResumeDownloadButton = memo(() => {
   const [isLoading, setIsLoading] = useState(false);
-
   const handleClick = useCallback(() => {
     setIsLoading(true);
     setTimeout(() => {
@@ -15,7 +13,6 @@ const ResumeDownloadButton = memo(() => {
       window.open('/resume.pdf', '_blank');
     }, 3000);
   }, []);
-
   return (
     <motion.button
       onClick={handleClick}
@@ -34,7 +31,6 @@ const ResumeDownloadButton = memo(() => {
     </motion.button>
   );
 });
-
 // Memoize static data
 const SKILLS_DATA = [
   {
@@ -73,7 +69,6 @@ const SKILLS_DATA = [
     url: 'https://www.postgresql.org/'
   }
 ];
-
 // Memoize static components
 const SkillCard = memo(({ Icon, name, level, description, url }) => (
   <motion.div
@@ -102,7 +97,6 @@ const SkillCard = memo(({ Icon, name, level, description, url }) => (
     <p className="mt-4 text-gray-600 dark:text-gray-300">{description}</p>
   </motion.div>
 ));
-
 const ExperienceCard = memo(({ title, company, period, description, technologies }) => (
   <motion.div
     initial={{ opacity: 0, x: -20 }}
@@ -129,7 +123,6 @@ const ExperienceCard = memo(({ title, company, period, description, technologies
     </div>
   </motion.div>
 ));
-
 const EXPERIENCE_DATA = [
   {
     title: 'Senior Backend Developer',
@@ -153,7 +146,6 @@ const EXPERIENCE_DATA = [
     technologies: ['Python', 'FastAPI', 'PostgreSQL', 'Redis', 'WebSockets']
   }
 ];
-
 const About = () => {
   // Memoize sections to prevent unnecessary re-renders
   const renderSkillsSection = useMemo(() => (
@@ -163,7 +155,6 @@ const About = () => {
       ))}
     </div>
   ), []);
-
   const renderExperienceSection = useMemo(() => (
     <div className="space-y-6">
       {EXPERIENCE_DATA.map((exp, index) => (
@@ -171,7 +162,6 @@ const About = () => {
       ))}
     </div>
   ), []);
-
   return (
     <>
       <SEO
@@ -241,7 +231,6 @@ const About = () => {
                 </p>
               </motion.div>
             </header>
-
             {/* Contact Information */}
             <section aria-label="Contact Information" className="mb-16">
               <motion.div
@@ -281,7 +270,6 @@ const About = () => {
                 </div>
               </motion.div>
             </section>
-
             {/* Download Resume Button */}
             <section aria-label="Resume Download" className="text-center mb-16">
               <motion.div
@@ -292,7 +280,6 @@ const About = () => {
                 <ResumeDownloadButton />
               </motion.div>
             </section>
-
             {/* Skills Section */}
             <section aria-label="Skills and Expertise" className="mb-16">
               <motion.div
@@ -306,7 +293,6 @@ const About = () => {
                 {renderSkillsSection}
               </motion.div>
             </section>
-
             {/* Experience Section */}
             <section aria-label="Professional Experience" className="mb-16">
               <motion.div
@@ -320,7 +306,6 @@ const About = () => {
                 {renderExperienceSection}
               </motion.div>
             </section>
-
             {/* Education Section */}
             <section aria-label="Education" className="mt-16">
               <motion.div
@@ -356,5 +341,4 @@ const About = () => {
     </>
   );
 };
-
 export default memo(About);

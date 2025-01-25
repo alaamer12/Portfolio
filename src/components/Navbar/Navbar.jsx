@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import {  useState  } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
 import { useTheme } from '../../context/ThemeContext';
-
 const NavLink = ({ to, children }) => {
   const location = useLocation();
   const isActive = location.pathname === to;
-
   return (
     <Link
       to={to}
@@ -28,13 +26,10 @@ const NavLink = ({ to, children }) => {
     </Link>
   );
 };
-
 const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => setIsOpen(!isOpen);
-
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -43,7 +38,6 @@ const Navbar = () => {
     >
       {/* Glass Background */}
       <div className="absolute inset-0 bg-white/40 dark:bg-gray-900/40 backdrop-blur-md border-b border-white/10 dark:border-gray-800/50" />
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -53,13 +47,11 @@ const Navbar = () => {
           >
             Amr Muhamed
           </Link>
-
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
             <NavLink to="/">Home</NavLink>
             <NavLink to="/projects">Projects</NavLink>
             <NavLink to="/about">About</NavLink>
-            
             <motion.button
               onClick={toggleTheme}
               className="ml-4 p-2 rounded-full
@@ -78,7 +70,6 @@ const Navbar = () => {
               )}
             </motion.button>
           </div>
-
           {/* Mobile Menu Button */}
           <motion.button
             onClick={toggleMenu}
@@ -99,7 +90,6 @@ const Navbar = () => {
           </motion.button>
         </div>
       </div>
-
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
@@ -111,12 +101,10 @@ const Navbar = () => {
           >
             {/* Glass Background for Mobile Menu */}
             <div className="absolute inset-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-b border-white/10 dark:border-gray-800/50" />
-
             <div className="relative px-4 py-4 space-y-3">
               <NavLink to="/">Home</NavLink>
               <NavLink to="/projects">Projects</NavLink>
               <NavLink to="/about">About</NavLink>
-              
               <motion.button
                 onClick={toggleTheme}
                 className="w-full mt-4 p-2 rounded-full
@@ -148,5 +136,4 @@ const Navbar = () => {
     </motion.nav>
   );
 };
-
 export default Navbar;

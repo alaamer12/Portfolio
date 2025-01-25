@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, memo } from 'react';
+import {  lazy, Suspense, memo  } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ThemeProvider } from './context/ThemeContext';
@@ -8,7 +8,6 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
-
 // Route configurations
 const ROUTES = {
   HOME: {
@@ -36,7 +35,6 @@ const ROUTES = {
     Component: lazy(() => import('./pages/NotFound')),
   },
 };
-
 // Memoized SEO component
 const SEOHelmet = memo(({ title, description, pathname }) => (
   <Helmet>
@@ -48,12 +46,10 @@ const SEOHelmet = memo(({ title, description, pathname }) => (
     <link rel="canonical" href={`https://amrmuhamed.com${pathname}`} />
   </Helmet>
 ));
-
 // Memoized page wrapper
 const PageWrapper = memo(({ children }) => {
   const location = useLocation();
   const route = Object.values(ROUTES).find(r => r.path === location.pathname) || ROUTES.HOME;
-
   return (
     <>
       <SEOHelmet
@@ -70,14 +66,12 @@ const PageWrapper = memo(({ children }) => {
     </>
   );
 });
-
 // Route component with error boundary
 const RouteWithErrorBoundary = memo(({ Component }) => (
   <ErrorBoundary>
     <Component />
   </ErrorBoundary>
 ));
-
 const App = () => (
   <ErrorBoundary>
     <ThemeProvider>
@@ -106,5 +100,4 @@ const App = () => (
     </ThemeProvider>
   </ErrorBoundary>
 );
-
 export default memo(App);

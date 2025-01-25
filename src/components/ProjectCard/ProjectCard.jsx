@@ -1,6 +1,5 @@
-import React, { memo } from 'react';
+import {  memo  } from "react";
 import { motion } from 'framer-motion';
-
 const ProjectCard = memo(({ project }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -19,7 +18,6 @@ const ProjectCard = memo(({ project }) => (
         />
       </div>
     )}
-
     {/* Content */}
     <div className="relative z-10">
       <div className="flex items-center gap-4 mb-4">
@@ -33,9 +31,7 @@ const ProjectCard = memo(({ project }) => (
         )}
         <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
       </div>
-
       <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-      
       <div className="flex flex-wrap gap-2 mb-4">
         {project.tags.map((tag, index) => (
           <span
@@ -46,7 +42,6 @@ const ProjectCard = memo(({ project }) => (
           </span>
         ))}
       </div>
-
       <div className="space-y-2 mb-4">
         {project.details.map((detail, index) => (
           <div key={index} className="flex items-start">
@@ -55,7 +50,6 @@ const ProjectCard = memo(({ project }) => (
           </div>
         ))}
       </div>
-
       <div className="flex gap-4">
         <a
           href={project.github}
@@ -77,7 +71,5 @@ const ProjectCard = memo(({ project }) => (
     </div>
   </motion.div>
 ));
-
 ProjectCard.displayName = 'ProjectCard';
-
 export default ProjectCard;

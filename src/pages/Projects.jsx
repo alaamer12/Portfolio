@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import {  useMemo, useCallback  } from "react";
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import Background from '../components/Background/Background';
@@ -9,15 +9,12 @@ import { IoSparkles } from 'react-icons/io5';
 import { BsClock } from 'react-icons/bs';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-
 const Projects = () => {
   const { isDark } = useTheme();
   const baseUrl = '';
-
   // Memoize the sorted projects to prevent unnecessary re-sorting
   const { trueFamilyProjects, utilityProjects, businessProjects } = useMemo(() => {
     const { trueFamilyProjects: unsortedTrueFamilyProjects, utilityProjects: unsortedUtilityProjects, businessProjects: unsortedBusinessProjects } = getProjectsData(baseUrl, isDark);
-
     // Badge priority for sorting
     const badgePriority = {
       'hot': 0,
@@ -25,21 +22,18 @@ const Projects = () => {
       'coming soon': 2,
       'none': 3
     };
-
     // Sort function for projects
     const sortProjects = (projects) => {
       return [...projects].sort((a, b) => {
         return badgePriority[a.badge || 'none'] - badgePriority[b.badge || 'none'];
       });
     };
-
     return {
       trueFamilyProjects: sortProjects(unsortedTrueFamilyProjects),
       utilityProjects: sortProjects(unsortedUtilityProjects),
       businessProjects: sortProjects(unsortedBusinessProjects)
     };
   }, [baseUrl, isDark]);
-
   // Memoize getBadgeContent to prevent unnecessary re-renders
   const getBadgeContent = useCallback((badge) => {
     switch (badge) {
@@ -65,11 +59,9 @@ const Projects = () => {
         return null;
     }
   }, []);
-
   // Memoize ProjectCard to prevent unnecessary re-renders
   const ProjectCard = useCallback(({ project }) => {
     const badgeContent = getBadgeContent(project.badge);
-    
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -89,7 +81,6 @@ const Projects = () => {
             <span className="tracking-wide uppercase">{badgeContent.text}</span>
           </motion.div>
         )}
-
         {/* Banner */}
         {project.banner && (
           <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -103,7 +94,6 @@ const Projects = () => {
             />
           </div>
         )}
-
         {/* Content */}
         <div className="relative z-10">
           <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
@@ -119,9 +109,7 @@ const Projects = () => {
             )}
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
           </div>
-
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">{project.description}</p>
-          
           <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
             {project.tags.map((tag, index) => (
               <span
@@ -132,7 +120,6 @@ const Projects = () => {
               </span>
             ))}
           </div>
-
           <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
             {project.details.map((detail, index) => (
               <div key={index} className="flex items-start">
@@ -141,7 +128,6 @@ const Projects = () => {
               </div>
             ))}
           </div>
-
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
             {(project.badge === 'hot' || project.badge === 'new') ? (
               <>
@@ -183,7 +169,6 @@ const Projects = () => {
       </motion.div>
     );
   }, [getBadgeContent]);
-
   // Memoize ProjectSection to prevent unnecessary re-renders
   const ProjectSection = useCallback(({ title, projects }) => (
     <div className="mb-16">
@@ -202,7 +187,6 @@ const Projects = () => {
       </div>
     </div>
   ), [ProjectCard]);
-
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
       <SEO
@@ -217,7 +201,6 @@ const Projects = () => {
           <div className="mb-12">
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white">All Projects</h1>
           </div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -228,7 +211,6 @@ const Projects = () => {
             <ProjectSection title="True Family Projects" projects={trueFamilyProjects} />
             <ProjectSection title="Utility Projects" projects={utilityProjects} />
           </motion.div>
-
           {/* View More Projects Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -263,5 +245,4 @@ const Projects = () => {
     </div>
   );
 };
-
 export default Projects;

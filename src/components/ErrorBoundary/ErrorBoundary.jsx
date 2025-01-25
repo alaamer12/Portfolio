@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import {  Component  } from "react";
 import { motion } from 'framer-motion';
 import Background from '../Background/Background';
 import { FaExclamationTriangle, FaHome, FaRedoAlt } from 'react-icons/fa';
-
 class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
@@ -12,11 +11,9 @@ class ErrorBoundary extends Component {
       errorInfo: null
     };
   }
-
   static getDerivedStateFromError(error) {
     return { hasError: true };
   }
-
   componentDidCatch(error, errorInfo) {
     this.setState({
       error: error,
@@ -25,15 +22,12 @@ class ErrorBoundary extends Component {
     // You can also log the error to an error reporting service here
     console.error('Error caught by ErrorBoundary:', error, errorInfo);
   }
-
   handleReload = () => {
     window.location.reload();
   };
-
   handleGoHome = () => {
     window.location.href = '/';
   };
-
   render() {
     if (this.state.hasError) {
       return (
@@ -55,16 +49,13 @@ class ErrorBoundary extends Component {
                 >
                   <FaExclamationTriangle className="w-12 h-12 text-red-500 dark:text-red-400" />
                 </motion.div>
-
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                   Oops! Something went wrong
                 </h1>
-
                 <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-md">
                   We apologize for the inconvenience. An unexpected error has occurred.
                   Our team has been notified and is working to fix it.
                 </p>
-
                 {process.env.NODE_ENV === 'development' && (
                   <div className="w-full mb-8 overflow-hidden">
                     <details className="bg-gray-100 dark:bg-gray-800/50 rounded-lg p-4 text-left">
@@ -82,7 +73,6 @@ class ErrorBoundary extends Component {
                     </details>
                   </div>
                 )}
-
                 <div className="flex flex-col sm:flex-row gap-4">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -109,9 +99,7 @@ class ErrorBoundary extends Component {
         </div>
       );
     }
-
     return this.props.children;
   }
 }
-
 export default ErrorBoundary;

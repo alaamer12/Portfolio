@@ -1,15 +1,13 @@
-import React, { useState, useEffect, lazy, Suspense, useCallback, memo } from 'react';
+import {  useState, useEffect, lazy, Suspense, useCallback, memo  } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
-
 // Lazy load components
 const Hero = lazy(() => import('../components/Hero/Hero'));
 const Skills = lazy(() => import('../components/Skills/Skills'));
 const Projects = lazy(() => import('../components/Projects/Projects'));
 const OpenSource = lazy(() => import('../components/OpenSource/OpenSource'));
-
 // Memoize scroll button for better performance
 const ScrollToTopButton = memo(({ isVisible, onClick }) => (
   <motion.button
@@ -34,20 +32,16 @@ const ScrollToTopButton = memo(({ isVisible, onClick }) => (
     </svg>
   </motion.button>
 ));
-
 const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     // Reduced initial loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 50);
-
     return () => clearTimeout(timer);
   }, []);
-
   // Memoized scroll handler
   const toggleVisibility = useCallback(() => {
     const shouldBeVisible = window.pageYOffset > 300;
@@ -55,12 +49,10 @@ const LandingPage = () => {
       setIsVisible(shouldBeVisible);
     }
   }, [isVisible]);
-
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility, { passive: true });
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, [toggleVisibility]);
-
   // Memoized scroll to top function
   const scrollToTop = useCallback(() => {
     window.scrollTo({
@@ -68,7 +60,6 @@ const LandingPage = () => {
       behavior: 'smooth',
     });
   }, []);
-
   // Memoized content component
   const Content = memo(() => (
     <div className="w-full mx-auto">
@@ -88,7 +79,6 @@ const LandingPage = () => {
       </div>
     </div>
   ));
-
   return (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
       <SEO
@@ -113,5 +103,4 @@ const LandingPage = () => {
     </div>
   );
 };
-
 export default memo(LandingPage);
