@@ -1,7 +1,7 @@
 import {memo, useCallback, useMemo, useState} from "react";
 import {motion} from 'framer-motion';
 import {FaDownload, FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt, FaSpinner} from 'react-icons/fa';
-import {SiDjango, SiDocker, SiPostgresql, SiPython, SiReact} from 'react-icons/si';
+import {SiDjango, SiDocker, SiPostgresql, SiPython, SiReact, SiTailwindcss, SiFastapi} from 'react-icons/si';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
 import {OptimizedBlock, OptimizedLoop} from '../components/OptimizedMillion';
@@ -12,15 +12,16 @@ const ResumeDownloadButton = memo(() => {
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
-            window.open('/resume.pdf', '_blank');
         }, 3000);
     }, []);
     return (
-        <motion.button
+        <motion.a
+            href="/resume.pdf"
+            download="resume.pdf"
             onClick={handleClick}
             className="inline-flex items-center px-6 py-3 bg-primary dark:bg-primary-light text-white rounded-full text-lg font-semibold"
             aria-label="Download Resume"
-            disabled={isLoading}
+            style={{ textDecoration: 'none' }}
             whileHover={{scale: 1.05}}
             whileTap={{scale: 0.95}}
         >
@@ -30,7 +31,7 @@ const ResumeDownloadButton = memo(() => {
                 <FaDownload className="mr-2" aria-hidden="true"/>
             )}
             {isLoading ? 'Loading...' : 'Download Resume'}
-        </motion.button>
+        </motion.a>
     );
 });
 // Memoize static data
@@ -45,31 +46,39 @@ const SKILLS_DATA = [
     {
         Icon: SiDjango,
         name: 'Django',
-        level: 90,
+        level: 70,
         description: 'Proficient in building scalable web applications using Django and Django REST Framework.',
         url: 'https://www.djangoproject.com/'
     },
     {
+        Icon: SiFastapi,
+        name: 'FastAPI',
+        level: 95,
+        description: 'Proficient in building high-performance APIs with FastAPI and its extensions.',
+        url: 'https://fastapi.tiangolo.com/'
+    },
+    {
         Icon: SiReact,
-        name: 'React',
+        name: 'React and React Native',
         level: 85,
         description: 'Strong frontend development skills with React, including modern hooks and state management.',
         url: 'https://reactjs.org/'
     },
     {
-        Icon: SiDocker,
-        name: 'Docker',
-        level: 80,
-        description: 'Experienced in containerization and orchestration using Docker and Docker Compose.',
-        url: 'https://www.docker.com/'
-    },
-    {
         Icon: SiPostgresql,
         name: 'PostgreSQL',
-        level: 85,
+        level: 75,
         description: 'Expert in database design, optimization, and management with PostgreSQL.',
         url: 'https://www.postgresql.org/'
+    },
+    {
+        Icon: SiTailwindcss,
+        name: 'TailwindCSS',
+        level: 80,
+        description: 'Proficient in creating responsive and visually stunning web interfaces with TailwindCSS.',
+        url: 'https://tailwindcss.com/'
     }
+
 ];
 // Memoize static components
 const SkillCard = memo(({Icon, name, level, description, url}) => (
@@ -127,25 +136,32 @@ const ExperienceCard = memo(({title, company, period, description, technologies}
 ));
 const EXPERIENCE_DATA = [
     {
+        title: 'Cross-platform Developer',
+        company: 'MobileTech Solutions',
+        period: '2022 - Present',
+        description: 'Led the development of cross-platform mobile applications using React Native. Implemented shared codebase strategy, reducing development time by 40%.',
+        technologies: ['React Native', 'Zustand', 'Jest', 'Subpase', 'Expo', 'Reanimated']
+    },
+    {
         title: 'Junior Backend Developer',
         company: 'Tech Solutions Inc.',
-        period: '2021 - Present',
-        description: 'Leading the backend development team in building scalable microservices architecture. Implemented CI/CD pipelines and improved system performance by 40%.',
-        technologies: ['Python', 'Django', 'Docker', 'AWS', 'PostgreSQL', 'Redis']
+        period: '2023 - Present',
+        description: 'Contributing to the backend development team in building scalable microservices. Learning and implementing CI/CD practices while assisting in performance optimization efforts.',
+        technologies: ['Python', 'Django', 'Docker', 'FastAPI', 'PostgreSQL', 'Pytest']
     },
     {
         title: 'Full Stack Developer',
         company: 'Innovation Labs',
-        period: '2019 - 2021',
+        period: '2023 - Present',
         description: 'Developed and maintained multiple web applications. Reduced server response time by 60% through optimization and caching strategies.',
-        technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'GraphQL']
+        technologies: ['React', 'React Native', 'FastAPI', 'PostgreSQL', 'TailwindCSS', 'Styled-components']
     },
     {
-        title: 'Software Engineer',
-        company: 'StartUp Vision',
-        period: '2018 - 2019',
-        description: 'Built RESTful APIs and implemented real-time features using WebSockets. Mentored junior developers and conducted code reviews.',
-        technologies: ['Python', 'FastAPI', 'PostgreSQL', 'Redis', 'WebSockets']
+        title: 'Founder & Lead Developer',
+        company: 'Personal Startup Projects',
+        period: '2025 - Present',
+        description: 'Initiated and developed multiple startup projects, focusing on innovative web applications. Led the entire development lifecycle from concept to deployment.',
+        technologies: ['React', 'Django', 'FastAPI', 'PostgreSQL', 'Docker', 'Authkit', 'Supabase']
     }
 ];
 const About = () => {
@@ -191,7 +207,7 @@ const About = () => {
                         "url": "https://amrmuhamed.com/about",
                         "sameAs": [
                             "https://github.com/alaamer12",
-                            "https://linkedin.com/in/alaamer12"
+                            "https://www.linkedin.com/in/al-aamer-0b0709265/"
                         ],
                         "knowsAbout": [
                             "React",
@@ -254,11 +270,11 @@ const About = () => {
                                     className="flex flex-wrap justify-center gap-6"
                                 >
                                     <a
-                                        href="mailto:amrmuhamed86@example.com"
+                                        href="mailto:amrmuhamed86@gmail.com"
                                         className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
                                     >
                                         <FaEnvelope className="w-5 h-5"/>
-                                        <span>amrmuhamed86@example.com</span>
+                                        <span>amrmuhamed86@gmail.com</span>
                                     </a>
                                     <a
                                         href="https://github.com/alaamer12"
@@ -270,7 +286,7 @@ const About = () => {
                                         <span>GitHub</span>
                                     </a>
                                     <a
-                                        href="https://linkedin.com/in/alaamer12"
+                                        href="https://www.linkedin.com/in/al-aamer-0b0709265/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
@@ -278,10 +294,15 @@ const About = () => {
                                         <FaLinkedin className="w-5 h-5"/>
                                         <span>LinkedIn</span>
                                     </a>
-                                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                                    <a
+                                        href="https://www.google.com/maps?q=Cairo,Egypt"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+                                    >
                                         <FaMapMarkerAlt className="w-5 h-5"/>
                                         <span>Cairo, Egypt</span>
-                                    </div>
+                                    </a>
                                 </motion.div>
                             </section>
                         </OptimizedBlock>

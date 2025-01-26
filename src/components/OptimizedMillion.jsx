@@ -169,13 +169,14 @@ export const OptimizedLoop = memo(({
                 <div className="w-full flex items-center justify-center py-16">
                     {isLoading ? (
                         <div
-                            className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl shadow-xl">
+                            className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl shadow-xl"
+                            >
                             {loadingComponent}
                         </div>
                     ) : (
                         <button
                             onClick={loadMore}
-                            className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl text-gray-900 dark:text-white hover:bg-[#e6e6e6]/20 dark:hover:bg-gray-700/50 transition-all duration-300 shadow-xl hover:shadow-2xl text-lg font-semibold"
+                            className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#b6b6b6]/50 dark:bg-gray-800/50 backdrop-blur-md rounded-xl text-gray-900 dark:text-white hover:bg-[#e6e6e6]/20 dark:hover:bg-gray-700/50 transition-all duration-300 shadow-xl hover:shadow-2xl text-lg font-semibold"
                         >
                             <span>Load More</span>
                             <svg

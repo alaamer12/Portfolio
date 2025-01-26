@@ -38,14 +38,6 @@ const ScrollToTopButton = memo(({isVisible, onClick}) => (
 
 const LandingPage = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 50);
-        return () => clearTimeout(timer);
-    }, []);
 
     const toggleVisibility = useCallback(() => {
         const shouldBeVisible = window.pageYOffset > 300;
@@ -66,37 +58,50 @@ const LandingPage = () => {
         });
     }, []);
 
-    if (isLoading) {
-        return <Loading/>;
-    }
-
     return (
         <>
             <SEO
-                title="Home"
-                description="Welcome to my portfolio! I'm Amr Muhamed, a Full Stack Developer specializing in creating modern web applications with React and Django. Explore my work and experience."
+                title="Amr Muhamed | Full Stack Developer Portfolio"
+                description="Welcome to my portfolio! I'm Amr Muhamed, a Full Stack Developer specializing in Python, React, and modern web technologies. Explore my projects and expertise in web development."
                 type="website"
                 image="/home-og.png"
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "url": "https://amrmuhamed.com",
+                    "name": "Amr Muhamed - Full Stack Developer Portfolio",
+                    "description": "Portfolio website of Amr Muhamed, showcasing expertise in full-stack development, projects, and professional experience.",
+                    "author": {
+                        "@type": "Person",
+                        "name": "Amr Muhamed",
+                        "jobTitle": "Full Stack Developer",
+                        "url": "https://amrmuhamed.com",
+                        "sameAs": [
+                            "https://github.com/alaamer12",
+                            "https://www.linkedin.com/in/al-aamer-0b0709265/"
+                        ]
+                    }
+                }}
             />
             <div className="relative min-h-screen w-screen overflow-x-hidden">
                 <Background/>
                 <div className="relative z-10 w-full pt-24 pb-16">
-                    <AnimatePresence mode='wait'>
-                        <Suspense fallback={<Loading/>}>
-                            <OptimizedBlock id="hero-section">
-                                <Hero/>
-                            </OptimizedBlock>
-                            <OptimizedBlock id="skills-section">
-                                <Skills/>
-                            </OptimizedBlock>
-                            <OptimizedBlock id="projects-section">
-                                <Projects/>
-                            </OptimizedBlock>
-                            <OptimizedBlock id="opensource-section">
-                                <OpenSource/>
-                            </OptimizedBlock>
-                        </Suspense>
-                        <ScrollToTopButton isVisible={isVisible} onClick={scrollToTop}/>
+                    <Suspense fallback={<Loading/>}>
+                        <OptimizedBlock id="hero-section">
+                            <Hero/>
+                        </OptimizedBlock>
+                        <OptimizedBlock id="skills-section">
+                            <Skills/>
+                        </OptimizedBlock>
+                        <OptimizedBlock id="projects-section">
+                            <Projects/>
+                        </OptimizedBlock>
+                        <OptimizedBlock id="opensource-section">
+                            <OpenSource/>
+                        </OptimizedBlock>
+                    </Suspense>
+                    <AnimatePresence>
+                        {isVisible && <ScrollToTopButton isVisible={isVisible} onClick={scrollToTop}/>}
                     </AnimatePresence>
                 </div>
             </div>

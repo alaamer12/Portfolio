@@ -104,7 +104,7 @@ const Hero = () => {
                                 <FaGithub/>
                             </motion.a>
                             <motion.a
-                                href="https://linkedin.com/in/alaamer12"
+                                href="https://www.linkedin.com/in/al-aamer-0b0709265/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-3xl text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
@@ -142,11 +142,11 @@ const Hero = () => {
                             transition={{duration: 0.3}}
                             onClick={() => window.location.href = '/about'}
                         >
-                            <div className="relative overflow-hidden rounded-3xl">
+                            <div className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-full mx-auto overflow-hidden rounded-3xl">
                                 <img
                                     src={heroImage}
                                     alt="Amr Muhamed"
-                                    className="w-3/4 sm:w-2/3 md:w-1/2 lg:w-full h-auto mx-auto rounded-3xl shadow-xl"
+                                    className="w-full h-auto rounded-3xl shadow-xl"
                                 />
                                 <motion.div
                                     className="absolute inset-0"

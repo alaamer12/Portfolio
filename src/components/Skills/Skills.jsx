@@ -39,7 +39,7 @@ const SkillCard = ({Icon, name, level, title, description, url}) => {
                 whileInView={{opacity: 1, y: 0}}
                 viewport={{once: true}}
                 whileHover={{scale: 1.05}}
-                className="bg-white dark:bg-gray-800 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+                className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
             >
                 <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
                     <Icon className="w-8 h-8 text-primary dark:text-primary-light"/>
@@ -64,7 +64,7 @@ const SkillCard = ({Icon, name, level, title, description, url}) => {
             whileInView={{opacity: 1, y: 0}}
             viewport={{once: true}}
             whileHover={{scale: 1.05}}
-            className="bg-white dark:bg-gray-800 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+            className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
         >
             <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{title}</h3>
             <p className="text-gray-600 dark:text-gray-300">{description}</p>

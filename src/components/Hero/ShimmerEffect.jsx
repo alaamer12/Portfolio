@@ -6,7 +6,7 @@ const ShimmerEffect = () => {
 
     return (
         <motion.div
-            className="absolute inset-0 overflow-hidden rounded-3xl"
+            className="absolute inset-0 w-full h-full overflow-hidden rounded-3xl"
             initial="hidden"
             whileHover="visible"
         >

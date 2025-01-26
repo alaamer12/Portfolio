@@ -193,6 +193,24 @@ const Projects = () => {
                 description="Explore my portfolio of web development projects, featuring React, Django, and modern web technologies. View my latest work and technical achievements."
                 type="website"
                 image="/projects-og.png"
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "CollectionPage",
+                    "url": "https://amrmuhamed.com/projects",
+                    "name": "Projects Portfolio - Amr Muhamed",
+                    "description": "Collection of web development projects and applications built by Amr Muhamed",
+                    "author": {
+                        "@type": "Person",
+                        "name": "Amr Muhamed",
+                        "jobTitle": "Full Stack Developer",
+                        "url": "https://amrmuhamed.com"
+                    },
+                    "about": {
+                        "@type": "Thing",
+                        "name": "Web Development Projects",
+                        "description": "A showcase of full-stack development projects including web applications, APIs, and open-source contributions"
+                    }
+                }}
             />
             <Background/>
             <div className="relative z-10 w-full py-16">

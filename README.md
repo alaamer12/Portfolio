@@ -173,7 +173,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Amr Muhamed**
 - Website: [amrmuhamed.com](https://amrmuhamed.com)
 - GitHub: [@alaamer12](https://github.com/alaamer12)
-- LinkedIn: [@alaamer12](https://linkedin.com/in/alaamer12)
+- LinkedIn: [@alaamer12](https://www.linkedin.com/in/al-aamer-0b0709265/)
 
 ## 🙏 Acknowledgments
 

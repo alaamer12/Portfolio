@@ -2,6 +2,7 @@ import {FaEnvelope, FaGithub, FaLinkedin} from 'react-icons/fa';
 import {motion} from 'framer-motion';
 import {OptimizedLoop} from '../OptimizedMillion';
 import {useCallback} from 'react';
+import {Link} from 'react-router-dom';
 
 const socialLinks = [
     {
@@ -11,12 +12,12 @@ const socialLinks = [
     },
     {
         Icon: FaLinkedin,
-        href: 'https://linkedin.com/in/alaamer12',
+        href: 'https://www.linkedin.com/in/al-aamer-0b0709265/',
         label: 'LinkedIn'
     },
     {
         Icon: FaEnvelope,
-        href: 'mailto:amrmuhamed86@example.com',
+        href: 'mailto:amrmuhamed86@gmail.com',
         label: 'Email'
     }
 ];
@@ -58,11 +59,11 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div className="text-sm text-gray-600 dark:text-gray-300">
-                        <a href="/about"
-                           className="hover:text-primary dark:hover:text-primary-light transition-colors">About</a>
+                        <Link to="/about"
+                           className="hover:text-primary dark:hover:text-primary-light transition-colors">About</Link>
                         <span className="mx-2">·</span>
-                        <a href="/projects"
-                           className="hover:text-primary dark:hover:text-primary-light transition-colors">Projects</a>
+                        <Link to="/projects"
+                           className="hover:text-primary dark:hover:text-primary-light transition-colors">Projects</Link>
                     </div>
                 </div>
             </div>

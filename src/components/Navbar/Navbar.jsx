@@ -45,12 +45,12 @@ const Navbar = () => {
                     {/* Logo */}
                     <Link
                         to="/"
-                        className="text-xl font-bold bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent hover:opacity-80 transition-all duration-300"
+                        className="text-xl select-none font-bold bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent hover:opacity-80 transition-all duration-300"
                     >
                         Amr Muhamed
                     </Link>
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center space-x-2">
+                    <div className="hidden select-none md:flex items-center space-x-2">
                         <NavLink to="/">Home</NavLink>
                         <NavLink to="/projects">Projects</NavLink>
                         <NavLink to="/about">About</NavLink>
@@ -76,7 +76,7 @@ const Navbar = () => {
                     <motion.button
                         onClick={toggleMenu}
                         className="p-2 rounded-full md:hidden
-              bg-white/10 dark:bg-gray-800/50
+              bg-white/10 select-none dark:bg-gray-800/50
               hover:bg-primary/10 dark:hover:bg-primary/20
               backdrop-blur-sm
               transition-all duration-300
