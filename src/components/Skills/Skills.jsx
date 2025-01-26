@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion';
 import {useInView} from 'react-intersection-observer';
-import {SiDjango, SiDocker, SiPostgresql, SiPython, SiReact, SiFastapi, SiTailwindcss, SiBootstrap, SiVite, SiNextdotjs} from 'react-icons/si';
+import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
 import {OptimizedBlock} from '../OptimizedMillion';
 
 const SkillBar = ({skill}) => {

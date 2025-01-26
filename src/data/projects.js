@@ -348,7 +348,7 @@ export const getProjectsData = (baseUrl, isDark) => ({
         {
             title: 'Snippets',
             description: 'Innovative E-market platform for trading code snippets and ready-to-use solutions.',
-            tags: ['React', 'PostgreSQL', 'Fastapi', 'E-Trading', 'Fast Access' , 'Developer Tools'],
+            tags: ['React', 'PostgreSQL', 'Fastapi', 'E-Trading', 'Fast Access', 'Developer Tools'],
             github: 'https://github.com/alaamer12/snippets',
             demo: 'https://snippets.com',
             type: 'web',

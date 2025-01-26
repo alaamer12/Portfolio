@@ -142,7 +142,8 @@ const Hero = () => {
                             transition={{duration: 0.3}}
                             onClick={() => window.location.href = '/about'}
                         >
-                            <div className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-full mx-auto overflow-hidden rounded-3xl">
+                            <div
+                                className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-full mx-auto overflow-hidden rounded-3xl">
                                 <img
                                     src={heroImage}
                                     alt="Amr Muhamed"

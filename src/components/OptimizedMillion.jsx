@@ -170,7 +170,7 @@ export const OptimizedLoop = memo(({
                     {isLoading ? (
                         <div
                             className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl shadow-xl"
-                            >
+                        >
                             {loadingComponent}
                         </div>
                     ) : (

@@ -1,7 +1,7 @@
 import {memo, useCallback, useMemo, useState} from "react";
 import {motion} from 'framer-motion';
 import {FaDownload, FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt, FaSpinner} from 'react-icons/fa';
-import {SiDjango, SiDocker, SiPostgresql, SiPython, SiReact, SiTailwindcss, SiFastapi} from 'react-icons/si';
+import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
 import {OptimizedBlock, OptimizedLoop} from '../components/OptimizedMillion';
@@ -21,7 +21,7 @@ const ResumeDownloadButton = memo(() => {
             onClick={handleClick}
             className="inline-flex items-center px-6 py-3 bg-primary dark:bg-primary-light text-white rounded-full text-lg font-semibold"
             aria-label="Download Resume"
-            style={{ textDecoration: 'none' }}
+            style={{textDecoration: 'none'}}
             whileHover={{scale: 1.05}}
             whileTap={{scale: 0.95}}
         >

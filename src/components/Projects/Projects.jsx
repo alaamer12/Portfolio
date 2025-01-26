@@ -33,7 +33,7 @@ const ProjectCard = ({title, description, image, darkImage, tags, github, demo, 
                         {title}
                     </h3>
                 </div>
-                
+
                 <div className="space-y-3">
                     <p className="text-sm text-gray-600 dark:text-text-light/70 group-hover:text-gray-800 dark:group-hover:text-text-light/90 transition-colors">
                         {description}
@@ -184,7 +184,8 @@ const Projects = () => {
                         whileHover={{scale: 1.05}}
                         transition={{type: "spring", stiffness: 400, damping: 10}}
                     >
-                        <span className="bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
+                        <span
+                            className="bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
                             Featured Projects
                         </span>
                     </motion.h2>
