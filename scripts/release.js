@@ -209,49 +209,49 @@ async function release(versionType) {
         }
     );
 
-    // Step 4: Git operations
-    transaction.addStep(
-        'Git operations',
-        async () => {
-            const version = JSON.parse(fs.readFileSync(packageJsonPath)).version;
+    // // Step 4: Git operations
+    // transaction.addStep(
+    //     'Git operations',
+    //     async () => {
+    //         const version = JSON.parse(fs.readFileSync(packageJsonPath)).version;
             
-            // Remove .release-backup from git if it was accidentally staged
-            try {
-                execute('git', ['reset', '--', BACKUP_DIR]);
-                if (fs.existsSync(BACKUP_DIR)) {
-                    execute('git', ['clean', '-fd', BACKUP_DIR]);
-                }
-            } catch (e) {
-                // Ignore if backup dir doesn't exist
-            }
+    //         // Remove .release-backup from git if it was accidentally staged
+    //         try {
+    //             execute('git', ['reset', '--', BACKUP_DIR]);
+    //             if (fs.existsSync(BACKUP_DIR)) {
+    //                 execute('git', ['clean', '-fd', BACKUP_DIR]);
+    //             }
+    //         } catch (e) {
+    //             // Ignore if backup dir doesn't exist
+    //         }
             
-            // Stage only the specific files we want to commit
-            execute('git', ['add', 'package.json', 'CHANGELOG.md']);
+    //         // Force add the files we want to commit
+    //         execute('git', ['add', '-f', 'package.json', 'CHANGELOG.md']);
             
-            // Check if there are any changes to commit
-            const status = executeWithOutput('git', ['status', '--porcelain']);
-            if (!status) {
-                console.log('No changes to commit');
-                return;
-            }
+    //         // Check if there are any changes to commit
+    //         const status = executeWithOutput('git', ['status', '--porcelain']);
+    //         if (!status) {
+    //             console.log('No changes to commit');
+    //             return;
+    //         }
             
-            // Commit changes and create tag
-            execute('git', ['commit', '-m', `Release v${version}`]);
-            execute('git', ['tag', '-a', `v${version}`, '-m', `Release v${version}`]);
-        },
-        async () => {
-            const version = JSON.parse(fs.readFileSync(packageJsonPath)).version;
-            try {
-                execute('git', ['tag', '-d', `v${version}`]);
-            } catch (e) {
-                // Ignore if tag doesn't exist
-            }
-            const originalHead = fs.readFileSync(GIT_HEAD_BACKUP, 'utf8').trim();
-            execute('git', ['reset', '--hard', originalHead]);
-            // Clean up any untracked files
-            execute('git', ['clean', '-fd']);
-        }
-    );
+    //         // Commit changes and create tag
+    //         execute('git', ['commit', '-m', `Release v${version}`]);
+    //         execute('git', ['tag', '-a', `v${version}`, '-m', `Release v${version}`]);
+    //     },
+    //     async () => {
+    //         const version = JSON.parse(fs.readFileSync(packageJsonPath)).version;
+    //         try {
+    //             execute('git', ['tag', '-d', `v${version}`]);
+    //         } catch (e) {
+    //             // Ignore if tag doesn't exist
+    //         }
+    //         const originalHead = fs.readFileSync(GIT_HEAD_BACKUP, 'utf8').trim();
+    //         execute('git', ['reset', '--hard', originalHead]);
+    //         // Clean up any untracked files
+    //         execute('git', ['clean', '-fd']);
+    //     }
+    // );
 
     // Step 5: Deploy
     transaction.addStep(
