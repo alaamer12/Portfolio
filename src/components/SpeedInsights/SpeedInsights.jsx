@@ -1,14 +1,7 @@
-import { inject } from '@vercel/speed-insights';
-import { useEffect } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
-const SpeedInsights = () => {
-    useEffect(() => {
-        // Initialize Speed Insights
-        inject();
-    }, []);
-
-    // This component doesn't render anything
-    return null;
+const SpeedInsightsWrapper = () => {
+    return <SpeedInsights />;
 };
 
-export default SpeedInsights;
+export default SpeedInsightsWrapper;
