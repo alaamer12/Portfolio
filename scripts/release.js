@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -12,6 +12,51 @@ const BACKUP_DIR = path.join(ROOT_DIR, '.release-backup');
 const PACKAGE_BACKUP = path.join(BACKUP_DIR, 'package.json');
 const CHANGELOG_BACKUP = path.join(BACKUP_DIR, 'CHANGELOG.md');
 const GIT_HEAD_BACKUP = path.join(BACKUP_DIR, 'git-head');
+
+function execute(command, args = []) {
+    try {
+        const result = spawnSync(command, args, {
+            stdio: 'inherit',
+            cwd: ROOT_DIR,
+            shell: true
+        });
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        if (result.status !== 0) {
+            throw new Error(`Command failed with exit code ${result.status}`);
+        }
+
+        return true;
+    } catch (error) {
+        throw new Error(`Command failed: ${command} ${args.join(' ')}\n${error.message}`);
+    }
+}
+
+function executeWithOutput(command, args = []) {
+    try {
+        const result = spawnSync(command, args, {
+            stdio: 'pipe',
+            cwd: ROOT_DIR,
+            shell: true,
+            encoding: 'utf-8'
+        });
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        if (result.status !== 0) {
+            throw new Error(`Command failed with exit code ${result.status}`);
+        }
+
+        return result.stdout.trim();
+    } catch (error) {
+        throw new Error(`Command failed: ${command} ${args.join(' ')}\n${error.message}`);
+    }
+}
 
 class ReleaseTransaction {
     constructor() {
@@ -69,15 +114,6 @@ class ReleaseTransaction {
     }
 }
 
-function execute(command) {
-    try {
-        execSync(command, { stdio: 'inherit', cwd: ROOT_DIR });
-        return true;
-    } catch (error) {
-        throw new Error(`Command failed: ${command}\n${error.message}`);
-    }
-}
-
 function backupFile(filePath, backupPath) {
     if (fs.existsSync(filePath)) {
         fs.copyFileSync(filePath, backupPath);
@@ -106,8 +142,8 @@ async function release(versionType) {
         async () => {
             backupFile(packageJsonPath, PACKAGE_BACKUP);
             backupFile(changelogPath, CHANGELOG_BACKUP);
-            execSync('git rev-parse HEAD', { cwd: ROOT_DIR }).toString().trim();
-            fs.writeFileSync(GIT_HEAD_BACKUP, execSync('git rev-parse HEAD', { cwd: ROOT_DIR }));
+            const gitHead = executeWithOutput('git', ['rev-parse', 'HEAD']);
+            fs.writeFileSync(GIT_HEAD_BACKUP, gitHead);
         },
         async () => {
             // No rollback needed for backup
@@ -119,7 +155,8 @@ async function release(versionType) {
         'Update version',
         async () => {
             const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-            const [major, minor, patch] = packageJson.version.split('.').map(Number);
+            const currentVersion = packageJson.version;
+            const [major, minor, patch] = currentVersion.split('.').map(Number);
             
             let newVersion;
             switch(versionType) {
@@ -133,7 +170,7 @@ async function release(versionType) {
             
             // Update CHANGELOG.md
             const date = new Date().toISOString().split('T')[0];
-            const newEntry = `\n## [${newVersion}] - ${date}\n\n### Added\n- [Add your new features here]\n\n### Changed\n- Version bump from ${packageJson.version} to ${newVersion}\n- [Add your changes here]\n\n### Fixed\n- [Add your fixes here]\n\n`;
+            const newEntry = `\n## [${newVersion}] - ${date}\n\n### Added\n- [Add your new features here]\n\n### Changed\n- Version bump from ${currentVersion} to ${newVersion}\n- [Add your changes here]\n\n### Fixed\n- [Add your fixes here]\n\n`;
             
             const changelog = fs.readFileSync(changelogPath, 'utf8');
             const lines = changelog.split('\n');
@@ -151,16 +188,24 @@ async function release(versionType) {
     transaction.addStep(
         'Build and test',
         async () => {
-            execute('bun run clean');
-            execute('bun install');
-            if (fs.existsSync(path.join(ROOT_DIR, 'test'))) {
-                execute('bun test');
+            // Clean build directory
+            const distPath = path.join(ROOT_DIR, 'dist');
+            if (fs.existsSync(distPath)) {
+                fs.rmSync(distPath, { recursive: true, force: true });
             }
-            execute('bun run build');
+            
+            execute('bun', ['install']);
+            if (fs.existsSync(path.join(ROOT_DIR, 'test'))) {
+                execute('bun', ['test']);
+            }
+            execute('C:\\Users\\amrmu\\.bun\\bin\\vite.exe', ['build']);
         },
         async () => {
-            execute('bun run clean');
-            execute('git clean -fd dist');
+            const distPath = path.join(ROOT_DIR, 'dist');
+            if (fs.existsSync(distPath)) {
+                fs.rmSync(distPath, { recursive: true, force: true });
+            }
+            execute('git', ['clean', '-fd', 'dist']);
         }
     );
 
@@ -169,18 +214,42 @@ async function release(versionType) {
         'Git operations',
         async () => {
             const version = JSON.parse(fs.readFileSync(packageJsonPath)).version;
-            execute('git add .');
-            execute(`git commit -m "Release v${version}"`);
-            execute(`git tag v${version}`);
+            
+            // Remove .release-backup from git if it was accidentally staged
+            try {
+                execute('git', ['reset', '--', BACKUP_DIR]);
+                if (fs.existsSync(BACKUP_DIR)) {
+                    execute('git', ['clean', '-fd', BACKUP_DIR]);
+                }
+            } catch (e) {
+                // Ignore if backup dir doesn't exist
+            }
+            
+            // Stage only the specific files we want to commit
+            execute('git', ['add', 'package.json', 'CHANGELOG.md']);
+            
+            // Check if there are any changes to commit
+            const status = executeWithOutput('git', ['status', '--porcelain']);
+            if (!status) {
+                console.log('No changes to commit');
+                return;
+            }
+            
+            // Commit changes and create tag
+            execute('git', ['commit', '-m', `Release v${version}`]);
+            execute('git', ['tag', '-a', `v${version}`, '-m', `Release v${version}`]);
         },
         async () => {
             const version = JSON.parse(fs.readFileSync(packageJsonPath)).version;
             try {
-                execute(`git tag -d v${version}`);
+                execute('git', ['tag', '-d', `v${version}`]);
             } catch (e) {
                 // Ignore if tag doesn't exist
             }
-            execute(`git reset --hard $(cat ${GIT_HEAD_BACKUP})`);
+            const originalHead = fs.readFileSync(GIT_HEAD_BACKUP, 'utf8').trim();
+            execute('git', ['reset', '--hard', originalHead]);
+            // Clean up any untracked files
+            execute('git', ['clean', '-fd']);
         }
     );
 
@@ -188,7 +257,7 @@ async function release(versionType) {
     transaction.addStep(
         'Deploy to production',
         async () => {
-            execute('vercel --prod');
+            execute('vercel', ['--prod']);
         },
         async () => {
             // Vercel keeps deployment history, no rollback needed
@@ -200,17 +269,17 @@ async function release(versionType) {
     transaction.addStep(
         'Push to remote',
         async () => {
-            execute('git push');
-            execute('git push --tags');
+            execute('git', ['push']);
+            execute('git', ['push', '--tags']);
         },
         async () => {
             const version = JSON.parse(fs.readFileSync(PACKAGE_BACKUP)).version;
             try {
-                execute('git push origin :refs/tags/v' + version);
+                execute('git', ['push', 'origin', `:refs/tags/v${version}`]);
             } catch (e) {
                 // Ignore if remote tag doesn't exist
             }
-            execute('git push -f');
+            execute('git', ['push', '-f']);
         }
     );
 
