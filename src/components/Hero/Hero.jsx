@@ -14,13 +14,13 @@ const StatBox = ({number, text, delay, color, hoverColor}) => (
         whileTap={{scale: 0.95}}
     >
         <motion.div
-            className={`text-4xl font-bold ${color} transition-all duration-300 group-hover:${hoverColor}`}
+            className={`text-4xl font-bold transition-colors ${color} group-hover:${hoverColor}`}
             whileHover={{y: -2}}
         >
-            {number}+
+            {number}
         </motion.div>
         <motion.div
-            className={`text-sm text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:${hoverColor}`}
+            className={`text-sm text-gray-700 dark:text-gray-300 transition-colors group-hover:${hoverColor}`}
             whileHover={{y: 2}}
         >
             {text}
@@ -31,24 +31,24 @@ const StatBox = ({number, text, delay, color, hoverColor}) => (
 const Hero = () => {
     const stats = [
         {
-            number: "200+",
+            number: "150+",
             text: "GitHub Repositories",
             delay: 0.1,
-            color: "text-gray-900 dark:text-white",
+            color: "text-gray-800 dark:text-white",
             hoverColor: "text-primary dark:text-primary-light"
         },
         {
-            number: "85%",
+            number: "86%",
             text: "Python Projects",
             delay: 0.25,
-            color: "text-gray-900 dark:text-white",
+            color: "text-gray-800 dark:text-white",
             hoverColor: "text-strawberry dark:text-strawberry-light"
         },
         {
             number: "10+",
             text: "PyPI Packages",
             delay: 0.4,
-            color: "text-gray-900 dark:text-white",
+            color: "text-gray-800 dark:text-white",
             hoverColor: "text-cherry-pie dark:text-cherry-pie-light"
         }
     ];
@@ -80,7 +80,7 @@ const Hero = () => {
 
                         <div className="flex justify-center lg:justify-start space-x-16 cursor-default">
                             {stats.map((stat) => (
-                                <OptimizedBlock key={stat.text} enableCache={true} threshold={20} className="mr-5">
+                                <OptimizedBlock key={stat.text} enableCache={true} threshold={20} className="mr-5 z-20">
                                     <StatBox
                                         number={stat.number}
                                         text={stat.text}

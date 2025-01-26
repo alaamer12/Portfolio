@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion';
 import {useInView} from 'react-intersection-observer';
-import {SiDjango, SiDocker, SiPostgresql, SiPython, SiReact} from 'react-icons/si';
+import {SiDjango, SiDocker, SiPostgresql, SiPython, SiReact, SiFastapi, SiTailwindcss, SiBootstrap, SiVite, SiNextdotjs} from 'react-icons/si';
 import {OptimizedBlock} from '../OptimizedMillion';
 
 const SkillBar = ({skill}) => {
@@ -110,22 +110,30 @@ const skills = [
 const mainSkills = [
     {Icon: SiPython, name: 'Python', level: 90, url: 'https://www.python.org/'},
     {Icon: SiReact, name: 'React', level: 85, url: 'https://reactjs.org/'},
+    {Icon: SiTailwindcss, name: 'TailwindCSS', level: 80, url: 'https://tailwindcss.com/'},
     {Icon: SiDjango, name: 'Django', level: 88, url: 'https://www.djangoproject.com/'},
-    {Icon: SiDocker, name: 'Docker', level: 80, url: 'https://www.docker.com/'},
-    {Icon: SiPostgresql, name: 'PostgreSQL', level: 85, url: 'https://www.postgresql.org/'}
+    {Icon: SiPostgresql, name: 'PostgreSQL', level: 85, url: 'https://www.postgresql.org/'},
+    {Icon: SiFastapi, name: 'FastAPI', level: 80, url: 'https://fastapi.tiangolo.com/'},
 ];
 
 const otherSkills = [
     {name: 'JavaScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript'},
     {name: 'TypeScript', url: 'https://www.typescriptlang.org/'},
     {name: 'Node.js', url: 'https://nodejs.org/'},
-    {name: 'Express', url: 'https://expressjs.com/'},
     {name: 'MongoDB', url: 'https://www.mongodb.com/'},
+    {name: 'MySQL', url: 'https://www.mysql.com/'},
     {name: 'Git', url: 'https://git-scm.com/'},
-    {name: 'AWS', url: 'https://aws.amazon.com/'},
     {name: 'REST APIs', url: 'https://restfulapi.net/'},
-    {name: 'GraphQL', url: 'https://graphql.org/'},
-    {name: 'TailwindCSS', url: 'https://tailwindcss.com/'}
+    {name: 'TailwindCSS', url: 'https://tailwindcss.com/'},
+    {name: 'Bootstrap', url: 'https://getbootstrap.com/'},
+    {name: 'Docker', url: 'https://www.docker.com/'},
+    {name: 'Nginx', url: 'https://nginx.org/'},
+    {name: 'Yarn', url: 'https://yarnpkg.com/'},
+    {name: 'NPM', url: 'https://www.npmjs.com/'},
+    {name: 'Vite', url: 'https://vitejs.dev/'},
+    {name: 'Next.js', url: 'https://nextjs.org/'},
+    {name: 'System Architecture', url: 'https://en.wikipedia.org/wiki/Architecture_(computing)'},
+    {name: 'System Design', url: 'https://en.wikipedia.org/wiki/System_design'},
 ];
 
 const Skills = () => {

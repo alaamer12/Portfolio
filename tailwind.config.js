@@ -4,6 +4,18 @@ export default {
     "./index.html",
     "./src/**/*.{js,jsx}",
   ],
+  safelist: [
+    'text-primary',
+    'text-primary-light',
+    'text-strawberry',
+    'text-strawberry-light',
+    'text-cherry-pie',
+    'text-cherry-pie-light',
+    {
+      pattern: /text-(primary|strawberry|cherry-pie)(-light)?/,
+      variants: ['group-hover'],
+    },
+  ],
   darkMode: 'class',
   theme: {
     extend: {
