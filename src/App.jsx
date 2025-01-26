@@ -8,6 +8,7 @@ import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import SpeedInsights from './components/SpeedInsights/SpeedInsights';
 import {OptimizedBlock} from './components/OptimizedMillion';
 // Route configurations
 const ROUTES = {
@@ -82,7 +83,11 @@ const App = () => (
     <ErrorBoundary>
         <ThemeProvider>
             <Router>
-                <ScrollToTop/>
+                <ScrollToTop />
+                <SpeedInsights />
+                <OptimizedBlock>
+                    <Navbar />
+                </OptimizedBlock>
                 <Suspense fallback={<Loading/>}>
                     <Routes>
                         {Object.values(ROUTES).map(({path, Component}) => (
