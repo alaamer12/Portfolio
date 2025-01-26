@@ -39,6 +39,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Release
+.release-backup
+
 # Vercel
 .vercel
 .now
