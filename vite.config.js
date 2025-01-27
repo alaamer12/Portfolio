@@ -4,10 +4,12 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { compression } from 'vite-plugin-compression2';
 import million from 'million/compiler';
+import vitePerformancePlugin from './vite-performance-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    vitePerformancePlugin(),
     million.vite({ 
       auto: true,
       mute: true,
@@ -115,8 +117,9 @@ export default defineConfig({
     target: 'esnext',
     outDir: 'dist',
     assetsDir: 'assets',
-    cssCodeSplit: true,
+    cssCodeSplit: false, // Bundle all CSS into a single file
     sourcemap: process.env.NODE_ENV === 'development',
+    reportCompressedSize: true,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -154,6 +157,12 @@ export default defineConfig({
     }
   },
 
+  esbuild: {
+    jsxInject: `import React from 'react'`,
+    drop: ['console', 'debugger'],
+    pure: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+  },
+
   optimizeDeps: {
     include: [
       'react',
@@ -180,5 +189,10 @@ export default defineConfig({
     hmr: {
       overlay: true,
     },
+    headers: {
+      'Cache-Control': 'public, max-age=31536000',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY'
+    }
   },
 });
