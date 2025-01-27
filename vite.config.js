@@ -8,16 +8,24 @@ import million from 'million/compiler';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    million.vite({ auto: true }),
+    million.vite({ 
+      auto: true,
+      mute: true,
+      threshold: 0.05, // Lower threshold for more aggressive optimization
+    }),
     react({
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'react',
       babel: {
         plugins: [
           ['@babel/plugin-transform-react-jsx', { 
             runtime: 'automatic',
-            importSource: 'react'
+            importSource: 'react',
+            throwIfNamespace: true,
           }]
         ]
-      }
+      },
+      fastRefresh: true,
     }),
     VitePWA({
       registerType: 'autoUpdate',
@@ -58,19 +66,48 @@ export default defineConfig({
                 statuses: [0, 200]
               }
             }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-files',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              }
+            }
           }
-        ]
+        ],
+        skipWaiting: true,
+        clientsClaim: true
       }
     }),
     compression({
       algorithm: 'brotliCompress',
       exclude: [/\.(br)$/, /\.(gz)$/],
       deleteOriginalAssets: false,
+      threshold: 512, // Only compress files larger than 512 bytes
     }),
     process.env.ANALYZE && visualizer({
       open: true,
       gzipSize: true,
       brotliSize: true,
+      template: 'treemap', // Use treemap for better visualization
     }),
   ].filter(Boolean),
   
@@ -79,11 +116,23 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     cssCodeSplit: true,
-    sourcemap: false,
+    sourcemap: process.env.NODE_ENV === 'development',
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-router': ['react-router-dom'],
+          'vendor-animation': ['framer-motion'],
+          'vendor-utils': ['react-use', 'web-vitals'],
+        },
+        // Optimize chunk size
+        chunkFileNames: (chunkInfo) => {
+          const id = chunkInfo.facadeModuleId || chunkInfo.moduleIds[0];
+          if (id && id.includes('node_modules')) {
+            const name = id.toString().split('node_modules/')[1].split('/')[0].replace('@', '');
+            return `assets/vendor-${name}-[hash].js`;
+          }
+          return 'assets/[name]-[hash].js';
         },
       },
     },
@@ -92,31 +141,44 @@ export default defineConfig({
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
+        drop_console: process.env.NODE_ENV === 'production',
+        drop_debugger: true,
+        pure_funcs: process.env.NODE_ENV === 'production' ? ['console.log', 'console.info', 'console.debug', 'console.trace'] : [],
+      },
+      mangle: {
+        safari10: true,
+      },
+      format: {
+        comments: false,
+      },
     }
   },
 
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'framer-motion',
+      'react-use',
+      'web-vitals',
+      'react-intersection-observer'
+    ],
+    exclude: ['@vercel/analytics'],
+    esbuildOptions: {
+      target: 'esnext',
+      supported: {
+        'top-level-await': true
+      },
+    }
   },
 
   server: {
-    port: 3000,
-    strictPort: true,
+    open: true,
     host: true,
-  },
-
-  preview: {
-    port: 4173,
-    strictPort: true,
-    host: true,
-  },
-
-  esbuild: {
-    jsxInject: `import React from 'react'`,
-    drop: ['console', 'debugger'],
-    pure: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+    cors: true,
+    hmr: {
+      overlay: true,
+    },
   },
 });
