@@ -2,7 +2,9 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{css,scss}",
+    "./public/**/*.html"
   ],
   safelist: [
     'text-primary',
@@ -13,7 +15,7 @@ export default {
     'text-cherry-pie-light',
     {
       pattern: /text-(primary|strawberry|cherry-pie)(-light)?/,
-      variants: ['group-hover'],
+      variants: ['group-hover', 'hover', 'focus', 'dark'],
     },
   ],
   darkMode: 'class',
