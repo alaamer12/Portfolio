@@ -221,7 +221,7 @@ const LandingPage = () => {
                     </AnimatePresence>
                 </div>
             </div>
-            <PerformanceMonitor />
+            {/* <PerformanceMonitor /> */}
         </>
     );
 };

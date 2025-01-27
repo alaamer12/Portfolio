@@ -125,7 +125,7 @@ const Projects = memo(() => {
         {
             title: 'Tealim',
             description: 'A comprehensive e-learning platform built with React and Node.js.',
-            image: '/images/tealim.png',
+            image: '/images/tealim.webp',
             tags: ['React Native', 'Node.js', 'PostgreSQL', 'Fastapi',],
             github: 'https://github.com/alaamer12/tealim',
             demo: 'https://tealim.com',
@@ -134,8 +134,8 @@ const Projects = memo(() => {
         {
             title: 'True Core',
             description: 'A boilerplate utility package, The core of `true` family packages.',
-            image: '/images/light_true_core_icon.png',
-            darkImage: '/images/dark_true_core_icon.png',
+            image: '/images/light_true_core_icon.avif',
+            darkImage: '/images/dark_true_core_icon.avif',
             tags: ['Python', 'Pypi', 'Boilerplate', 'Utility'],
             github: 'https://github.com/alaamer12/true-core',
             delay: 0.4,

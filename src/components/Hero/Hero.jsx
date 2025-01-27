@@ -7,7 +7,7 @@ import {OptimizedBlock} from '../OptimizedMillion';
 const ShimmerEffect = lazy(() => import('./ShimmerEffect'));
 
 // Preload hero image
-const heroImage = new URL('/images/hero.png', import.meta.url).href;
+const heroImage = new URL('/images/hero.avif', import.meta.url).href;
 if (typeof window !== 'undefined') {
     const preloadLink = document.createElement('link');
     preloadLink.rel = 'preload';

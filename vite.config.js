@@ -4,12 +4,12 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { compression } from 'vite-plugin-compression2';
 import million from 'million/compiler';
-import vitePerformancePlugin from './vite-performance-plugin';
+// import vitePerformancePlugin from './vite-performance-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vitePerformancePlugin(),
+    // vitePerformancePlugin(),
     million.vite({ 
       auto: true,
       mute: true,
