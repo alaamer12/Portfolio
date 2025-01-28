@@ -1,23 +1,43 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef, useMemo } from 'react';
 import { useWindowSize } from 'react-use';
 import { useInView } from 'react-intersection-observer';
+import { useReducedMotion } from 'framer-motion';
 
 const useOptimizedAnimation = (options = {}) => {
     const {
         threshold = 0.1,
         rootMargin = '50px',
         disabled = false,
-        triggerOnce = true
+        triggerOnce = true,
+        mobileBreakpoint = 768
     } = options;
 
     const elementRef = useRef(null);
     const { width } = useWindowSize();
+    const prefersReducedMotion = useReducedMotion();
     const animationFrame = useRef(null);
+    
+    // Device detection
+    const isMobile = width <= mobileBreakpoint;
     const isLowEndDevice = useRef(
         typeof window !== 'undefined' && 
         (!window.matchMedia('(min-device-memory: 4gb)').matches || 
          navigator.hardwareConcurrency < 4)
     );
+
+    // Optimization settings based on device and preferences
+    const optimizationSettings = useMemo(() => ({
+        duration: isMobile ? 0.3 : 0.5,
+        useTransform: !isMobile && !isLowEndDevice.current,
+        shouldAnimate: !prefersReducedMotion && !disabled,
+        delay: isMobile ? 0 : 0.1,
+        ease: "easeOut",
+        staggerChildren: isMobile ? 0.1 : 0.2,
+        // Scale down animations for mobile
+        scale: isMobile ? 1.02 : 1.05,
+        distance: isMobile ? 10 : 20,
+        blur: isMobile ? '2px' : '3px'
+    }), [isMobile, prefersReducedMotion, disabled]);
 
     // Cleanup function for animation frame
     const cleanup = useCallback(() => {
@@ -26,22 +46,21 @@ const useOptimizedAnimation = (options = {}) => {
         }
     }, []);
 
-    // Intersection observer setup using react-intersection-observer
+    // Intersection observer setup
     const [ref, inView] = useInView({
         threshold,
         rootMargin,
         triggerOnce,
-        skip: disabled
+        skip: disabled || prefersReducedMotion
     });
 
     // Handle animation based on intersection and device capabilities
     useEffect(() => {
-        if (disabled || !inView) return;
+        if (!optimizationSettings.shouldAnimate || !inView) return;
 
         const element = elementRef.current;
         if (!element) return;
         
-        // Optimize animation based on device capabilities
         const animate = () => {
             const start = performance.now();
             const duration = isLowEndDevice.current ? 400 : 800;
@@ -50,67 +69,33 @@ const useOptimizedAnimation = (options = {}) => {
                 const elapsed = currentTime - start;
                 const progress = Math.min(elapsed / duration, 1);
 
-                // Use transform for better performance
-                const opacity = progress;
-                const transform = `translateY(${(1 - progress) * 20}px)`;
-                
-                element.style.opacity = opacity;
-                element.style.transform = transform;
+                // Apply optimized animations
+                if (optimizationSettings.useTransform) {
+                    element.style.transform = `translateY(${(1 - progress) * optimizationSettings.distance}px)`;
+                }
+                element.style.opacity = progress;
 
                 if (progress < 1) {
                     animationFrame.current = requestAnimationFrame(step);
-                } else {
-                    element.style.willChange = 'auto';
                 }
             };
 
-            // Set will-change before animation
-            element.style.willChange = 'transform, opacity';
             animationFrame.current = requestAnimationFrame(step);
         };
 
-        // Initial styles
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
-
-        // Start animation in next frame
-        requestAnimationFrame(animate);
-
+        animate();
         return cleanup;
-    }, [inView, disabled, cleanup]);
+    }, [inView, cleanup, optimizationSettings]);
 
-    // Cleanup on unmount
-    useEffect(() => cleanup, [cleanup]);
-
-    // Handle resize events
-    useEffect(() => {
-        if (disabled) return;
-        
-        const element = elementRef.current;
-        if (!element) return;
-
-        // Reset will-change on resize for better performance
-        let resizeTimeout;
-        const handleResize = () => {
-            element.style.willChange = 'transform, opacity';
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                element.style.willChange = 'auto';
-            }, 100);
-        };
-
-        window.addEventListener('resize', handleResize, { passive: true });
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            clearTimeout(resizeTimeout);
-        };
-    }, [disabled, width]);
-
+    // Return all necessary values for component use
     return {
         ref,
+        elementRef,
         inView,
+        isMobile,
+        prefersReducedMotion,
         isLowEndDevice: isLowEndDevice.current,
-        elementRef
+        settings: optimizationSettings
     };
 };
 

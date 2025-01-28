@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion';
-import {useInView} from 'react-intersection-observer';
 import {FaGithub, FaPython} from 'react-icons/fa';
 import {OptimizedBlock} from '../OptimizedMillion';
+import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
 
 const packages = [
     {
@@ -31,78 +31,95 @@ const packages = [
 ];
 
 const PackageCard = ({pkg, index}) => {
-    const [ref, inView] = useInView({
+    const {settings, ref, inView} = useOptimizedAnimation({
         threshold: 0.1,
-        triggerOnce: true,
+        triggerOnce: true
     });
 
     return (
-        <motion.div
-            ref={ref}
-            initial={{opacity: 0, x: index % 2 === 0 ? -50 : 50}}
-            animate={inView ? {opacity: 1, x: 0} : {opacity: 0, x: index % 2 === 0 ? -50 : 50}}
-            transition={{duration: 0.5, delay: index * 0.1}}
-            className="bg-surface-light dark:bg-surface rounded-lg p-6 shadow-light-lg dark:shadow-dark-lg hover:shadow-light-xl dark:hover:shadow-dark-xl transition-all"
-        >
-            <div className="flex items-center mb-4">
-                <FaPython className="text-accent text-2xl mr-2"/>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">{pkg.name}</h3>
-            </div>
+        <OptimizedBlock threshold={12}>
+            <motion.div
+                ref={ref}
+                initial={settings.shouldAnimate ? {
+                    opacity: 0,
+                    x: index % 2 === 0 ? -settings.distance : settings.distance
+                } : {}}
+                animate={inView && settings.shouldAnimate ? {
+                    opacity: 1,
+                    x: 0
+                } : {}}
+                transition={{
+                    duration: settings.duration,
+                    delay: index * (settings.isMobile ? 0.05 : 0.1),
+                    ease: settings.ease,
+                    useTransform: settings.useTransform
+                }}
+                className="bg-surface-light dark:bg-surface rounded-lg p-4 md:p-6 shadow-light-lg dark:shadow-dark-lg hover:shadow-light-xl dark:hover:shadow-dark-xl transition-all"
+            >
+                <div className="flex items-center mb-4">
+                    <FaPython className="text-accent text-xl md:text-2xl mr-2"/>
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">{pkg.name}</h3>
+                </div>
 
-            <p className="text-gray-600 dark:text-gray-300 mb-4">{pkg.description}</p>
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4">{pkg.description}</p>
 
-            <div className="flex space-x-4">
-                <a
-                    href={pkg.pypi}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent hover:text-accent-light transition-colors"
-                >
-                    PyPI Package
-                </a>
-                <a
-                    href={pkg.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent hover:text-accent-light transition-colors flex items-center"
-                >
-                    <FaGithub className="mr-1"/>
-                    GitHub
-                </a>
-            </div>
-        </motion.div>
+                <div className="flex space-x-4">
+                    <motion.a
+                        href={pkg.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+                        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+                    >
+                        <FaGithub className="text-lg md:text-xl"/>
+                    </motion.a>
+                    <motion.a
+                        href={pkg.pypi}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+                        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+                        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+                    >
+                        <FaPython className="text-lg md:text-xl"/>
+                    </motion.a>
+                </div>
+            </motion.div>
+        </OptimizedBlock>
     );
 };
 
 const OpenSource = () => {
-    const [ref, inView] = useInView({
-        threshold: 0.1,
-        triggerOnce: true,
-    });
+    const {settings} = useOptimizedAnimation();
 
     return (
-        <section className="py-20" id="opensource">
-            <div className="w-full max-w-6xl mx-auto">
-                <motion.div
-                    ref={ref}
-                    initial={{opacity: 0, y: 50}}
-                    animate={inView ? {opacity: 1, y: 0} : {opacity: 0, y: 50}}
-                    transition={{duration: 0.5}}
-                    className="text-center mb-12"
+        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <motion.div
+                className="space-y-12"
+                initial={settings.shouldAnimate ? {opacity: 0} : {}}
+                whileInView={settings.shouldAnimate ? {opacity: 1} : {}}
+                viewport={{once: true}}
+                transition={{
+                    duration: settings.duration,
+                    staggerChildren: settings.staggerChildren
+                }}
+            >
+                <motion.h2
+                    className="text-3xl sm:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12"
+                    initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+                    whileInView={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
+                    viewport={{once: true}}
                 >
-                    <h2 className="text-4xl font-bold text-gray-900 dark:text-[#f1f1f1]">
-                        Open Source Contributions
-                    </h2>
-                </motion.div>
+                    Open Source Contributions
+                </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid gap-6 md:grid-cols-2">
                     {packages.map((pkg, index) => (
-                        <OptimizedBlock key={pkg.name} enableCache={true} threshold={20}>
-                            <PackageCard key={pkg.name} pkg={pkg} index={index}/>
-                        </OptimizedBlock>
+                        <PackageCard key={pkg.name} pkg={pkg} index={index}/>
                     ))}
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 };

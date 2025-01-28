@@ -10,6 +10,8 @@ import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SpeedInsights from './components/SpeedInsights/SpeedInsights';
 import {OptimizedBlock} from './components/OptimizedMillion';
+
+
 // Route configurations
 const ROUTES = {
     HOME: {

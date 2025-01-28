@@ -10,10 +10,13 @@ import {BsClock} from 'react-icons/bs';
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import {OptimizedBlock, OptimizedLoop} from '../components/OptimizedMillion';
+import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
 
 const Projects = () => {
     const {isDark} = useTheme();
+    const {settings} = useOptimizedAnimation();
     const baseUrl = '';
+
     // Memoize the sorted projects to prevent unnecessary re-sorting
     const {trueFamilyProjects, utilityProjects, businessProjects} = useMemo(() => {
         const {
@@ -21,6 +24,7 @@ const Projects = () => {
             utilityProjects: unsortedUtilityProjects,
             businessProjects: unsortedBusinessProjects
         } = getProjectsData(baseUrl, isDark);
+
         // Badge priority for sorting
         const badgePriority = {
             'hot': 0,
@@ -28,18 +32,21 @@ const Projects = () => {
             'coming soon': 2,
             'none': 3
         };
+
         // Sort function for projects
         const sortProjects = (projects) => {
             return [...projects].sort((a, b) => {
                 return badgePriority[a.badge || 'none'] - badgePriority[b.badge || 'none'];
             });
         };
+
         return {
             trueFamilyProjects: sortProjects(unsortedTrueFamilyProjects),
             utilityProjects: sortProjects(unsortedUtilityProjects),
             businessProjects: sortProjects(unsortedBusinessProjects)
         };
     }, [baseUrl, isDark]);
+
     // Memoize getBadgeContent to prevent unnecessary re-renders
     const getBadgeContent = useCallback((badge) => {
         switch (badge) {
@@ -65,28 +72,38 @@ const Projects = () => {
                 return null;
         }
     }, []);
+
     // Memoize ProjectCard to prevent unnecessary re-renders
     const ProjectCard = useCallback(({project}) => {
         const badgeContent = getBadgeContent(project.badge);
+
         return (
             <motion.div
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                transition={{duration: 0.5}}
+                initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+                animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
+                transition={{
+                    duration: settings.duration,
+                    ease: settings.ease,
+                    useTransform: settings.useTransform
+                }}
                 className={`bg-[#f5f4f4] dark:bg-surface p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group ${!project.available ? 'opacity-75' : ''}`}
             >
                 {/* Badge */}
                 {badgeContent && (
                     <motion.div
-                        initial={{scale: 0.8, opacity: 0}}
-                        animate={{scale: 1, opacity: 1}}
-                        transition={{duration: 0.3}}
+                        initial={settings.shouldAnimate ? {scale: 0.8, opacity: 0} : {}}
+                        animate={settings.shouldAnimate ? {scale: 1, opacity: 1} : {}}
+                        transition={{
+                            duration: settings.duration,
+                            ease: settings.ease
+                        }}
                         className={`absolute top-2 sm:top-4 right-2 sm:right-4 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[0.65rem] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 shadow-lg text-white ${badgeContent.className} hover:scale-105 transition-transform duration-200 backdrop-blur-sm`}
                     >
                         <span className="text-[0.65rem] sm:text-sm">{badgeContent.icon}</span>
                         <span className="tracking-wide uppercase">{badgeContent.text}</span>
                     </motion.div>
                 )}
+
                 {/* Banner */}
                 {project.banner && (
                     <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -100,6 +117,7 @@ const Projects = () => {
                         />
                     </div>
                 )}
+
                 {/* Content */}
                 <div className="relative z-10">
                     <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
@@ -115,17 +133,20 @@ const Projects = () => {
                         )}
                         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
                     </div>
+
                     <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">{project.description}</p>
+
                     <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                         {project.tags.map((tag, index) => (
                             <span
                                 key={index}
                                 className="px-2 sm:px-3 py-0.5 sm:py-1 text-xs sm:text-sm bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light rounded-full"
                             >
-                {tag}
-              </span>
+                                {tag}
+                            </span>
                         ))}
                     </div>
+
                     <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
                         {project.details.map((detail, index) => (
                             <div key={index} className="flex items-start">
@@ -134,25 +155,30 @@ const Projects = () => {
                             </div>
                         ))}
                     </div>
+
                     <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                         {(project.badge === 'hot' || project.badge === 'new') ? (
                             <>
-                                <a
+                                <motion.a
                                     href={project.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-4 py-2 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white text-sm sm:text-base rounded-full transition-colors text-center"
+                                    whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+                                    whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
                                 >
                                     View on GitHub
-                                </a>
-                                <a
+                                </motion.a>
+                                <motion.a
                                     href={project.demo}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white text-sm sm:text-base rounded-full transition-colors text-center"
+                                    whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+                                    whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
                                 >
                                     Live Demo
-                                </a>
+                                </motion.a>
                             </>
                         ) : (
                             <>
@@ -174,30 +200,35 @@ const Projects = () => {
                 </div>
             </motion.div>
         );
-    }, [getBadgeContent]);
+    }, [getBadgeContent, settings]);
+
     // Memoize the project card render function
     const renderProjectCard = useCallback((project, index) => (
         <motion.div
             key={index}
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.5, delay: index * 0.1}}
+            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+            animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
+            transition={{
+                duration: settings.duration,
+                delay: index * (settings.isMobile ? 0.05 : 0.1),
+                ease: settings.ease,
+                useTransform: settings.useTransform
+            }}
         >
             <ProjectCard project={project}/>
         </motion.div>
-    ), []);
+    ), [ProjectCard, settings]);
+
     return (
         <div className="relative min-h-screen w-screen overflow-x-hidden">
             <SEO
                 title="Projects"
-                description="Explore my portfolio of web development projects, featuring React, Django, and modern web technologies. View my latest work and technical achievements."
+                description="Explore my portfolio of web development projects, including full-stack applications, APIs, and open-source contributions."
                 type="website"
-                image="/projects-og.png"
                 schema={{
                     "@context": "https://schema.org",
                     "@type": "CollectionPage",
-                    "url": "https://amrmuhamed.com/projects",
-                    "name": "Projects Portfolio - Amr Muhamed",
+                    "name": "Projects - Amr Muhamed",
                     "description": "Collection of web development projects and applications built by Amr Muhamed",
                     "author": {
                         "@type": "Person",
@@ -214,21 +245,34 @@ const Projects = () => {
             />
             <Background/>
             <div className="relative z-10 w-full py-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <OptimizedBlock className="mb-12">
-                        <h1 className="text-4xl font-bold text-gray-900 dark:text-white">All Projects</h1>
+                <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+                    <OptimizedBlock className="mb-12" threshold={8}>
+                        <motion.h1 
+                            className="text-4xl font-bold text-gray-900 dark:text-white"
+                            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+                            animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
+                            transition={{
+                                duration: settings.duration,
+                                ease: settings.ease
+                            }}
+                        >
+                            All Projects
+                        </motion.h1>
                     </OptimizedBlock>
 
                     <motion.div
-                        initial={{opacity: 0, y: 20}}
-                        animate={{opacity: 1, y: 0}}
-                        transition={{duration: 0.5}}
+                        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+                        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
+                        transition={{
+                            duration: settings.duration,
+                            ease: settings.ease,
+                            staggerChildren: settings.staggerChildren
+                        }}
                         className="space-y-8 sm:space-y-12 md:space-y-16"
                     >
-                        <OptimizedBlock className="mb-16">
+                        <OptimizedBlock className="mb-16" threshold={8}>
                             <div className="mb-16">
-                                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Business
-                                    Projects</h2>
+                                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Business Projects</h2>
                                 <OptimizedLoop
                                     items={businessProjects}
                                     renderItem={renderProjectCard}
@@ -238,10 +282,9 @@ const Projects = () => {
                             </div>
                         </OptimizedBlock>
 
-                        <OptimizedBlock className="mb-16">
+                        <OptimizedBlock className="mb-16" threshold={8}>
                             <div className="mb-16">
-                                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">True Family
-                                    Projects</h2>
+                                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">True Family Projects</h2>
                                 <OptimizedLoop
                                     items={trueFamilyProjects}
                                     renderItem={renderProjectCard}
@@ -251,10 +294,9 @@ const Projects = () => {
                             </div>
                         </OptimizedBlock>
 
-                        <OptimizedBlock className="mb-16">
+                        <OptimizedBlock className="mb-16" threshold={8}>
                             <div className="mb-16">
-                                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Utility
-                                    Projects</h2>
+                                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Utility Projects</h2>
                                 <OptimizedLoop
                                     items={utilityProjects}
                                     renderItem={renderProjectCard}
@@ -266,16 +308,22 @@ const Projects = () => {
                     </motion.div>
 
                     <motion.div
-                        initial={{opacity: 0, y: 20}}
-                        animate={{opacity: 1, y: 0}}
-                        transition={{duration: 0.5, delay: 0.2}}
+                        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+                        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
+                        transition={{
+                            duration: settings.duration,
+                            delay: 0.2,
+                            ease: settings.ease
+                        }}
                         className="mt-12 sm:mt-16 flex justify-center"
                     >
-                        <a
+                        <motion.a
                             href="https://github.com/alaamer12"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-base sm:text-lg font-semibold"
+                            whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+                            whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
                         >
                             <span>View More Projects on GitHub</span>
                             <svg
@@ -291,7 +339,7 @@ const Projects = () => {
                                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                                 />
                             </svg>
-                        </a>
+                        </motion.a>
                     </motion.div>
                 </div>
             </div>

@@ -2,28 +2,35 @@ import {motion} from 'framer-motion';
 import {useInView} from 'react-intersection-observer';
 import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
 import {OptimizedBlock} from '../OptimizedMillion';
+import {useDeviceDetect} from '../../hooks/useDeviceDetect';
+import {useReducedMotion} from 'framer-motion';
 
 const SkillBar = ({skill}) => {
     const [ref, inView] = useInView({
         threshold: 0.1,
         triggerOnce: true,
     });
+    const isMobile = useDeviceDetect();
 
     return (
         <div className="mb-6">
             <div className="flex justify-between mb-2">
-                <span className="text-lg font-medium text-gray-900 dark:text-white">{skill.name}</span>
-                <span className="text-lg font-medium text-primary dark:text-primary-light">{skill.percentage}%</span>
+                <span className="text-base md:text-lg font-medium text-gray-900 dark:text-white">{skill.name}</span>
+                <span className="text-base md:text-lg font-medium text-primary dark:text-primary-light">{skill.percentage}%</span>
             </div>
             <div
                 ref={ref}
-                className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
+                className="h-3 md:h-4 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
             >
                 <motion.div
                     className={`h-full ${skill.color}`}
                     initial={{width: 0}}
                     animate={inView ? {width: `${skill.percentage}%`} : {width: 0}}
-                    transition={{duration: 1, ease: "easeOut"}}
+                    transition={{
+                        duration: isMobile ? 0.5 : 1,
+                        ease: "easeOut",
+                        useTransform: !isMobile
+                    }}
                 />
             </div>
         </div>
@@ -31,6 +38,9 @@ const SkillBar = ({skill}) => {
 };
 
 const SkillCard = ({Icon, name, level, title, description, url}) => {
+    const isMobile = useDeviceDetect();
+    const prefersReducedMotion = useReducedMotion();
+
     if (Icon && level !== undefined) {
         // Technical skill card with icon and progress bar
         return (
@@ -38,17 +48,28 @@ const SkillCard = ({Icon, name, level, title, description, url}) => {
                 initial={{opacity: 0, y: 20}}
                 whileInView={{opacity: 1, y: 0}}
                 viewport={{once: true}}
-                whileHover={{scale: 1.05}}
-                className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+                whileHover={isMobile ? {} : {scale: 1.05}}
+                transition={{
+                    duration: isMobile ? 0.3 : 0.5,
+                    useTransform: !isMobile
+                }}
+                className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-4 md:p-6 shadow-lg border border-gray-200 dark:border-gray-700"
             >
                 <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
-                    <Icon className="w-8 h-8 text-primary dark:text-primary-light"/>
+                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-primary dark:text-primary-light"/>
                     <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
-                        <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div
-                                className="bg-primary dark:bg-primary-light h-2 rounded-full transition-all duration-500"
-                                style={{width: `${level}%`}}
+                        <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
+                        <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 md:h-2">
+                            <motion.div
+                                initial={{width: 0}}
+                                whileInView={{width: `${level}%`}}
+                                viewport={{once: true}}
+                                transition={{
+                                    duration: isMobile ? 0.5 : 1,
+                                    ease: "easeOut",
+                                    useTransform: !isMobile
+                                }}
+                                className="bg-primary dark:bg-primary-light h-1.5 md:h-2 rounded-full"
                             />
                         </div>
                     </div>
@@ -57,17 +78,21 @@ const SkillCard = ({Icon, name, level, title, description, url}) => {
         );
     }
 
-    // Description card for general skills
+    // Regular skill card with title and description
     return (
         <motion.div
             initial={{opacity: 0, y: 20}}
             whileInView={{opacity: 1, y: 0}}
             viewport={{once: true}}
-            whileHover={{scale: 1.05}}
-            className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+            whileHover={isMobile ? {} : {scale: 1.05}}
+            transition={{
+                duration: isMobile ? 0.3 : 0.5,
+                useTransform: !isMobile
+            }}
+            className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-4 md:p-6 shadow-lg border border-gray-200 dark:border-gray-700"
         >
-            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{title}</h3>
-            <p className="text-gray-600 dark:text-gray-300">{description}</p>
+            <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">{description}</p>
         </motion.div>
     );
 };
@@ -141,6 +166,7 @@ const Skills = () => {
         threshold: 0.1,
         triggerOnce: true,
     });
+    const isMobile = useDeviceDetect();
 
     const containerVariants = {
         hidden: {opacity: 0, y: 50},
@@ -148,7 +174,7 @@ const Skills = () => {
             opacity: 1,
             y: 0,
             transition: {
-                duration: 0.5,
+                duration: isMobile ? 0.5 : 0.8,
                 staggerChildren: 0.2,
             },
         },

@@ -1,5 +1,5 @@
 import {lazy, memo, Suspense, useCallback, useEffect, useState, useRef} from "react";
-import {AnimatePresence, motion, useReducedMotion} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
@@ -7,8 +7,6 @@ import {OptimizedBlock} from '../components/OptimizedMillion';
 import usePerformanceOptimizations from '../hooks/usePerformanceOptimizations';
 import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
 import { useWindowSize, useMeasure } from 'react-use';
-
-import PerformanceMonitor from '../components/PerformanceMonitor/PerformanceMonitor';
 
 // Lazy load components with dynamic imports and prefetch
 const Hero = lazy(() => {
@@ -26,56 +24,49 @@ const Projects = lazy(() => import('../components/Projects/Projects'));
 const OpenSource = lazy(() => import('../components/OpenSource/OpenSource'));
 
 // Enhanced scroll button with optimized animations
-const ScrollToTopButton = memo(({isVisible, onClick, isLowEndDevice}) => {
-    const prefersReducedMotion = useReducedMotion();
-    const { ref, inView } = useOptimizedAnimation({
+const ScrollToTopButton = memo(({isVisible, onClick}) => {
+    const {settings, ref} = useOptimizedAnimation({
         threshold: 0.5,
         triggerOnce: false
     });
     
-    const buttonVariants = {
-        initial: { opacity: 0, scale: 0.8, y: 20 },
-        animate: { 
-            opacity: isVisible ? 1 : 0, 
-            scale: isVisible ? 1 : 0.8,
-            y: isVisible ? 0 : 20
-        },
-        exit: { opacity: 0, scale: 0.8, y: 20 },
-        transition: {
-            duration: prefersReducedMotion ? 0.1 : 0.2,
-            ease: 'easeOut'
-        }
-    };
-
     return (
         <motion.button
             ref={ref}
-            {...(isLowEndDevice ? {} : buttonVariants)}
             onClick={onClick}
-            className="fixed bottom-8 right-8 p-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary rounded-full shadow-lg transition-colors z-50 touch-manipulation"
-            style={{
-                WebkitTapHighlightColor: 'transparent',
-                willChange: 'transform',
-                transform: isLowEndDevice && !inView ? 'scale(0)' : 'scale(1)',
-                opacity: isLowEndDevice && !inView ? 0 : 1,
-                backfaceVisibility: 'hidden'
+            className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary dark:bg-primary-light text-white shadow-lg hover:shadow-xl transition-shadow"
+            initial={settings.shouldAnimate ? {opacity: 0, scale: 0.8, y: 20} : {}}
+            animate={settings.shouldAnimate ? {
+                opacity: isVisible ? 1 : 0,
+                scale: isVisible ? 1 : 0.8,
+                y: isVisible ? 0 : 20
+            } : {}}
+            exit={settings.shouldAnimate ? {opacity: 0, scale: 0.8, y: 20} : {}}
+            transition={{
+                duration: settings.duration,
+                ease: settings.ease
             }}
+            whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+            whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
         >
             <svg
-                className="w-6 h-6 text-white"
+                className="w-6 h-6"
                 fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
                 stroke="currentColor"
-                aria-hidden="true"
+                viewBox="0 0 24 24"
             >
-                <path d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 10l7-7m0 0l7 7m-7-7v18"
+                />
             </svg>
         </motion.button>
     );
 });
+
+ScrollToTopButton.displayName = 'ScrollToTopButton';
 
 const LandingPage = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -84,7 +75,7 @@ const LandingPage = () => {
     const { width: windowWidth } = useWindowSize();
     
     // Performance optimizations
-    const { ref, metrics, isLowEndDevice } = usePerformanceOptimizations();
+    const { metrics, isLowEndDevice } = usePerformanceOptimizations();
     
     // Optimized intersection observer for scroll button
     const { ref: heroRef, inView } = useOptimizedAnimation({
@@ -121,13 +112,9 @@ const LandingPage = () => {
                 requestAnimationFrame(animateScroll);
             } else {
                 scrolling.current = false;
-                // Reset will-change after animation
-                document.body.style.willChange = 'auto';
             }
         };
 
-        // Set will-change before animation
-        document.body.style.willChange = 'scroll-position';
         requestAnimationFrame(animateScroll);
     }, [isLowEndDevice]);
 
@@ -143,12 +130,6 @@ const LandingPage = () => {
                         if (entry.isIntersecting) {
                             const img = entry.target;
                             if (img.dataset.src) {
-                                const preloadLink = document.createElement('link');
-                                preloadLink.rel = 'preload';
-                                preloadLink.as = 'image';
-                                preloadLink.href = img.dataset.src;
-                                document.head.appendChild(preloadLink);
-
                                 img.src = img.dataset.src;
                                 img.removeAttribute('data-src');
                                 imageObserver.unobserve(img);
@@ -156,7 +137,7 @@ const LandingPage = () => {
                         }
                     });
                 },
-                { rootMargin: '50px 0px' }
+                { rootMargin: '50px 0px', threshold: 0.1 }
             );
 
             images.forEach(img => imageObserver.observe(img));
@@ -195,18 +176,18 @@ const LandingPage = () => {
                 <Background />
                 <div className="relative z-10 w-full pt-24 pb-16">
                     <Suspense fallback={<Loading />}>
-                        <OptimizedBlock id="hero-section">
+                        <OptimizedBlock id="hero-section" threshold={8}>
                             <div ref={heroRef}>
                                 <Hero />
                             </div>
                         </OptimizedBlock>
-                        <OptimizedBlock id="skills-section">
+                        <OptimizedBlock id="skills-section" threshold={8}>
                             <Skills />
                         </OptimizedBlock>
-                        <OptimizedBlock id="projects-section">
+                        <OptimizedBlock id="projects-section" threshold={8}>
                             <Projects />
                         </OptimizedBlock>
-                        <OptimizedBlock id="opensource-section">
+                        <OptimizedBlock id="opensource-section" threshold={8}>
                             <OpenSource />
                         </OptimizedBlock>
                     </Suspense>
@@ -215,13 +196,11 @@ const LandingPage = () => {
                             <ScrollToTopButton 
                                 isVisible={isVisible} 
                                 onClick={scrollToTop}
-                                isLowEndDevice={isLowEndDevice}
                             />
                         )}
                     </AnimatePresence>
                 </div>
             </div>
-            {/* <PerformanceMonitor /> */}
         </>
     );
 };

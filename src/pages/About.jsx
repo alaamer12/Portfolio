@@ -1,10 +1,11 @@
-import {memo, useCallback, useMemo, useState} from "react";
+import {memo, useCallback, useState, useMemo} from "react";
 import {motion} from 'framer-motion';
 import {FaDownload, FaEnvelope, FaGithub, FaLinkedin, FaMapMarkerAlt, FaSpinner} from 'react-icons/fa';
 import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
 import {OptimizedBlock, OptimizedLoop} from '../components/OptimizedMillion';
+import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
 
 const ResumeDownloadButton = memo(() => {
     const [isLoading, setIsLoading] = useState(false);
@@ -34,106 +35,80 @@ const ResumeDownloadButton = memo(() => {
         </motion.a>
     );
 });
-// Memoize static data
-const SKILLS_DATA = [
-    {
-        Icon: SiPython,
-        name: 'Python',
-        level: 95,
-        description: 'Expert in Python development with extensive experience in automation, data processing, and backend development.',
-        url: 'https://www.python.org/'
-    },
-    {
-        Icon: SiDjango,
-        name: 'Django',
-        level: 70,
-        description: 'Proficient in building scalable web applications using Django and Django REST Framework.',
-        url: 'https://www.djangoproject.com/'
-    },
-    {
-        Icon: SiFastapi,
-        name: 'FastAPI',
-        level: 95,
-        description: 'Proficient in building high-performance APIs with FastAPI and its extensions.',
-        url: 'https://fastapi.tiangolo.com/'
-    },
-    {
-        Icon: SiReact,
-        name: 'React and React Native',
-        level: 85,
-        description: 'Strong frontend development skills with React, including modern hooks and state management.',
-        url: 'https://reactjs.org/'
-    },
-    {
-        Icon: SiPostgresql,
-        name: 'PostgreSQL',
-        level: 75,
-        description: 'Expert in database design, optimization, and management with PostgreSQL.',
-        url: 'https://www.postgresql.org/'
-    },
-    {
-        Icon: SiTailwindcss,
-        name: 'TailwindCSS',
-        level: 80,
-        description: 'Proficient in creating responsive and visually stunning web interfaces with TailwindCSS.',
-        url: 'https://tailwindcss.com/'
-    }
 
-];
-// Memoize static components
-const SkillCard = memo(({Icon, name, level, description, url}) => (
-    <motion.div
-        initial={{opacity: 0, y: 20}}
-        whileInView={{opacity: 1, y: 0}}
-        viewport={{once: true}}
-        whileHover={{scale: 1.05}}
-        className="bg-[#e6e6e6]/10 cursor-pointer dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl"
-    >
-        <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
-            <Icon className="w-8 h-8 text-primary dark:text-primary-light"/>
-            <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-          <span className="hover:underline">
-            {name}
-          </span>
-                </h3>
-                <div className="mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div
-                        className="bg-primary dark:bg-primary-light h-2 rounded-full transition-all duration-500"
-                        style={{width: `${level}%`}}
-                    />
+const SkillCard = memo(({Icon, name, level, description, url}) => {
+    const {settings} = useOptimizedAnimation();
+    
+    return (
+        <motion.div
+            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+            whileInView={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
+            viewport={{once: true, margin: "50px"}}
+            whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+            className="bg-[#e6e6e6]/10 cursor-pointer dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl"
+        >
+            <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
+                <Icon className="w-8 h-8 text-primary dark:text-primary-light"/>
+                <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        <span className="hover:underline">{name}</span>
+                    </h3>
+                    <div className="mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <motion.div
+                            initial={{width: 0}}
+                            whileInView={{width: `${level}%`}}
+                            viewport={{once: true}}
+                            transition={{duration: 1, ease: "easeOut"}}
+                            className="bg-primary dark:bg-primary-light h-2 rounded-full"
+                        />
+                    </div>
+                </div>
+            </a>
+            <p className="mt-4 text-gray-600 dark:text-gray-300">{description}</p>
+        </motion.div>
+    );
+});
+
+const ExperienceCard = memo(({title, company, period, description, technologies}) => {
+    const {settings} = useOptimizedAnimation();
+    
+    return (
+        <motion.div
+            initial={settings.shouldAnimate ? {opacity: 0, x: settings.distance * -1} : {}}
+            whileInView={settings.shouldAnimate ? {opacity: 1, x: 0} : {}}
+            viewport={{once: true, margin: "50px"}}
+            className="relative pl-8 pb-8 border-l-2 border-primary dark:border-primary-light"
+        >
+            <motion.div 
+                className="absolute w-4 h-4 bg-primary dark:bg-primary-light rounded-full -left-[9px] top-0"
+                initial={settings.shouldAnimate ? {scale: 0} : {}}
+                whileInView={settings.shouldAnimate ? {scale: 1} : {}}
+                viewport={{once: true}}
+            />
+            <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
+                <div className="mt-2 text-primary dark:text-primary-light font-semibold">{company}</div>
+                <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">{period}</div>
+                <p className="mt-4 text-gray-700 dark:text-gray-300">{description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                    {technologies.map((tech, index) => (
+                        <motion.span
+                            key={index}
+                            initial={settings.shouldAnimate ? {opacity: 0, scale: 0.8} : {}}
+                            whileInView={settings.shouldAnimate ? {opacity: 1, scale: 1} : {}}
+                            viewport={{once: true}}
+                            transition={{delay: index * 0.1}}
+                            className="px-3 py-1 text-sm bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light rounded-full"
+                        >
+                            {tech}
+                        </motion.span>
+                    ))}
                 </div>
             </div>
-        </a>
-        <p className="mt-4 text-gray-600 dark:text-gray-300">{description}</p>
-    </motion.div>
-));
-const ExperienceCard = memo(({title, company, period, description, technologies}) => (
-    <motion.div
-        initial={{opacity: 0, x: -20}}
-        whileInView={{opacity: 1, x: 0}}
-        viewport={{once: true}}
-        className="relative pl-8 pb-8 border-l-2 border-primary dark:border-primary-light"
-    >
-        <div className="absolute w-4 h-4 bg-primary dark:bg-primary-light rounded-full -left-[9px] top-0"/>
-        <div className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h3>
-            <div className="mt-2 text-primary dark:text-primary-light font-semibold">{company}</div>
-            <div className="mt-1 text-sm text-gray-600 dark:text-gray-400">{period}</div>
-            <p className="mt-4 text-gray-700 dark:text-gray-300">{description}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-                {technologies.map((tech, index) => (
-                    <span
-                        key={index}
-                        className="px-3 py-1 text-sm bg-primary/10 dark:bg-primary-light/10 text-primary dark:text-primary-light rounded-full"
-                    >
-            {tech}
-          </span>
-                ))}
-            </div>
-        </div>
-    </motion.div>
-));
+        </motion.div>
+    );
+});
+
 const EXPERIENCE_DATA = [
     {
         title: 'Cross-platform Developer',
@@ -164,7 +139,53 @@ const EXPERIENCE_DATA = [
         technologies: ['React', 'Django', 'FastAPI', 'PostgreSQL', 'Docker', 'Authkit', 'Supabase']
     }
 ];
+
 const About = () => {
+    const SKILLS_DATA = [
+        {
+            Icon: SiPython,
+            name: 'Python',
+            level: 95,
+            description: 'Expert in Python development with extensive experience in automation, data processing, and backend development.',
+            url: 'https://www.python.org/'
+        },
+        {
+            Icon: SiDjango,
+            name: 'Django',
+            level: 70,
+            description: 'Proficient in building scalable web applications using Django and Django REST Framework.',
+            url: 'https://www.djangoproject.com/'
+        },
+        {
+            Icon: SiFastapi,
+            name: 'FastAPI',
+            level: 95,
+            description: 'Proficient in building high-performance APIs with FastAPI and its extensions.',
+            url: 'https://fastapi.tiangolo.com/'
+        },
+        {
+            Icon: SiReact,
+            name: 'React and React Native',
+            level: 85,
+            description: 'Strong frontend development skills with React, including modern hooks and state management.',
+            url: 'https://reactjs.org/'
+        },
+        {
+            Icon: SiPostgresql,
+            name: 'PostgreSQL',
+            level: 75,
+            description: 'Expert in database design, optimization, and management with PostgreSQL.',
+            url: 'https://www.postgresql.org/'
+        },
+        {
+            Icon: SiTailwindcss,
+            name: 'TailwindCSS',
+            level: 80,
+            description: 'Proficient in creating responsive and visually stunning web interfaces with TailwindCSS.',
+            url: 'https://tailwindcss.com/'
+        }
+    ];
+
     // Memoize sections to prevent unnecessary re-renders
     const renderSkillsSection = useMemo(() => (
         <OptimizedLoop
@@ -175,7 +196,7 @@ const About = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             enableCache={true}
         />
-    ), []);
+    ), [SKILLS_DATA]);
 
     const renderExperienceSection = useMemo(() => (
         <OptimizedLoop
@@ -186,7 +207,7 @@ const About = () => {
             className="space-y-6"
             enableCache={true}
         />
-    ), []);
+    ), [EXPERIENCE_DATA]);
 
     return (
         <>

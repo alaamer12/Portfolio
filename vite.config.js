@@ -5,10 +5,41 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { compression } from 'vite-plugin-compression2';
 import million from 'million/compiler';
 // import vitePerformancePlugin from './vite-performance-plugin';
+// Add to vite.config.js
+import imagemin from 'vite-plugin-imagemin';
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    imagemin({
+      gifsicle: {
+        optimizationLevel: 7,
+        interlaced: false,
+      },
+      optipng: {
+        optimizationLevel: 7,
+      },
+      mozjpeg: {
+        quality: 65,
+      },
+      pngquant: {
+        quality: [0.65, 0.9],
+        speed: 4,
+      },
+      svgo: {
+        plugins: [
+          {
+            name: 'removeViewBox',
+          },
+          {
+            name: 'removeEmptyAttrs',
+            active: false,
+          },
+        ],
+      },
+    }),
+
     // vitePerformancePlugin(),
     million.vite({ 
       auto: true,
