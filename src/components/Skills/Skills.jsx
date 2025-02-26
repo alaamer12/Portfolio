@@ -1,9 +1,8 @@
-import {motion} from 'framer-motion';
+import {motion, useReducedMotion} from 'framer-motion';
 import {useInView} from 'react-intersection-observer';
 import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
 import {OptimizedBlock} from '../OptimizedMillion';
 import {useDeviceDetect} from '../../hooks/useDeviceDetect';
-import {useReducedMotion} from 'framer-motion';
 
 const SkillBar = ({skill}) => {
     const [ref, inView] = useInView({
@@ -16,7 +15,8 @@ const SkillBar = ({skill}) => {
         <div className="mb-6">
             <div className="flex justify-between mb-2">
                 <span className="text-base md:text-lg font-medium text-gray-900 dark:text-white">{skill.name}</span>
-                <span className="text-base md:text-lg font-medium text-primary dark:text-primary-light">{skill.percentage}%</span>
+                <span
+                    className="text-base md:text-lg font-medium text-primary dark:text-primary-light">{skill.percentage}%</span>
             </div>
             <div
                 ref={ref}

@@ -1,30 +1,31 @@
-import { memo, useState, useRef, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaRobot, FaTimes, FaPaperPlane } from 'react-icons/fa';
+import {memo, useCallback, useEffect, useRef, useState} from 'react';
+import {AnimatePresence, motion} from 'framer-motion';
+import {FaPaperPlane, FaRobot, FaTimes} from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
-import { useTheme } from '../../context/ThemeContext';
-import { OptimizedBlock } from '../OptimizedMillion';
+import {useTheme} from '../../context/ThemeContext';
 import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
 import styles from './ChatBot.module.css';
 
-const ChatMessage = memo(({ message, type }) => {
-    const { isDark } = useTheme();
-    
+const ChatMessage = memo(({message, type}) => {
+    const {isDark} = useTheme();
+
     return (
         <div className={`flex ${type === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
             <div className={`max-w-[80%] p-3 rounded-lg ${
-                type === 'user' 
+                type === 'user'
                     ? 'bg-primary dark:bg-primary-light text-white'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
             }`}>
                 <div className="prose dark:prose-invert max-w-none">
-                    <ReactMarkdown 
+                    <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
                         components={{
                             p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
-                            a: ({node, ...props}) => <a className="text-primary dark:text-primary-light hover:underline" {...props} />,
-                            code: ({node, ...props}) => <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props} />,
+                            a: ({node, ...props}) => <a
+                                className="text-primary dark:text-primary-light hover:underline" {...props} />,
+                            code: ({node, ...props}) => <code
+                                className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded" {...props} />,
                             ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2" {...props} />,
                             ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2" {...props} />
                         }}
@@ -43,11 +44,11 @@ const ChatBot = () => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
-    const { isDark } = useTheme();
-    const { settings } = useOptimizedAnimation();
+    const {isDark} = useTheme();
+    const {settings} = useOptimizedAnimation();
 
     const scrollToBottom = useCallback(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
     }, []);
 
     useEffect(() => {
@@ -60,7 +61,7 @@ const ChatBot = () => {
 
         const userMessage = input.trim();
         setInput('');
-        setMessages(prev => [...prev, { type: 'user', content: userMessage }]);
+        setMessages(prev => [...prev, {type: 'user', content: userMessage}]);
         setIsLoading(true);
 
         try {
@@ -69,25 +70,25 @@ const ChatBot = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: userMessage }),
+                body: JSON.stringify({message: userMessage}),
             });
 
             const data = await response.json();
-            
+
             if (!data.success) {
                 throw new Error(data.error || 'Failed to get response');
             }
 
             // Handle the direct response string from G4F
-            setMessages(prev => [...prev, { 
-                type: 'bot', 
-                content: data.response.trim() 
+            setMessages(prev => [...prev, {
+                type: 'bot',
+                content: data.response.trim()
             }]);
         } catch (error) {
             console.error('Chat error:', error);
-            setMessages(prev => [...prev, { 
-                type: 'bot', 
-                content: `Error: ${error.message || 'Something went wrong. Please try again later.'}` 
+            setMessages(prev => [...prev, {
+                type: 'bot',
+                content: `Error: ${error.message || 'Something went wrong. Please try again later.'}`
             }]);
         } finally {
             setIsLoading(false);
@@ -102,21 +103,21 @@ const ChatBot = () => {
                 className={`fixed bottom-24 right-8 z-[9999] p-4 rounded-full 
                     bg-primary dark:bg-primary-light text-white shadow-lg 
                     hover:shadow-xl transition-shadow ${isOpen ? 'hidden' : ''} ${styles.pulse}`}
-                initial={settings.shouldAnimate ? { scale: 0 } : {}}
-                animate={settings.shouldAnimate ? { scale: 1 } : {}}
-                whileHover={settings.shouldAnimate ? { scale: 1.1 } : {}}
-                whileTap={settings.shouldAnimate ? { scale: 0.9 } : {}}
+                initial={settings.shouldAnimate ? {scale: 0} : {}}
+                animate={settings.shouldAnimate ? {scale: 1} : {}}
+                whileHover={settings.shouldAnimate ? {scale: 1.1} : {}}
+                whileTap={settings.shouldAnimate ? {scale: 0.9} : {}}
             >
-                <FaRobot className="w-6 h-6" />
+                <FaRobot className="w-6 h-6"/>
             </motion.button>
 
             {/* Chat Window */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
+                        initial={{opacity: 0, y: 20}}
+                        animate={{opacity: 1, y: 0}}
+                        exit={{opacity: 0, y: 20}}
                         className={`fixed bottom-24 right-8 z-[9999] w-96 h-[500px] 
                             bg-white dark:bg-gray-900 rounded-lg shadow-2xl 
                             flex flex-col overflow-hidden ${styles['chat-window']}`}
@@ -132,7 +133,7 @@ const ChatBot = () => {
                                     dark:hover:bg-gray-800 transition-colors"
                             >
                                 <FaTimes className="w-5 h-5 text-gray-500 
-                                    dark:text-gray-400" />
+                                    dark:text-gray-400"/>
                             </button>
                         </div>
 
@@ -155,7 +156,7 @@ const ChatBot = () => {
                                     <span className={styles['loading-dots']}>Thinking</span>
                                 </div>
                             )}
-                            <div ref={messagesEndRef} />
+                            <div ref={messagesEndRef}/>
                         </div>
 
                         {/* Input */}
@@ -182,7 +183,7 @@ const ChatBot = () => {
                                         dark:bg-primary-light text-white 
                                         ${isLoading ? 'opacity-50' : 'hover:opacity-90'}`}
                                 >
-                                    <FaPaperPlane className="w-5 h-5" />
+                                    <FaPaperPlane className="w-5 h-5"/>
                                 </button>
                             </div>
                         </form>

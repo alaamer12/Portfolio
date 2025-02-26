@@ -8,8 +8,8 @@ import {OptimizedBlock} from '../OptimizedMillion';
 const ProjectLinks = memo(({github, demo}) => {
     const {settings} = useOptimizedAnimation();
     const links = useMemo(() => [
-        { url: github, Icon: FaGithub },
-        { url: demo, Icon: FaExternalLinkAlt }
+        {url: github, Icon: FaGithub},
+        {url: demo, Icon: FaExternalLinkAlt}
     ], [github, demo]);
 
     return (
@@ -35,7 +35,7 @@ ProjectLinks.displayName = 'ProjectLinks';
 
 const ProjectImage = memo(({displayImage, title}) => {
     const {settings} = useOptimizedAnimation();
-    
+
     return (
         <motion.div
             className="relative w-12 h-12 sm:w-24 sm:h-24 flex-shrink-0 flex items-center justify-center"
@@ -98,9 +98,9 @@ ProjectTags.displayName = 'ProjectTags';
 const ProjectCard = memo(({project, delay}) => {
     const {settings} = useOptimizedAnimation();
     const {isDark} = useTheme();
-    const displayImage = useMemo(() => 
-        project.darkImage && isDark ? project.darkImage : project.image
-    , [project.darkImage, isDark, project.image]);
+    const displayImage = useMemo(() =>
+            project.darkImage && isDark ? project.darkImage : project.image
+        , [project.darkImage, isDark, project.image]);
 
     return (
         <OptimizedBlock threshold={12}>
@@ -118,13 +118,13 @@ const ProjectCard = memo(({project, delay}) => {
             >
                 <div className="flex sm:flex-row sm:gap-6">
                     <div className="flex items-center mr-3 gap-3 mb-3 sm:mb-0">
-                        <ProjectImage displayImage={displayImage} title={project.title} />
+                        <ProjectImage displayImage={displayImage} title={project.title}/>
                     </div>
 
                     <div className="flex-grow space-y-3">
-                        <ProjectCaption title={project.title} description={project.description} />
-                        <ProjectTags tags={project.tags} />
-                        <ProjectLinks github={project.github} demo={project.demo} />
+                        <ProjectCaption title={project.title} description={project.description}/>
+                        <ProjectTags tags={project.tags}/>
+                        <ProjectLinks github={project.github} demo={project.demo}/>
                     </div>
                 </div>
             </motion.div>
@@ -179,7 +179,8 @@ const Projects = memo(() => {
                             damping: settings.isMobile ? 15 : 10
                         }}
                     >
-                        <span className="bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
+                        <span
+                            className="bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
                             Featured Projects
                         </span>
                     </motion.h2>
@@ -198,7 +199,7 @@ const Projects = memo(() => {
 
                 <div className="space-y-6">
                     {projects.map((project) => (
-                        <ProjectCard key={project.title} project={project} delay={project.delay} />
+                        <ProjectCard key={project.title} project={project} delay={project.delay}/>
                     ))}
                 </div>
             </div>

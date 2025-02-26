@@ -10,7 +10,6 @@ import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SpeedInsights from './components/SpeedInsights/SpeedInsights';
 import {OptimizedBlock} from './components/OptimizedMillion';
-import ChatBot from './components/ChatBot/ChatBot';
 
 // Route configurations
 const ROUTES = {
@@ -85,10 +84,10 @@ const App = () => (
     <ErrorBoundary>
         <ThemeProvider>
             <Router>
-                <ScrollToTop />
-                <SpeedInsights />
+                <ScrollToTop/>
+                <SpeedInsights/>
                 <OptimizedBlock>
-                    <Navbar />
+                    <Navbar/>
                     {/* <OptimizedBlock>
                         <ChatBot />
                     </OptimizedBlock> */}

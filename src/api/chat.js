@@ -1,4 +1,5 @@
-import { G4F } from "g4f";
+import {G4F} from "g4f";
+
 const g4f = new G4F();
 
 const options = {
@@ -26,7 +27,7 @@ export async function handleChatRequest(message) {
         }];
 
         console.log('Using provider:', options.provider);
-        
+
         // Generate response using g4f
         const response = await g4f.chatCompletion(messages, options);
         console.log('G4F response:', response);

@@ -1,7 +1,7 @@
-import { useEffect, useCallback, useRef, useMemo } from 'react';
-import { useWindowSize } from 'react-use';
-import { useInView } from 'react-intersection-observer';
-import { useReducedMotion } from 'framer-motion';
+import {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useWindowSize} from 'react-use';
+import {useInView} from 'react-intersection-observer';
+import {useReducedMotion} from 'framer-motion';
 
 const useOptimizedAnimation = (options = {}) => {
     const {
@@ -13,16 +13,16 @@ const useOptimizedAnimation = (options = {}) => {
     } = options;
 
     const elementRef = useRef(null);
-    const { width } = useWindowSize();
+    const {width} = useWindowSize();
     const prefersReducedMotion = useReducedMotion();
     const animationFrame = useRef(null);
-    
+
     // Device detection
     const isMobile = width <= mobileBreakpoint;
     const isLowEndDevice = useRef(
-        typeof window !== 'undefined' && 
-        (!window.matchMedia('(min-device-memory: 4gb)').matches || 
-         navigator.hardwareConcurrency < 4)
+        typeof window !== 'undefined' &&
+        (!window.matchMedia('(min-device-memory: 4gb)').matches ||
+            navigator.hardwareConcurrency < 4)
     );
 
     // Optimization settings based on device and preferences
@@ -60,7 +60,7 @@ const useOptimizedAnimation = (options = {}) => {
 
         const element = elementRef.current;
         if (!element) return;
-        
+
         const animate = () => {
             const start = performance.now();
             const duration = isLowEndDevice.current ? 400 : 800;

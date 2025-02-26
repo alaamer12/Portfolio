@@ -3,7 +3,7 @@ import {useDeviceDetect} from '../../hooks/useDeviceDetect';
 
 const Loading = () => {
     const isMobile = useDeviceDetect();
-    
+
     return (
         <div className="fixed inset-0 bg-background flex items-center justify-center">
             <motion.div

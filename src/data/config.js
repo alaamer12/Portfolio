@@ -1,3 +1,11 @@
+// noinspection t
+
+import {useCallback} from "react";
+import {FaFire} from "react-icons/fa";
+import {IoSparkles} from "react-icons/io5";
+import {BsClock} from "react-icons/bs";
+import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from "react-icons/si";
+
 export const getProjectsData = (baseUrl, isDark) => ({
     trueFamilyProjects: [
         {
@@ -366,3 +374,119 @@ export const getProjectsData = (baseUrl, isDark) => ({
         }
     ]
 });
+
+
+// Badge priority for sorting
+const badgePriority = {
+    'hot': 0,
+    'new': 1,
+    'coming soon': 2,
+    'none': 3
+};
+
+// Sort function for projects
+export const sortProjects = (projects) => {
+    return [...projects].sort((a, b) => {
+        return badgePriority[a.badge || 'none'] - badgePriority[b.badge || 'none'];
+    });
+};
+export const getBadgeContent = (badge) => {
+    switch (badge) {
+        case 'hot':
+            return {
+                icon: <FaFire className="mr-1"/>,
+                text: 'HOT',
+                className: 'bg-gradient-to-r from-orange-500 to-red-500 backdrop-blur-md bg-opacity-90'
+            };
+        case 'new':
+            return {
+                icon: <IoSparkles className="mr-1"/>,
+                text: 'NEW',
+                className: 'bg-gradient-to-r from-blue-400 to-cyan-400 backdrop-blur-md bg-opacity-90'
+            };
+        case 'coming soon':
+            return {
+                icon: <BsClock className="mr-1"/>,
+                text: 'SOON',
+                className: 'bg-gradient-to-r from-violet-400 to-purple-500 backdrop-blur-md bg-opacity-90'
+            };
+        default:
+            return null;
+    }
+};
+
+export const SKILLS_DATA = [
+    {
+        Icon: SiPython,
+        name: 'Python',
+        level: 95,
+        description: 'Expert in Python development with extensive experience in automation, data processing, and backend development.',
+        url: 'https://www.python.org/'
+    },
+    {
+        Icon: SiDjango,
+        name: 'Django',
+        level: 70,
+        description: 'Proficient in building scalable web applications using Django and Django REST Framework.',
+        url: 'https://www.djangoproject.com/'
+    },
+    {
+        Icon: SiFastapi,
+        name: 'FastAPI',
+        level: 95,
+        description: 'Proficient in building high-performance APIs with FastAPI and its extensions.',
+        url: 'https://fastapi.tiangolo.com/'
+    },
+    {
+        Icon: SiReact,
+        name: 'React and React Native',
+        level: 85,
+        description: 'Strong frontend development skills with React, including modern hooks and state management.',
+        url: 'https://reactjs.org/'
+    },
+    {
+        Icon: SiPostgresql,
+        name: 'PostgreSQL',
+        level: 75,
+        description: 'Expert in database design, optimization, and management with PostgreSQL.',
+        url: 'https://www.postgresql.org/'
+    },
+    {
+        Icon: SiTailwindcss,
+        name: 'TailwindCSS',
+        level: 80,
+        description: 'Proficient in creating responsive and visually stunning web interfaces with TailwindCSS.',
+        url: 'https://tailwindcss.com/'
+    }
+];
+
+export const EXPERIENCE_DATA = [
+    {
+        title: 'Cross-platform Developer',
+        company: 'MobileTech Solutions',
+        period: '2022 - Present',
+        description: 'Led the development of cross-platform mobile applications using React Native. Implemented shared codebase strategy, reducing development time by 40%.',
+        technologies: ['React Native', 'Zustand', 'Jest', 'Subpase', 'Expo', 'Reanimated']
+    },
+    {
+        title: 'Junior Backend Developer',
+        company: 'Tech Solutions Inc.',
+        period: '2023 - Present',
+        description: 'Contributing to the backend development team in building scalable microservices. Learning and implementing CI/CD practices while assisting in performance optimization efforts.',
+        technologies: ['Python', 'Django', 'Docker', 'FastAPI', 'PostgreSQL', 'Pytest']
+    },
+    {
+        title: 'Full Stack Developer',
+        company: 'Innovation Labs',
+        period: '2023 - Present',
+        description: 'Developed and maintained multiple web applications. Reduced server response time by 60% through optimization and caching strategies.',
+        technologies: ['React', 'React Native', 'FastAPI', 'PostgreSQL', 'TailwindCSS', 'Styled-components']
+    },
+    {
+        title: 'Founder & Lead Developer',
+        company: 'Personal Startup Projects',
+        period: '2025 - Present',
+        description: 'Initiated and developed multiple startup projects, focusing on innovative web applications. Led the entire development lifecycle from concept to deployment.',
+        technologies: ['React', 'Django', 'FastAPI', 'PostgreSQL', 'Docker', 'Authkit', 'Supabase']
+    }
+]; 

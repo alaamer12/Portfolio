@@ -1,7 +1,7 @@
-import { SpeedInsights } from '@vercel/speed-insights/react';
+import {SpeedInsights} from '@vercel/speed-insights/react';
 
 const SpeedInsightsWrapper = () => {
-    return <SpeedInsights />;
+    return <SpeedInsights/>;
 };
 
 export default SpeedInsightsWrapper;

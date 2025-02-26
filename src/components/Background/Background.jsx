@@ -1,35 +1,35 @@
-import { useTheme } from '../../context/ThemeContext';
-import { memo } from 'react';
+import {useTheme} from '../../context/ThemeContext';
+import {memo} from 'react';
 import styles from './Background.module.css';
-import { OptimizedBlock } from '../OptimizedMillion';
+import {OptimizedBlock} from '../OptimizedMillion';
 
 // Wave component for creating decorative wave shapes
-const Wave = memo(({ className, path, style }) => (
+const Wave = memo(({className, path, style}) => (
     <OptimizedBlock threshold={8}>
         <svg
             className="absolute left-0 w-[100vw] h-full"
             viewBox="0 0 1440 320"
             xmlns="http://www.w3.org/2000/svg"
             preserveAspectRatio="none"
-            style={{ minWidth: '100vw', ...style }}
+            style={{minWidth: '100vw', ...style}}
         >
-            <path className={className} d={path} />
+            <path className={className} d={path}/>
         </svg>
     </OptimizedBlock>
 ));
 
 // AnimatedShape component for floating background shapes
-const AnimatedShape = memo(({ number }) => (
+const AnimatedShape = memo(({number}) => (
     <OptimizedBlock threshold={8}>
-        <div className={`${styles.shape} ${styles[`shape-${number}`]}`} />
+        <div className={`${styles.shape} ${styles[`shape-${number}`]}`}/>
     </OptimizedBlock>
 ));
 
 // BackgroundShapes component for managing animated shapes
-const BackgroundShapes = memo(({ themeColors }) => (
+const BackgroundShapes = memo(({themeColors}) => (
     <OptimizedBlock className={styles['background-shapes']} style={themeColors} threshold={12}>
         {[1, 2, 3, 4].map((num) => (
-            <AnimatedShape key={num} number={num} />
+            <AnimatedShape key={num} number={num}/>
         ))}
     </OptimizedBlock>
 ));
@@ -37,7 +37,8 @@ const BackgroundShapes = memo(({ themeColors }) => (
 // GradientOverlay component for background gradient
 const GradientOverlay = memo(() => (
     <OptimizedBlock threshold={8}>
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-strawberry/10 via-transparent to-cherry-pie/10 dark:from-strawberry-dark/20 dark:to-cherry-pie-dark/20" />
+        <div
+            className="absolute inset-0 w-full h-full bg-gradient-to-br from-strawberry/10 via-transparent to-cherry-pie/10 dark:from-strawberry-dark/20 dark:to-cherry-pie-dark/20"/>
     </OptimizedBlock>
 ));
 
@@ -57,7 +58,7 @@ const WaveSection = memo(() => (
             <Wave
                 className="fill-cherry-pie/40 dark:fill-strawberry-dark/30 transition-colors duration-300"
                 path="M0,160L34.3,165.3C68.6,171,137,181,206,165.3C274.3,149,343,107,411,101.3C480,96,549,128,617,154.7C685.7,181,754,203,823,186.7C891.4,171,960,117,1029,101.3C1097.1,85,1166,107,1234,133.3C1302.9,160,1371,192,1406,208L1440,224L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"
-                style={{ transform: 'scaleX(-1)' }}
+                style={{transform: 'scaleX(-1)'}}
             />
         </div>
 
@@ -96,7 +97,7 @@ const FloatingShapes = memo(() => (
 
 // Main Background component
 const Background = memo(() => {
-    const { isDark } = useTheme();
+    const {isDark} = useTheme();
 
     // Theme colors for animated shapes
     const themeColors = {
@@ -107,19 +108,19 @@ const Background = memo(() => {
     };
 
     return (
-        <OptimizedBlock 
+        <OptimizedBlock
             className="absolute top-0 left-0 w-screen min-h-screen bg-background-light dark:bg-background transition-colors duration-300"
             threshold={20}
-            onRender={({ renderTime, isSlowRender }) => {
+            onRender={({renderTime, isSlowRender}) => {
                 if (isSlowRender) {
                     console.warn(`Background component render took ${renderTime.toFixed(2)}ms`);
                 }
             }}
         >
-            <BackgroundShapes themeColors={themeColors} />
-            <GradientOverlay />
-            <WaveSection />
-            <FloatingShapes />
+            <BackgroundShapes themeColors={themeColors}/>
+            <GradientOverlay/>
+            <WaveSection/>
+            <FloatingShapes/>
         </OptimizedBlock>
     );
 });

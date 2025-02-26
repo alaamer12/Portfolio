@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useWindowScroll, useWindowSize, useMeasure } from 'react-use';
-import { getCLS, getFID, getLCP } from 'web-vitals';
+import {useEffect} from 'react';
+import {useMeasure, useWindowScroll, useWindowSize} from 'react-use';
+import {getCLS, getFID, getLCP} from 'web-vitals';
 
 const usePerformanceOptimizations = () => {
-    const { y: scrollY } = useWindowScroll();
-    const { width } = useWindowSize();
-    const [ref, { height }] = useMeasure();
+    const {y: scrollY} = useWindowScroll();
+    const {width} = useWindowSize();
+    const [ref, {height}] = useMeasure();
 
     useEffect(() => {
         // Report Web Vitals
@@ -26,7 +26,7 @@ const usePerformanceOptimizations = () => {
                     }
                 });
             },
-            { rootMargin: '50px 0px' }
+            {rootMargin: '50px 0px'}
         );
 
         images.forEach(img => imageObserver.observe(img));
@@ -34,8 +34,8 @@ const usePerformanceOptimizations = () => {
         // Preload critical resources
         const preloadCriticalResources = () => {
             const resources = [
-                { type: 'style', href: '/styles/critical.css' },
-                { type: 'font', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' }
+                {type: 'style', href: '/styles/critical.css'},
+                {type: 'font', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'}
             ];
 
             resources.forEach(resource => {
@@ -62,13 +62,13 @@ const usePerformanceOptimizations = () => {
         };
 
         // Enable passive scroll listeners
-        window.addEventListener('scroll', optimizeScroll, { passive: true });
+        window.addEventListener('scroll', optimizeScroll, {passive: true});
 
         // Optimize animations on low-end devices
         const isLowEndDevice = () => {
             return !matchMedia('(min-device-memory: 4gb)').matches ||
-                   !matchMedia('(min-width: 768px)').matches ||
-                   navigator.hardwareConcurrency < 4;
+                !matchMedia('(min-width: 768px)').matches ||
+                navigator.hardwareConcurrency < 4;
         };
 
         if (isLowEndDevice()) {
