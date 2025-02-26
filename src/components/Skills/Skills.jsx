@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {motion, useReducedMotion} from 'framer-motion';
 import {useInView} from 'react-intersection-observer';
 import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
@@ -37,65 +38,80 @@ const SkillBar = ({skill}) => {
     );
 };
 
-const SkillCard = ({Icon, name, level, title, description, url}) => {
+const TechnicalSkillCard = memo(({Icon, name, level, url}) => {
     const isMobile = useDeviceDetect();
     const prefersReducedMotion = useReducedMotion();
 
-    if (Icon && level !== undefined) {
-        // Technical skill card with icon and progress bar
-        return (
-            <motion.div
-                initial={{opacity: 0, y: 20}}
-                whileInView={{opacity: 1, y: 0}}
-                viewport={{once: true}}
-                whileHover={isMobile ? {} : {scale: 1.05}}
-                transition={{
-                    duration: isMobile ? 0.3 : 0.5,
-                    useTransform: !isMobile
-                }}
-                className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-4 md:p-6 shadow-lg border border-gray-200 dark:border-gray-700"
-            >
-                <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
-                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-primary dark:text-primary-light"/>
-                    <div className="flex-1">
-                        <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
-                        <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 md:h-2">
-                            <motion.div
-                                initial={{width: 0}}
-                                whileInView={{width: `${level}%`}}
-                                viewport={{once: true}}
-                                transition={{
-                                    duration: isMobile ? 0.5 : 1,
-                                    ease: "easeOut",
-                                    useTransform: !isMobile
-                                }}
-                                className="bg-primary dark:bg-primary-light h-1.5 md:h-2 rounded-full"
-                            />
-                        </div>
-                    </div>
-                </a>
-            </motion.div>
-        );
-    }
-
-    // Regular skill card with title and description
     return (
-        <motion.div
-            initial={{opacity: 0, y: 20}}
-            whileInView={{opacity: 1, y: 0}}
-            viewport={{once: true}}
-            whileHover={isMobile ? {} : {scale: 1.05}}
-            transition={{
-                duration: isMobile ? 0.3 : 0.5,
-                useTransform: !isMobile
-            }}
-            className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-4 md:p-6 shadow-lg border border-gray-200 dark:border-gray-700"
-        >
+        <AnimatedCard isMobile={isMobile}>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
+                <SkillIcon Icon={Icon} />
+                <div className="flex-1">
+                    <SkillName name={name} />
+                    <SkillProgressBar level={level} isMobile={isMobile} prefersReducedMotion={prefersReducedMotion} />
+                </div>
+            </a>
+        </AnimatedCard>
+    );
+});
+
+const RegularSkillCard = memo(({title, description}) => {
+    const isMobile = useDeviceDetect();
+
+    return (
+        <AnimatedCard isMobile={isMobile}>
             <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
             <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">{description}</p>
-        </motion.div>
+        </AnimatedCard>
     );
-};
+});
+
+const AnimatedCard = memo(({children, isMobile}) => (
+    <motion.div
+        initial={{opacity: 0, y: 20}}
+        whileInView={{opacity: 1, y: 0}}
+        viewport={{once: true}}
+        whileHover={isMobile ? {} : {scale: 1.05}}
+        transition={{
+            duration: isMobile ? 0.3 : 0.5,
+            useTransform: !isMobile
+        }}
+        className="bg-[#f6f6f6] dark:bg-gray-800 backdrop-blur-md rounded-xl p-4 md:p-6 shadow-lg border border-gray-200 dark:border-gray-700"
+    >
+        {children}
+    </motion.div>
+));
+
+const SkillIcon = memo(({Icon}) => (
+    <Icon className="w-6 h-6 md:w-8 md:h-8 text-primary dark:text-primary-light"/>
+));
+
+const SkillName = memo(({name}) => (
+    <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
+));
+
+const SkillProgressBar = memo(({level, isMobile, prefersReducedMotion}) => (
+    <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 md:h-2">
+        <motion.div
+            initial={{width: 0}}
+            whileInView={{width: `${level}%`}}
+            viewport={{once: true}}
+            transition={{
+                duration: isMobile ? 0.5 : 1,
+                ease: "easeOut",
+                useTransform: !isMobile && !prefersReducedMotion
+            }}
+            className="bg-primary dark:bg-primary-light h-1.5 md:h-2 rounded-full"
+        />
+    </div>
+));
+
+const SkillCard = memo(({Icon, name, level, title, description, url}) => {
+    if (Icon && level !== undefined) {
+        return <TechnicalSkillCard Icon={Icon} name={name} level={level} url={url} />;
+    }
+    return <RegularSkillCard title={title} description={description} />;
+});
 
 const SkillChip = ({skill, url}) => (
     <motion.div
