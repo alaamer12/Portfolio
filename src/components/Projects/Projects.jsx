@@ -134,8 +134,66 @@ const ProjectCard = memo(({project, delay}) => {
 
 ProjectCard.displayName = 'ProjectCard';
 
+
+const ProjectsHeader = memo(() => {
+    const { settings } = useOptimizedAnimation();
+    
+    return (
+        <motion.div
+            initial={settings.shouldAnimate ? {opacity: 0} : {}}
+            whileInView={settings.shouldAnimate ? {opacity: 1} : {}}
+            viewport={{once: true}}
+            transition={{
+                duration: settings.duration,
+                staggerChildren: settings.staggerChildren
+            }}
+            className="text-center mb-8 sm:mb-12 group"
+        >
+            <HeaderTitle settings={settings} />
+            <HeaderDescription settings={settings} />
+        </motion.div>
+    );
+});
+
+const HeaderTitle = memo(({ settings }) => (
+    <motion.h2
+        className="text-3xl sm:text-4xl font-bold text-text dark:text-text-light mb-3 sm:mb-4 inline-block"
+        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+        transition={{
+            type: "spring",
+            stiffness: settings.isMobile ? 300 : 400,
+            damping: settings.isMobile ? 15 : 10
+        }}
+    >
+        <span className="bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
+            Featured Projects
+        </span>
+    </motion.h2>
+));
+
+const HeaderDescription = memo(({ settings }) => (
+    <motion.p
+        className="text-sm sm:text-base text-text/70 dark:text-white/50 max-w-2xl mx-auto transition-colors duration-300 px-4"
+        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+        transition={{
+            type: "spring",
+            stiffness: settings.isMobile ? 300 : 400,
+            damping: settings.isMobile ? 15 : 10
+        }}
+    >
+        Here are some of my notable projects that showcase my skills and experience in web development.
+    </motion.p>
+));
+
+const ProjectList = memo(({ projects }) => (
+    <div className="space-y-6">
+        {projects.map((project) => (
+            <ProjectCard key={project.title} project={project} delay={project.delay} />
+        ))}
+    </div>
+));
+
 const Projects = memo(() => {
-    const {settings} = useOptimizedAnimation();
     const projects = useMemo(() => [
         {
             title: 'Tealim',
@@ -160,48 +218,8 @@ const Projects = memo(() => {
     return (
         <section className="py-20" id="projects">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={settings.shouldAnimate ? {opacity: 0} : {}}
-                    whileInView={settings.shouldAnimate ? {opacity: 1} : {}}
-                    viewport={{once: true}}
-                    transition={{
-                        duration: settings.duration,
-                        staggerChildren: settings.staggerChildren
-                    }}
-                    className="text-center mb-8 sm:mb-12 group"
-                >
-                    <motion.h2
-                        className="text-3xl sm:text-4xl font-bold text-text dark:text-text-light mb-3 sm:mb-4 inline-block"
-                        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                        transition={{
-                            type: "spring",
-                            stiffness: settings.isMobile ? 300 : 400,
-                            damping: settings.isMobile ? 15 : 10
-                        }}
-                    >
-                        <span
-                            className="bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
-                            Featured Projects
-                        </span>
-                    </motion.h2>
-                    <motion.p
-                        className="text-sm sm:text-base text-text/70 dark:text-white/50 max-w-2xl mx-auto transition-colors duration-300 px-4"
-                        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                        transition={{
-                            type: "spring",
-                            stiffness: settings.isMobile ? 300 : 400,
-                            damping: settings.isMobile ? 15 : 10
-                        }}
-                    >
-                        Here are some of my notable projects that showcase my skills and experience in web development.
-                    </motion.p>
-                </motion.div>
-
-                <div className="space-y-6">
-                    {projects.map((project) => (
-                        <ProjectCard key={project.title} project={project} delay={project.delay}/>
-                    ))}
-                </div>
+                <ProjectsHeader />
+                <ProjectList projects={projects} />
             </div>
         </section>
     );
@@ -210,3 +228,5 @@ const Projects = memo(() => {
 Projects.displayName = 'Projects';
 
 export default Projects;
+
+
