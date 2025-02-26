@@ -11,7 +11,7 @@ const options = {
 export async function handleChatRequest(message) {
     try {
         if (!message || typeof message !== 'string') {
-            throw new Error('Invalid message format');
+            new Error('Invalid message format');
         }
         console.log('Sending message to G4F:', message);
 
@@ -33,7 +33,7 @@ export async function handleChatRequest(message) {
         console.log('G4F response:', response);
 
         if (!response) {
-            throw new Error('No response from G4F');
+            new Error('No response from G4F');
         }
 
         return {

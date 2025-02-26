@@ -1,6 +1,6 @@
 // noinspection t
 
-import {useCallback} from "react";
+import {lazy} from "react";
 import {FaFire} from "react-icons/fa";
 import {IoSparkles} from "react-icons/io5";
 import {BsClock} from "react-icons/bs";
@@ -489,4 +489,30 @@ export const EXPERIENCE_DATA = [
         description: 'Initiated and developed multiple startup projects, focusing on innovative web applications. Led the entire development lifecycle from concept to deployment.',
         technologies: ['React', 'Django', 'FastAPI', 'PostgreSQL', 'Docker', 'Authkit', 'Supabase']
     }
-]; 
+]; // Route configurations
+export const ROUTES = {
+    HOME: {
+        path: '/',
+        title: 'Amr Muhamed | Full Stack Developer',
+        description: 'Experienced Full Stack Developer specializing in React, Django, and modern web technologies. View my portfolio of innovative projects.',
+        Component: lazy(() => import('../pages/LandingPage')),
+    },
+    ABOUT: {
+        path: '/about',
+        title: 'About Me | Amr Muhamed',
+        description: 'Learn about my journey as a Full Stack Developer, my skills, experiences, and what drives me to create innovative web solutions.',
+        Component: lazy(() => import('../pages/About')),
+    },
+    PROJECTS: {
+        path: '/projects',
+        title: 'Projects | Amr Muhamed',
+        description: 'Explore my portfolio of web development projects, featuring React, Django, and other modern technologies.',
+        Component: lazy(() => import('../pages/Projects')),
+    },
+    NOT_FOUND: {
+        path: '*',
+        title: '404 - Page Not Found | Amr Muhamed',
+        description: 'The page you are looking for could not be found.',
+        Component: lazy(() => import('../pages/NotFound')),
+    },
+};

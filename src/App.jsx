@@ -1,4 +1,4 @@
-import {lazy, memo, Suspense} from "react";
+import {memo, Suspense} from "react";
 import {BrowserRouter as Router, Route, Routes, useLocation} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import {ThemeProvider} from './context/ThemeContext';
@@ -10,34 +10,8 @@ import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SpeedInsights from './components/SpeedInsights/SpeedInsights';
 import {OptimizedBlock} from './components/OptimizedMillion';
+import {ROUTES} from "./data/config.js";
 
-// Route configurations
-const ROUTES = {
-    HOME: {
-        path: '/',
-        title: 'Amr Muhamed | Full Stack Developer',
-        description: 'Experienced Full Stack Developer specializing in React, Django, and modern web technologies. View my portfolio of innovative projects.',
-        Component: lazy(() => import('./pages/LandingPage')),
-    },
-    ABOUT: {
-        path: '/about',
-        title: 'About Me | Amr Muhamed',
-        description: 'Learn about my journey as a Full Stack Developer, my skills, experiences, and what drives me to create innovative web solutions.',
-        Component: lazy(() => import('./pages/About')),
-    },
-    PROJECTS: {
-        path: '/projects',
-        title: 'Projects | Amr Muhamed',
-        description: 'Explore my portfolio of web development projects, featuring React, Django, and other modern technologies.',
-        Component: lazy(() => import('./pages/Projects')),
-    },
-    NOT_FOUND: {
-        path: '*',
-        title: '404 - Page Not Found | Amr Muhamed',
-        description: 'The page you are looking for could not be found.',
-        Component: lazy(() => import('./pages/NotFound')),
-    },
-};
 // Memoized SEO component
 const SEOHelmet = memo(({title, description, pathname}) => (
     <Helmet>
