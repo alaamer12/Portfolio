@@ -10,7 +10,7 @@ import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SpeedInsights from './components/SpeedInsights/SpeedInsights';
 import {OptimizedBlock} from './components/OptimizedMillion';
-
+import ChatBot from './components/ChatBot/ChatBot';
 
 // Route configurations
 const ROUTES = {
@@ -89,6 +89,9 @@ const App = () => (
                 <SpeedInsights />
                 <OptimizedBlock>
                     <Navbar />
+                    {/* <OptimizedBlock>
+                        <ChatBot />
+                    </OptimizedBlock> */}
                 </OptimizedBlock>
                 <Suspense fallback={<Loading/>}>
                     <Routes>
@@ -109,6 +112,7 @@ const App = () => (
                         ))}
                     </Routes>
                 </Suspense>
+
             </Router>
         </ThemeProvider>
     </ErrorBoundary>

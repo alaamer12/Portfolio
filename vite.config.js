@@ -130,6 +130,47 @@ export default defineConfig({
         clientsClaim: true
       }
     }),
+    {
+      name: 'chat-api',
+      configureServer(server) {
+        server.middlewares.use('/api/chat', async (req, res) => {
+          if (req.method !== 'POST') {
+            res.statusCode = 405;
+            res.end(JSON.stringify({ error: 'Method not allowed' }));
+            return;
+          }
+
+          // Parse request body
+          let body = '';
+          req.on('data', chunk => {
+            body += chunk.toString();
+          });
+
+          req.on('end', async () => {
+            try {
+              const data = JSON.parse(body);
+              const { message } = data;
+
+              if (!message) {
+                res.statusCode = 400;
+                res.end(JSON.stringify({ error: 'Message is required' }));
+                return;
+              }
+
+              const { handleChatRequest } = await import('./src/api/chat.js');
+              const result = await handleChatRequest(message);
+
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify(result));
+            } catch (error) {
+              console.error('Chat handler error:', error);
+              res.statusCode = 500;
+              res.end(JSON.stringify({ error: 'Internal server error' }));
+            }
+          });
+        });
+      },
+    },
     compression({
       algorithm: 'brotliCompress',
       exclude: [/\.(br)$/, /\.(gz)$/],
