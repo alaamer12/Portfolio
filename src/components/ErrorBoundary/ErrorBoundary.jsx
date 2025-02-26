@@ -13,7 +13,7 @@ class ErrorBoundary extends Component {
         };
     }
 
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError() {
         return {hasError: true};
     }
 
@@ -27,6 +27,7 @@ class ErrorBoundary extends Component {
     }
 
     handleReload = () => {
+        // noinspection JSUnresolvedReference
         window.location.reload();
     };
     handleGoHome = () => {
