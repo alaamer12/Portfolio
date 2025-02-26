@@ -2,19 +2,14 @@ import {useEffect} from 'react';
 import {useMeasure, useWindowScroll, useWindowSize} from 'react-use';
 import {getCLS, getFID, getLCP} from 'web-vitals';
 
-const usePerformanceOptimizations = () => {
-    const {y: scrollY} = useWindowScroll();
-    const {width} = useWindowSize();
-    const [ref, {height}] = useMeasure();
-
+const useWebVitals = () => {
     useEffect(() => {
-        // Report Web Vitals
-        getCLS(console.log);
-        getFID(console.log);
-        getLCP(console.log);
+        [getCLS, getFID, getLCP].forEach(metric => metric(console.log));
+    }, []);
+};
 
-        // Optimize images on viewport
-        const images = document.querySelectorAll('img[data-src]');
+const useLazyLoadImages = () => {
+    useEffect(() => {
         const imageObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach(entry => {
@@ -29,31 +24,36 @@ const usePerformanceOptimizations = () => {
             {rootMargin: '50px 0px'}
         );
 
-        images.forEach(img => imageObserver.observe(img));
+        document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
 
-        // Preload critical resources
-        const preloadCriticalResources = () => {
-            const resources = [
-                {type: 'style', href: '/styles/critical.css'},
-                {type: 'font', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'}
-            ];
+        return () => imageObserver.disconnect();
+    }, []);
+};
 
-            resources.forEach(resource => {
-                const link = document.createElement('link');
-                link.rel = resource.type === 'font' ? 'preload' : 'prefetch';
-                link.as = resource.type;
-                link.href = resource.href;
-                if (resource.type === 'font') link.crossOrigin = 'anonymous';
-                document.head.appendChild(link);
-            });
-        };
+const usePreloadResources = () => {
+    useEffect(() => {
+        const resources = [
+            {type: 'style', href: '/styles/critical.css'},
+            {type: 'font', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'}
+        ];
 
-        // Optimize scroll performance
+        resources.forEach(resource => {
+            const link = document.createElement('link');
+            link.rel = resource.type === 'font' ? 'preload' : 'prefetch';
+            link.as = resource.type;
+            link.href = resource.href;
+            if (resource.type === 'font') link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+        });
+    }, []);
+};
+
+const useOptimizedScroll = () => {
+    useEffect(() => {
         let ticking = false;
         const optimizeScroll = () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    // Apply optimizations based on scroll position
                     document.body.style.setProperty('--scroll-y', `${window.scrollY}px`);
                     ticking = false;
                 });
@@ -61,26 +61,33 @@ const usePerformanceOptimizations = () => {
             }
         };
 
-        // Enable passive scroll listeners
         window.addEventListener('scroll', optimizeScroll, {passive: true});
+        return () => window.removeEventListener('scroll', optimizeScroll);
+    }, []);
+};
 
-        // Optimize animations on low-end devices
-        const isLowEndDevice = () => {
-            return !matchMedia('(min-device-memory: 4gb)').matches ||
-                !matchMedia('(min-width: 768px)').matches ||
-                navigator.hardwareConcurrency < 4;
-        };
+const useDeviceOptimizations = () => {
+    useEffect(() => {
+        const isLowEndDevice = !matchMedia('(min-device-memory: 4gb)').matches ||
+            !matchMedia('(min-width: 768px)').matches ||
+            navigator.hardwareConcurrency < 4;
 
-        if (isLowEndDevice()) {
+        if (isLowEndDevice) {
             document.body.classList.add('reduce-motion');
         }
-
-        // Clean up
-        return () => {
-            window.removeEventListener('scroll', optimizeScroll);
-            images.forEach(img => imageObserver.unobserve(img));
-        };
     }, []);
+};
+
+const usePerformanceOptimizations = () => {
+    const {y: scrollY} = useWindowScroll();
+    const {width} = useWindowSize();
+    const [ref, {height}] = useMeasure();
+
+    useWebVitals();
+    useLazyLoadImages();
+    usePreloadResources();
+    useOptimizedScroll();
+    useDeviceOptimizations();
 
     return {
         ref,
