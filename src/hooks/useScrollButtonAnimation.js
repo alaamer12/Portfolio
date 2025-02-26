@@ -1,18 +1,23 @@
 import useOptimizedAnimation from "./useOptimizedAnimation.js";
 
 const useScrollButtonAnimation = (isVisible) => {
-    const {settings} = useOptimizedAnimation({threshold: 0.5, triggerOnce: false});
+    const { settings: { shouldAnimate, duration, ease, scale } } = useOptimizedAnimation({
+        threshold: 0.5,
+        triggerOnce: false
+    });
+
+    if (!shouldAnimate) return {};
+
+    const baseAnimation = { opacity: 0, scale: 0.8, y: 20 };
+    const visibleAnimation = { opacity: 1, scale: 1, y: 0 };
+
     return {
-        initial: settings.shouldAnimate ? {opacity: 0, scale: 0.8, y: 20} : {},
-        animate: settings.shouldAnimate ? {
-            opacity: isVisible ? 1 : 0,
-            scale: isVisible ? 1 : 0.8,
-            y: isVisible ? 0 : 20
-        } : {},
-        exit: settings.shouldAnimate ? {opacity: 0, scale: 0.8, y: 20} : {},
-        transition: {duration: settings.duration, ease: settings.ease},
-        whileHover: settings.shouldAnimate ? {scale: settings.scale} : {},
-        whileTap: settings.shouldAnimate ? {scale: 0.95} : {}
+        initial: baseAnimation,
+        animate: isVisible ? visibleAnimation : baseAnimation,
+        exit: baseAnimation,
+        transition: { duration, ease },
+        whileHover: { scale },
+        whileTap: { scale: 0.95 }
     };
 };
 
