@@ -16,7 +16,7 @@
 }
 
 .shape-1 {
-    background: var(--shape1-color, #ff6b6b);
+    /*background: var(--shape1-color, #ff6b6b);*/
     width: 300px;
     height: 300px;
     top: -150px;
@@ -25,7 +25,7 @@
 }
 
 .shape-2 {
-    background: var(--shape2-color, #4ecdc4);
+    /*background: var(--shape2-color, #4ecdc4);*/
     width: 400px;
     height: 400px;
     top: 60%;
@@ -34,7 +34,7 @@
 }
 
 .shape-3 {
-    background: var(--shape3-color, #ffe66d);
+    /*background: var(--shape3-color, #ffe66d);*/
     width: 200px;
     height: 200px;
     bottom: 10%;
@@ -43,7 +43,7 @@
 }
 
 .shape-4 {
-    background: var(--shape4-color, #6c5ce7);
+    /*background: var(--shape4-color, #6c5ce7);*/
     width: 250px;
     height: 250px;
     top: 20%;
