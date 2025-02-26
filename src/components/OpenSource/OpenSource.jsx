@@ -1,3 +1,5 @@
+import {memo} from 'react'
+
 import {motion} from 'framer-motion';
 import {FaGithub, FaPython} from 'react-icons/fa';
 import {OptimizedBlock} from '../OptimizedMillion';
@@ -30,65 +32,78 @@ const packages = [
     },
 ];
 
-const PackageCard = ({pkg, index}) => {
+const PackageIcon = memo(({Icon, className}) => (
+    <Icon className={`text-accent text-xl md:text-2xl mr-2 ${className}`}/>
+));
+
+const PackageTitle = memo(({name}) => (
+    <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">{name}</h3>
+));
+
+const PackageDescription = memo(({description}) => (
+    <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4">{description}</p>
+));
+
+const PackageLink = memo(({href, Icon, settings}) => (
+    <motion.a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
+        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+    >
+        <Icon className="text-lg md:text-xl"/>
+    </motion.a>
+));
+
+const PackageLinks = memo(({github, pypi, settings}) => (
+    <div className="flex space-x-4">
+        <PackageLink href={github} Icon={FaGithub} settings={settings}/>
+        <PackageLink href={pypi} Icon={FaPython} settings={settings}/>
+    </div>
+));
+
+const PackageCard = memo(({pkg, index}) => {
     const {settings, ref, inView} = useOptimizedAnimation({
         threshold: 0.1,
         triggerOnce: true
     });
 
+    const cardAnimation = {
+        initial: settings.shouldAnimate ? {
+            opacity: 0,
+            x: index % 2 === 0 ? -settings.distance : settings.distance
+        } : {},
+        animate: inView && settings.shouldAnimate ? {
+            opacity: 1,
+            x: 0
+        } : {},
+        transition: {
+            duration: settings.duration,
+            delay: index * (settings.isMobile ? 0.05 : 0.1),
+            ease: settings.ease,
+            useTransform: settings.useTransform
+        }
+    };
+
     return (
         <OptimizedBlock threshold={12}>
             <motion.div
                 ref={ref}
-                initial={settings.shouldAnimate ? {
-                    opacity: 0,
-                    x: index % 2 === 0 ? -settings.distance : settings.distance
-                } : {}}
-                animate={inView && settings.shouldAnimate ? {
-                    opacity: 1,
-                    x: 0
-                } : {}}
-                transition={{
-                    duration: settings.duration,
-                    delay: index * (settings.isMobile ? 0.05 : 0.1),
-                    ease: settings.ease,
-                    useTransform: settings.useTransform
-                }}
+                {...cardAnimation}
                 className="bg-surface-light dark:bg-surface rounded-lg p-4 md:p-6 shadow-light-lg dark:shadow-dark-lg hover:shadow-light-xl dark:hover:shadow-dark-xl transition-all"
             >
                 <div className="flex items-center mb-4">
-                    <FaPython className="text-accent text-xl md:text-2xl mr-2"/>
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">{pkg.name}</h3>
+                    <PackageIcon Icon={FaPython}/>
+                    <PackageTitle name={pkg.name}/>
                 </div>
-
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4">{pkg.description}</p>
-
-                <div className="flex space-x-4">
-                    <motion.a
-                        href={pkg.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
-                    >
-                        <FaGithub className="text-lg md:text-xl"/>
-                    </motion.a>
-                    <motion.a
-                        href={pkg.pypi}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-                        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
-                    >
-                        <FaPython className="text-lg md:text-xl"/>
-                    </motion.a>
-                </div>
+                <PackageDescription description={pkg.description}/>
+                <PackageLinks github={pkg.github} pypi={pkg.pypi} settings={settings}/>
             </motion.div>
         </OptimizedBlock>
     );
-};
+});
 
 const OpenSource = () => {
     const {settings} = useOptimizedAnimation();
