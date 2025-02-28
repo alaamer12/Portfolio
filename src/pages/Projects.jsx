@@ -187,85 +187,34 @@ const ProjectsSEO = () => (
         }}
     />
 );
+
+
 const ProjectSection = memo(({title, projects, renderProjectCard}) => (
     <OptimizedBlock className="mb-16" threshold={8}>
-        <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">{title}</h2>
-            <OptimizedLoop
-                items={projects}
-                renderItem={renderProjectCard}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 auto-rows-fr"
-                enableCache={true}
-            />
-        </div>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">{title}</h2>
+        <OptimizedLoop items={projects} renderItem={renderProjectCard} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 auto-rows-fr" enableCache={true} />
     </OptimizedBlock>
 ));
 
 const ProjectsHeader = memo(({settings}) => (
     <OptimizedBlock className="mb-12" threshold={8}>
-        <motion.h1
-            className="text-4xl font-bold text-gray-900 dark:text-white"
-            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
-            animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
-            transition={{
-                duration: settings.duration,
-                ease: settings.ease
-            }}
-        >
-            All Projects
-        </motion.h1>
+        <motion.h1 className="text-4xl font-bold text-gray-900 dark:text-white" {...settings.shouldAnimate && {initial: {opacity: 0, y: settings.distance}, animate: {opacity: 1, y: 0}, transition: {duration: settings.duration, ease: settings.ease}}}>All Projects</motion.h1>
     </OptimizedBlock>
 ));
 
 const GitHubLink = memo(({settings}) => (
-    <motion.div
-        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
-        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
-        transition={{
-            duration: settings.duration,
-            delay: 0.2,
-            ease: settings.ease
-        }}
-        className="mt-12 sm:mt-16 flex justify-center"
-    >
-        <motion.a
-            href="https://github.com/alaamer12"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-base sm:text-lg font-semibold"
-            whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-            whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
-        >
+    <motion.div className="mt-12 sm:mt-16 flex justify-center" {...settings.shouldAnimate && {initial: {opacity: 0, y: settings.distance}, animate: {opacity: 1, y: 0}, transition: {duration: settings.duration, delay: 0.2, ease: settings.ease}}}>
+        <motion.a href="https://github.com/alaamer12" target="_blank" rel="noopener noreferrer" className="group relative inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-base sm:text-lg font-semibold" {...settings.shouldAnimate && {whileHover: {scale: settings.scale}, whileTap: {scale: 0.95}}}>
             <span>View More Projects on GitHub</span>
-            <svg
-                className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
+            <svg className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
         </motion.a>
     </motion.div>
 ));
 
 const renderProjectCard = (project, settings, index) => (
-    <motion.div
-        key={index}
-        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
-        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
-        transition={{
-            duration: settings.duration,
-            delay: index * (settings.isMobile ? 0.05 : 0.1),
-            ease: settings.ease,
-            useTransform: settings.useTransform
-        }}
-    >
+    <motion.div key={index} {...settings.shouldAnimate && {initial: {opacity: 0, y: settings.distance}, animate: {opacity: 1, y: 0}, transition: {duration: settings.duration, delay: index * (settings.isMobile ? 0.05 : 0.1), ease: settings.ease, useTransform: settings.useTransform}}}>
         <ProjectCard project={project} settings={settings}/>
     </motion.div>
 );
@@ -276,17 +225,8 @@ const Projects = () => {
     const baseUrl = '';
 
     const {trueFamilyProjects, utilityProjects, businessProjects} = useMemo(() => {
-        const {
-            trueFamilyProjects: unsortedTrueFamilyProjects,
-            utilityProjects: unsortedUtilityProjects,
-            businessProjects: unsortedBusinessProjects
-        } = getProjectsData(baseUrl, isDark);
-
-        return {
-            trueFamilyProjects: sortProjects(unsortedTrueFamilyProjects),
-            utilityProjects: sortProjects(unsortedUtilityProjects),
-            businessProjects: sortProjects(unsortedBusinessProjects)
-        };
+        const {trueFamilyProjects: unsortedTrueFamilyProjects, utilityProjects: unsortedUtilityProjects, businessProjects: unsortedBusinessProjects} = getProjectsData(baseUrl, isDark);
+        return {trueFamilyProjects: sortProjects(unsortedTrueFamilyProjects), utilityProjects: sortProjects(unsortedUtilityProjects), businessProjects: sortProjects(unsortedBusinessProjects)};
     }, [baseUrl, isDark]);
 
     return (
@@ -296,22 +236,10 @@ const Projects = () => {
             <div className="relative z-10 w-full py-16">
                 <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
                     <ProjectsHeader settings={settings}/>
-                    <motion.div
-                        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
-                        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
-                        transition={{
-                            duration: settings.duration,
-                            ease: settings.ease,
-                            staggerChildren: settings.staggerChildren
-                        }}
-                        className="space-y-8 sm:space-y-12 md:space-y-16"
-                    >
-                        <ProjectSection title="Business Projects" projects={businessProjects}
-                                        renderProjectCard={renderProjectCard}/>
-                        <ProjectSection title="True Family Projects" projects={trueFamilyProjects}
-                                        renderProjectCard={renderProjectCard}/>
-                        <ProjectSection title="Utility Projects" projects={utilityProjects}
-                                        renderProjectCard={renderProjectCard}/>
+                    <motion.div className="space-y-8 sm:space-y-12 md:space-y-16" {...settings.shouldAnimate && {initial: {opacity: 0, y: settings.distance}, animate: {opacity: 1, y: 0}, transition: {duration: settings.duration, ease: settings.ease, staggerChildren: settings.staggerChildren}}}>
+                        {[{title: "Business Projects", projects: businessProjects}, {title: "True Family Projects", projects: trueFamilyProjects}, {title: "Utility Projects", projects: utilityProjects}].map(({title, projects}) => (
+                            <ProjectSection key={title} title={title} projects={projects} renderProjectCard={renderProjectCard} />
+                        ))}
                     </motion.div>
                     <GitHubLink settings={settings}/>
                 </div>
@@ -320,4 +248,4 @@ const Projects = () => {
     );
 };
 
-export default Projects;
+export default memo(Projects);

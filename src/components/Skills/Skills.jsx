@@ -166,9 +166,9 @@ const SkillCards = memo(({ skills }) => {
     }, []);
     
     return (
-        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6">
             {skills.map((skill, index) => (
-                <div key={skill.title} className="min-h-[200px]">
+                <div key={skill.title} className="min-h-[150px] sm:min-h-[175px] md:min-h-[200px]">
                     {visibleCards.has(index.toString()) && (
                         <TechnicalSkillCard {...skill} />
                     )}

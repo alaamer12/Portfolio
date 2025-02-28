@@ -4,10 +4,9 @@ import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
 import {OptimizedBlock} from '../components/OptimizedMillion';
-import usePerformanceOptimizations from '../hooks/usePerformanceOptimizations';
 import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
 import useScrollButtonAnimation from "../hooks/useScrollButtonAnimation.js";
-import {useInView} from "react-intersection-observer";
+
 
 // Lazy load components with dynamic imports and prefetch
 const Hero = lazy(() => {
@@ -121,55 +120,6 @@ const ContentSections = memo(() => {
     );
 });
 
-const ScrollHandler = memo(() => {
-    const [isVisible, setIsVisible] = useState(false);
-    const scrolling = useRef(false);
-    const {isLowEndDevice} = usePerformanceOptimizations();
-
-    const {inView} = useInView({
-        threshold: 0,
-        rootMargin: '-300px 0px 0px 0px',
-        triggerOnce: false
-    });
-
-    useEffect(() => {
-        setIsVisible(!inView);
-    }, [inView]);
-
-    const scrollToTop = useCallback(() => {
-        if (scrolling.current) return;
-        scrolling.current = true;
-
-        const duration = isLowEndDevice ? 300 : 500;
-        const start = window.pageYOffset;
-        const startTime = performance.now();
-
-        const easeOutQuart = t => 1 - (--t) * t * t * t;
-
-        const animateScroll = () => {
-            const elapsed = performance.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-
-            window.scrollTo(0, start * (1 - easeOutQuart(progress)));
-
-            if (progress < 1) {
-                requestAnimationFrame(animateScroll);
-            } else {
-                scrolling.current = false;
-            }
-        };
-
-        requestAnimationFrame(animateScroll);
-    }, [isLowEndDevice]);
-
-    return isVisible ? (
-        <ScrollToTopButton
-            isVisible={isVisible}
-            onClick={scrollToTop}
-        />
-    ) : null;
-});
-
 const LandingPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const loadingTimerRef = useRef(null);
@@ -186,7 +136,7 @@ const LandingPage = () => {
             if (imagesLoaded) {
                 setIsLoading(false);
             }
-        }, 800);
+        }, 200);
         
         return () => {
             if (loadingTimerRef.current) {
@@ -248,7 +198,6 @@ const LandingPage = () => {
                         </>
                     )}
                 </Suspense>
-                <ScrollHandler/>
             </div>
         </>
     );
