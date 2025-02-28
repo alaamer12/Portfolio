@@ -177,7 +177,7 @@ const SocialLinks = memo(() => (
 const HeroImage = memo(({ imageAnimation, isMobile }) => (
     <motion.div {...imageAnimation} className="relative mt-8 lg:mt-0">
         <div className="absolute inset-0 bg-gradient-to-r from-strawberry/20 to-cherry-pie/20 dark:from-strawberry-dark/20 dark:to-cherry-pie-dark/20 rounded-3xl filter blur-xl opacity-50"/>
-        <div className="relative group cursor-pointer" onClick={() => window.location.href = '/about'}>
+        <div className="relative group cursor-pointer transition-all duration-300 hover:shadow-2xl" onClick={() => window.location.href = '/about'}>
             <div className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-full mx-auto overflow-hidden rounded-3xl">
                 <img
                     src={heroImage}
