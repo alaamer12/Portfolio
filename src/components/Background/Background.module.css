@@ -15,173 +15,345 @@
     background: var(--bg-primary-dark, #0a0a0a);
 }
 
-.backgroundGradient {
-    position: absolute;
-    inset: -50%;
-    background: radial-gradient(
-        circle at center,
-        transparent 0%,
-        rgba(var(--accent-rgb, 0, 120, 212), 0.03) 40%,
-        transparent 70%
-    );
-    animation: rotate 60s linear infinite;
-    pointer-events: none;
-}
-
-.hexGrid {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(15, 1fr);
-    transform: perspective(1000px) rotateX(60deg);
-    transform-origin: center center;
-    opacity: 0.1;
-}
-
-.hexCell {
-    position: relative;
-    aspect-ratio: 1;
-    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-    background: linear-gradient(
-        45deg,
-        rgba(var(--accent-rgb, 0, 120, 212), 0.1),
-        rgba(var(--accent-rgb, 0, 120, 212), 0.2)
-    );
-    transition: opacity 0.3s ease;
-}
-
-.hexCell::before {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    background: inherit;
-    clip-path: inherit;
-    opacity: 0.7;
-}
-
-.hexCell:hover {
-    opacity: 1;
-    animation: pulse 2s infinite;
-}
-
-.glowingLines {
+.blobContainer {
     position: absolute;
     inset: 0;
     overflow: hidden;
-    transform: translateZ(0);
+    opacity: 0.6;
 }
 
-.line {
+.blob {
     position: absolute;
-    width: 100vw;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(var(--accent-rgb, 0, 120, 212), 0.2),
-        rgba(var(--accent-rgb, 0, 120, 212), 0.4),
-        rgba(var(--accent-rgb, 0, 120, 212), 0.2),
-        transparent
-    );
-    animation: moveLine 8s linear infinite;
-    animation-delay: calc(var(--index) * 1.6s);
-    opacity: 0.3;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.4;
+    animation: blobFloat 20s infinite;
+    mix-blend-mode: normal;
 }
 
-.particleField {
+.blob1 {
+    width: 800px;
+    height: 800px;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    top: -20%;
+    left: -10%;
+    animation-delay: -5s;
+}
+
+.blob2 {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+    top: 60%;
+    right: -10%;
+    animation-delay: -2s;
+}
+
+.blob3 {
+    width: 700px;
+    height: 700px;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    bottom: -20%;
+    left: 30%;
+    animation-delay: -8s;
+}
+
+.dark .blob1 {
+    opacity: 0.15;
+}
+
+.dark .blob2 {
+    opacity: 0.15;
+}
+
+.dark .blob3 {
+    opacity: 0.15;
+}
+
+.particleCanvas {
     position: absolute;
     inset: 0;
-    perspective: 1000px;
+    pointer-events: none;
 }
 
-.particle {
+.patternGrid {
     position: absolute;
-    width: 2px;
-    height: 2px;
-    background: rgba(var(--accent-rgb, 0, 120, 212), 0.5);
-    border-radius: 50%;
-    animation: float var(--duration) linear infinite;
-    animation-delay: var(--delay);
+    inset: 0;
+    overflow: hidden;
+}
+
+.pattern {
+    position: absolute;
     opacity: 0;
+    animation: patternAppear 1s ease-out forwards;
+}
+
+.pattern-dots {
+    width: 20px;
+    height: 20px;
+    background-image: radial-gradient(circle at center, currentColor 2px, transparent 2px);
+    background-size: 8px 8px;
+}
+
+.pattern-cross {
+    width: 25px;
+    height: 25px;
+    background: 
+        linear-gradient(currentColor 2px, transparent 2px),
+        linear-gradient(90deg, currentColor 2px, transparent 2px);
+    background-size: 10px 10px;
+}
+
+.pattern-circle {
+    width: 30px;
+    height: 30px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+}
+
+.pattern-square {
+    width: 22px;
+    height: 22px;
+    border: 2px solid currentColor;
+}
+
+.pattern {
+    color: rgba(0, 0, 0, 0.06);
+}
+
+.dark .pattern {
+    color: rgba(255, 255, 255, 0.08);
 }
 
 .overlay {
     position: absolute;
     inset: 0;
     background: radial-gradient(
-        circle at 50% 50%,
+        circle at center,
         transparent 0%,
-        rgba(var(--bg-rgb, 255, 255, 255), 0.03) 70%,
-        rgba(var(--bg-rgb, 255, 255, 255), 0.1) 100%
+        rgba(255, 255, 255, 0.95) 100%
     );
     pointer-events: none;
 }
 
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-@keyframes moveLine {
-    0% {
-        transform: translateY(-100%) translateX(-100%) rotate(-45deg);
-    }
-    100% {
-        transform: translateY(200%) translateX(200%) rotate(-45deg);
-    }
-}
-
-@keyframes float {
-    0% {
-        transform: translate3d(
-            calc(random() * 100vw),
-            calc(random() * 100vh),
-            calc(random() * 500px)
-        );
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate3d(
-            calc(random() * 100vw),
-            calc(random() * 100vh),
-            calc(random() * -500px)
-        );
-        opacity: 0;
-    }
-}
-
-/* Dark mode enhancements */
-.dark .hexCell {
-    background: linear-gradient(
-        45deg,
-        rgba(var(--accent-rgb, 0, 120, 212), 0.15),
-        rgba(var(--accent-rgb, 0, 120, 212), 0.3)
+.dark .overlay {
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(10, 10, 10, 0.92) 100%
     );
 }
 
-.dark .line {
-    opacity: 0.4;
+.codeGrid {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
 }
 
-.dark .particle {
-    background: rgba(var(--accent-rgb, 0, 120, 212), 0.7);
+.codeBlock {
+    position: absolute;
+    padding: 12px;
+    margin: 0;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    border-radius: 8px;
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(var(--accent-rgb, 0, 112, 243), 0.2);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(var(--accent-rgb, 0, 112, 243), 0.1);
+    transform: rotate(0deg) scale(0);
+    opacity: 0;
+    animation: codeBlockAppear 3s ease-out forwards;
+    transition: all 0.3s ease;
+}
+
+.codeBlock:hover {
+    transform: scale(1.05) !important;
+    z-index: 1;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(var(--accent-rgb, 0, 112, 243), 0.2);
+}
+
+.langLabel {
+    display: block;
+    font-size: 10px;
+    color: rgba(var(--accent-rgb, 0, 112, 243), 1);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.linesContainer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(var(--accent-rgb, 0, 112, 243), 0.15) 50%,
+        transparent
+    );
+    transform-origin: 0 0;
+    animation: lineRotate 20s linear infinite;
+}
+
+/* Language-specific styles - Light Theme */
+.lang-javascript code {
+    color: #24292e;
+}
+.lang-javascript .keyword { color: #d73a49; }
+.lang-javascript .string { color: #032f62; }
+.lang-javascript .function { color: #6f42c1; }
+.lang-javascript .operator { color: #005cc5; }
+
+.lang-python code {
+    color: #24292e;
+}
+.lang-python .keyword { color: #d73a49; }
+.lang-python .string { color: #032f62; }
+.lang-python .function { color: #6f42c1; }
+
+.lang-rust code {
+    color: #24292e;
+}
+.lang-rust .keyword { color: #d73a49; }
+.lang-rust .string { color: #032f62; }
+.lang-rust .function { color: #6f42c1; }
+
+.lang-cpp code {
+    color: #24292e;
+}
+.lang-cpp .keyword { color: #d73a49; }
+.lang-cpp .string { color: #032f62; }
+.lang-cpp .function { color: #6f42c1; }
+
+.lang-go code {
+    color: #24292e;
+}
+.lang-go .keyword { color: #d73a49; }
+.lang-go .string { color: #032f62; }
+.lang-go .function { color: #6f42c1; }
+
+.lang-java code {
+    color: #24292e;
+}
+.lang-java .keyword { color: #d73a49; }
+.lang-java .string { color: #032f62; }
+.lang-java .function { color: #6f42c1; }
+
+/* Dark mode styles */
+.dark .codeBlock {
+    color: #e1e4e8;
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(var(--accent-rgb, 0, 112, 243), 0.15);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(var(--accent-rgb, 0, 112, 243), 0.1);
+}
+
+.dark .codeBlock:hover {
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(var(--accent-rgb, 0, 112, 243), 0.2);
+}
+
+/* Dark mode syntax highlighting */
+.dark .lang-javascript code,
+.dark .lang-python code,
+.dark .lang-rust code,
+.dark .lang-cpp code,
+.dark .lang-go code,
+.dark .lang-java code { color: #e1e4e8; }
+
+.dark .keyword { color: #ff79c6; }
+.dark .string { color: #50fa7b; }
+.dark .number { color: #bd93f9; }
+.dark .function { color: #8be9fd; }
+.dark .comment { color: #6272a4; }
+
+@keyframes blobFloat {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) rotate(120deg) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg) scale(0.9);
+    }
+}
+
+@keyframes patternAppear {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes codeBlockAppear {
+    0% {
+        transform: rotate(0deg) scale(0);
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes lineRotate {
+    0% {
+        transform: rotate(0deg) translateY(-50%);
+    }
+    100% {
+        transform: rotate(360deg) translateY(-50%);
+    }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .hexGrid {
-        grid-template-columns: repeat(10, 1fr);
+    .blob {
+        filter: blur(40px);
     }
     
-    .particle {
-        display: none;
+    .blob1 {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .blob2 {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .blob3 {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .codeBlock {
+        font-size: 10px;
+        padding: 8px;
+    }
+
+    .langLabel {
+        font-size: 8px;
     }
 }
