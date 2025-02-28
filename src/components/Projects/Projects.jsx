@@ -1,4 +1,4 @@
-import {memo, useMemo} from 'react';
+import {memo, useMemo, useState} from 'react';
 import {motion} from 'framer-motion';
 import {FaExternalLinkAlt, FaGithub} from 'react-icons/fa';
 import {useTheme} from '../../context/ThemeContext';
@@ -35,6 +35,13 @@ ProjectLinks.displayName = 'ProjectLinks';
 
 const ProjectImage = memo(({displayImage, title}) => {
     const {settings} = useOptimizedAnimation();
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isError, setIsError] = useState(false);
+
+    const imageStyle = useMemo(() => ({
+        opacity: isLoaded ? 1 : 0,
+        transition: 'opacity 0.3s ease-in-out'
+    }), [isLoaded]);
 
     return (
         <motion.div
@@ -46,12 +53,23 @@ const ProjectImage = memo(({displayImage, title}) => {
                 damping: settings.isMobile ? 15 : 10
             }}
         >
+            {!isLoaded && !isError && (
+                <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-md" />
+            )}
             <img
                 src={displayImage}
                 alt={title}
                 className="w-full h-full sm:w-auto sm:h-auto sm:max-w-[90%] sm:max-h-[90%] object-contain"
                 loading="lazy"
+                style={imageStyle}
+                onLoad={() => setIsLoaded(true)}
+                onError={() => setIsError(true)}
             />
+            {isError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-md">
+                    <span className="text-sm text-gray-500">Failed to load image</span>
+                </div>
+            )}
         </motion.div>
     );
 });
@@ -75,16 +93,32 @@ const ProjectCaption = memo(({title, description}) => (
 ProjectCaption.displayName = 'ProjectCaption';
 
 const ProjectTags = memo(({tags}) => {
+    const {settings} = useOptimizedAnimation();
+    const [hoveredTag, setHoveredTag] = useState(null);
+
     const renderedTags = useMemo(() => (
-        tags.map((tag, index) => (
-            <span
-                key={index}
-                className="px-2 cursor-pointer py-0.5 text-xs rounded-full bg-gray-50 dark:bg-primary/10 text-gray-600 dark:text-white/50 hover:dark:text-primary-light transition-colors"
-            >
-                {tag}
-            </span>
-        ))
-    ), [tags]);
+        tags.map((tag, index) => {
+            const isHovered = hoveredTag === index;
+            return (
+                <motion.span
+                    key={index}
+                    className="px-2 cursor-pointer py-0.5 text-xs rounded-full bg-gray-50 dark:bg-primary/10 text-gray-600 dark:text-white/50 hover:dark:text-primary-light transition-colors"
+                    onHoverStart={() => setHoveredTag(index)}
+                    onHoverEnd={() => setHoveredTag(null)}
+                    animate={settings.shouldAnimate && isHovered ? {
+                        scale: settings.scale,
+                        transition: {
+                            type: "spring",
+                            stiffness: settings.isMobile ? 300 : 400,
+                            damping: settings.isMobile ? 15 : 10
+                        }
+                    } : {}}
+                >
+                    {tag}
+                </motion.span>
+            );
+        })
+    ), [tags, hoveredTag, settings]);
 
     return (
         <div className="flex flex-wrap gap-1.5">
@@ -228,5 +262,3 @@ const Projects = memo(() => {
 Projects.displayName = 'Projects';
 
 export default Projects;
-
-

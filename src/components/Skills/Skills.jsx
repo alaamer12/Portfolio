@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useState, useEffect, useRef} from 'react';
 import {motion, useReducedMotion} from 'framer-motion';
 import {useInView} from 'react-intersection-observer';
 import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
@@ -82,29 +82,101 @@ const AnimatedCard = memo(({children, isMobile}) => (
     </motion.div>
 ));
 
-const SkillIcon = memo(({Icon}) => (
-    <Icon className="w-6 h-6 md:w-8 md:h-8 text-primary dark:text-primary-light"/>
-));
+const SkillIcon = memo(({Icon}) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+    
+    useEffect(() => {
+        setIsLoaded(true);
+    }, []);
+    
+    return (
+        <div className="relative w-6 h-6 md:w-8 md:h-8">
+            {!isLoaded && (
+                <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full" />
+            )}
+            {isLoaded && (
+                <Icon className="w-full h-full text-primary dark:text-primary-light" />
+            )}
+        </div>
+    );
+});
 
 const SkillName = memo(({name}) => (
     <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
 ));
 
-const SkillProgressBar = memo(({level, isMobile, prefersReducedMotion}) => (
-    <div className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 md:h-2">
-        <motion.div
-            initial={{width: 0}}
-            whileInView={{width: `${level}%`}}
-            viewport={{once: true}}
-            transition={{
-                duration: isMobile ? 0.5 : 1,
-                ease: "easeOut",
-                useTransform: !isMobile && !prefersReducedMotion
-            }}
-            className="bg-primary dark:bg-primary-light h-1.5 md:h-2 rounded-full"
-        />
-    </div>
-));
+const SkillProgressBar = memo(({level, isMobile, prefersReducedMotion}) => {
+    const [isInView, setIsInView] = useState(false);
+    const progressRef = useRef(null);
+    
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+        
+        observer.observe(progressRef.current);
+        return () => observer.disconnect();
+    }, []);
+    
+    return (
+        <div ref={progressRef} className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 md:h-2">
+            <motion.div
+                className="bg-primary dark:bg-primary-light rounded-full h-full"
+                initial={{ width: 0 }}
+                animate={isInView && !prefersReducedMotion ? { width: `${level}%` } : { width: 0 }}
+                transition={{
+                    duration: isMobile ? 0.5 : 1,
+                    ease: "easeOut",
+                    useTransform: !isMobile
+                }}
+            />
+        </div>
+    );
+});
+
+const SkillCards = memo(({ skills }) => {
+    const [visibleCards, setVisibleCards] = useState(new Set());
+    const containerRef = useRef(null);
+    
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setVisibleCards(prev => new Set([...prev, entry.target.dataset.index]));
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+        
+        const elements = containerRef.current.children;
+        Array.from(elements).forEach((el, index) => {
+            el.dataset.index = index;
+            observer.observe(el);
+        });
+        
+        return () => observer.disconnect();
+    }, []);
+    
+    return (
+        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skills.map((skill, index) => (
+                <div key={skill.title} className="min-h-[200px]">
+                    {visibleCards.has(index.toString()) && (
+                        <TechnicalSkillCard {...skill} />
+                    )}
+                </div>
+            ))}
+        </div>
+    );
+});
 
 const SkillCard = memo(({Icon, name, level, title, description, url}) => {
     if (Icon && level !== undefined) {
@@ -232,13 +304,7 @@ const Skills = () => {
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
                         Core Technologies
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                        {mainSkills.map((skill, index) => (
-                            <OptimizedBlock key={index} enableCache={true} threshold={20}>
-                                <SkillCard key={index} {...skill} />
-                            </OptimizedBlock>
-                        ))}
-                    </div>
+                    <SkillCards skills={mainSkills} />
                 </div>
 
                 {/* Other Skills */}

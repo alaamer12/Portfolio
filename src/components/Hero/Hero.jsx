@@ -1,6 +1,6 @@
 // noinspection JSValidateTypes
 
-import {lazy, memo, Suspense} from 'react';
+import {lazy, memo, Suspense, useState, useEffect, useMemo} from 'react';
 import {motion, useReducedMotion} from 'framer-motion';
 import {FaGithub, FaLinkedin} from 'react-icons/fa';
 import {OptimizedBlock} from '../OptimizedMillion';
@@ -92,22 +92,70 @@ const SocialLink = memo(({href, icon: Icon}) => {
 
 SocialLink.displayName = 'SocialLink';
 
-// Main Hero component with optimized animations and loading
-const HeroText = memo(({ textAnimation }) => (
-    <motion.div {...textAnimation} className="space-y-8 text-center lg:text-left">
-        <h1 className="lg:text-7xl md:text-7xl font-bold relative">
-            <span className="inline-block bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
-                Amr{' '}
-                <span className="inline-block bg-gradient-to-r from-cherry-pie via-accent to-strawberry dark:from-cherry-pie-light dark:via-accent-light dark:to-strawberry-light bg-clip-text text-transparent">
-                    Muhamed
+// Optimize hero image loading
+const useHeroImage = () => {
+    const [imageLoaded, setImageLoaded] = useState(false);
+    
+    useEffect(() => {
+        const img = new Image();
+        img.src = heroImage;
+        img.onload = () => setImageLoaded(true);
+    }, []);
+    
+    return imageLoaded;
+};
+
+// Optimize stats rendering
+const useOptimizedStats = (isMobile) => {
+    return useMemo(() => [
+        {
+            number: "150+",
+            text: "GitHub Repositories",
+            delay: isMobile ? 0.1 : 0.2,
+            color: "text-gray-800 dark:text-white",
+            hoverColor: "text-primary dark:text-primary-light"
+        },
+        {
+            number: "86%",
+            text: "Python Projects",
+            delay: isMobile ? 0.15 : 0.3,
+            color: "text-gray-800 dark:text-white",
+            hoverColor: "text-strawberry dark:text-strawberry-light"
+        },
+        {
+            number: "10+",
+            text: "PyPI Packages",
+            delay: isMobile ? 0.2 : 0.4,
+            color: "text-gray-800 dark:text-white",
+            hoverColor: "text-cherry-pie dark:text-cherry-pie-light"
+        }
+    ], [isMobile]); // Only recompute when device type changes
+};
+
+const HeroText = memo(({ textAnimation }) => {
+    const imageLoaded = useHeroImage();
+    
+    return (
+        <motion.div 
+            {...textAnimation} 
+            className={`space-y-8 text-center lg:text-left transition-opacity duration-500 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+        >
+            <h1 className="lg:text-7xl md:text-7xl font-bold relative">
+                <span className="inline-block bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
+                    Amr{' '}
+                    <span className="inline-block bg-gradient-to-r from-cherry-pie via-accent to-strawberry dark:from-cherry-pie-light dark:via-accent-light dark:to-strawberry-light bg-clip-text text-transparent">
+                        Muhamed
+                    </span>
                 </span>
-            </span>
-        </h1>
-        <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-700 dark:text-gray-300 font-light">
-            Python and Backend Expert
-        </h2>
-    </motion.div>
-));
+            </h1>
+            <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-700 dark:text-gray-300 font-light">
+                Python and Backend Expert
+            </h2>
+        </motion.div>
+    );
+});
 
 const StatsSection = memo(({ stats }) => (
     <div className="flex justify-center lg:justify-start space-x-8 sm:space-x-12 md:space-x-16 cursor-default">
@@ -158,7 +206,7 @@ const Hero = memo(() => {
             <HeroContent>
                 <LeftColumn>
                     <HeroText textAnimation={useTextAnimation(prefersReducedMotion, isMobile)} />
-                    <StatsSection stats={useHeroStats(isMobile)} />
+                    <StatsSection stats={useOptimizedStats(isMobile)} />
                     <SocialLinks />
                 </LeftColumn>
                 <RightColumn>
@@ -193,30 +241,6 @@ const LeftColumn = ({children}) => (
 );
 
 const RightColumn = ({children}) => children;
-
-const useHeroStats = (isMobile) => [
-    {
-        number: "150+",
-        text: "GitHub Repositories",
-        delay: isMobile ? 0.1 : 0.2,
-        color: "text-gray-800 dark:text-white",
-        hoverColor: "text-primary dark:text-primary-light"
-    },
-    {
-        number: "86%",
-        text: "Python Projects",
-        delay: isMobile ? 0.15 : 0.3,
-        color: "text-gray-800 dark:text-white",
-        hoverColor: "text-strawberry dark:text-strawberry-light"
-    },
-    {
-        number: "10+",
-        text: "PyPI Packages",
-        delay: isMobile ? 0.2 : 0.4,
-        color: "text-gray-800 dark:text-white",
-        hoverColor: "text-cherry-pie dark:text-cherry-pie-light"
-    }
-];
 
 const useTextAnimation = (prefersReducedMotion, isMobile) => 
     prefersReducedMotion ? false : {

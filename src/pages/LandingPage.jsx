@@ -1,5 +1,5 @@
-import {lazy, memo, Suspense, useCallback, useEffect, useRef, useState} from "react";
-import {motion} from 'framer-motion';
+import {lazy, memo, Suspense, useCallback, useEffect, useRef, useState, useLayoutEffect, useMemo} from "react";
+import {motion, useReducedMotion} from 'framer-motion';
 import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
@@ -29,8 +29,6 @@ const ScrollButtonIcon = () => (
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18"/>
     </svg>
 );
-
-// Animation settings hook
 
 
 // Enhanced scroll button with optimized animations
@@ -95,19 +93,33 @@ const HeroSection = memo(() => {
     );
 });
 
-const ContentSections = memo(() => (
-    <>
-        <OptimizedBlock id="skills-section" threshold={8}>
-            <Skills/>
-        </OptimizedBlock>
-        <OptimizedBlock id="projects-section" threshold={8}>
-            <Projects/>
-        </OptimizedBlock>
-        <OptimizedBlock id="opensource-section" threshold={8}>
-            <OpenSource/>
-        </OptimizedBlock>
-    </>
-));
+const ContentSections = memo(() => {
+    const {ref, inView} = useOptimizedAnimation({
+        threshold: 0.1,
+        triggerOnce: false,
+        rootMargin: '100px'
+    });
+
+    const sectionStyles = useMemo(() => ({
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'opacity 0.5s ease-out, transform 0.5s ease-out'
+    }), [inView]);
+
+    return (
+        <motion.div ref={ref} style={sectionStyles}>
+            <OptimizedBlock id="skills-section" threshold={8}>
+                <Skills/>
+            </OptimizedBlock>
+            <OptimizedBlock id="projects-section" threshold={8}>
+                <Projects/>
+            </OptimizedBlock>
+            <OptimizedBlock id="opensource-section" threshold={8}>
+                <OpenSource/>
+            </OptimizedBlock>
+        </motion.div>
+    );
+});
 
 const ScrollHandler = memo(() => {
     const [isVisible, setIsVisible] = useState(false);
@@ -159,22 +171,87 @@ const ScrollHandler = memo(() => {
 });
 
 const LandingPage = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const loadingTimerRef = useRef(null);
+    const prefersReducedMotion = useReducedMotion();
+    const [imagesLoaded, setImagesLoaded] = useState(false);
+    
+    useLayoutEffect(() => {
+        if (prefersReducedMotion) {
+            setIsLoading(false);
+            return;
+        }
+        
+        loadingTimerRef.current = setTimeout(() => {
+            if (imagesLoaded) {
+                setIsLoading(false);
+            }
+        }, 800);
+        
+        return () => {
+            if (loadingTimerRef.current) {
+                clearTimeout(loadingTimerRef.current);
+            }
+        };
+    }, [prefersReducedMotion, imagesLoaded]);
+
+    // Preload critical resources
+    useEffect(() => {
+        const preloadResources = async () => {
+            try {
+                const imagesToPreload = ['/images/home-og.png'];
+                await Promise.all(
+                    imagesToPreload.map(src => {
+                        return new Promise((resolve) => {
+                            const img = new Image();
+                            img.src = src;
+                            img.onload = () => resolve();
+                            img.onerror = () => {
+                                console.warn(`Failed to load image: ${src}`);
+                                resolve(); // Resolve anyway to not block loading
+                            };
+                        });
+                    })
+                );
+                setImagesLoaded(true);
+            } catch (error) {
+                console.error('Error preloading resources:', error);
+                setImagesLoaded(true); // Set loaded anyway to not block the UI
+            }
+        };
+        
+        if (!prefersReducedMotion) {
+            preloadResources();
+        } else {
+            setImagesLoaded(true);
+        }
+    }, [prefersReducedMotion]);
+
     return (
         <>
             <LandingPageSEO/>
-            {/*<ImagePreloader>*/}
-                <Background/>
-                <div className="relative z-10 w-full pt-24 pb-16">
-                    <Suspense fallback={<Loading/>}>
-                        <HeroSection/>
-                        <ContentSections/>
-                    </Suspense>
-                    <ScrollHandler/>
-                </div>
-            {/*</ImagePreloader>*/}
+            <Background/>
+            <div className="relative z-10 w-full pt-24 pb-16">
+                <Suspense fallback={
+                    <div className="min-h-screen flex items-center justify-center">
+                        <Loading/>
+                    </div>
+                }>
+                    {isLoading ? (
+                        <div className="min-h-screen flex items-center justify-center">
+                            <Loading/>
+                        </div>
+                    ) : (
+                        <>
+                            <HeroSection/>
+                            <ContentSections/>
+                        </>
+                    )}
+                </Suspense>
+                <ScrollHandler/>
+            </div>
         </>
     );
 };
-
 
 export default memo(LandingPage);
