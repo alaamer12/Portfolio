@@ -2,10 +2,10 @@
     position: fixed;
     inset: 0;
     overflow: hidden;
-    background: var(--bg-primary, #080b1a);
+    background: var(--bg-primary, #f8f9fa);
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-    perspective: 1000px;
+    font-family: 'Fira Code', monospace;
 }
 
 .mounted {
@@ -13,124 +13,7 @@
 }
 
 .dark {
-    background: var(--bg-primary-dark, #050709);
-}
-
-.gradientLayer {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        circle at calc(50% + (var(--mouse-x, 0) * 20%)) calc(50% + (var(--mouse-y, 0) * 20%)),
-        rgba(45, 76, 255, 0.03) 0%,
-        rgba(2, 11, 32, 0.2) 50%,
-        rgba(0, 0, 0, 0.1) 100%
-    );
-}
-
-.geometricContainer {
-    position: absolute;
-    inset: 0;
-    opacity: 0.4;
-    transform-style: preserve-3d;
-}
-
-.hexagonGrid {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    padding: 2rem;
-    transform: perspective(1000px) rotateX(60deg);
-}
-
-.hexagon {
-    position: relative;
-    width: 100%;
-    padding-bottom: 115%;
-    opacity: 0;
-    animation: hexagonFade 4s ease-in-out infinite;
-}
-
-.hexagon::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, rgba(66, 134, 244, 0.1), rgba(66, 229, 244, 0.1));
-    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
-
-.hexagon:hover::before {
-    transform: scale(1);
-}
-
-.circuitContainer {
-    position: absolute;
-    inset: 0;
-    opacity: 0.15;
-}
-
-.circuit {
-    width: 100%;
-    height: 100%;
-}
-
-.circuitPath {
-    fill: none;
-    stroke: rgba(66, 134, 244, 0.5);
-    stroke-width: 0.5;
-    stroke-dasharray: 100;
-    stroke-dashoffset: 1000;
-    animation: drawCircuit 15s linear infinite;
-}
-
-.particleContainer {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    animation: particleFloat 20s ease-in-out infinite;
-}
-
-.particle-0 {
-    background: rgba(66, 134, 244, 0.5);
-}
-
-.particle-1 {
-    background: rgba(66, 229, 244, 0.5);
-}
-
-.particle-2 {
-    background: rgba(98, 66, 244, 0.5);
-}
-
-.linesContainer {
-    position: absolute;
-    inset: 0;
-    opacity: 0.1;
-    overflow: hidden;
-}
-
-.line {
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%,
-        rgba(66, 134, 244, 0.5) 50%,
-        transparent 100%
-    );
-    animation: lineFlow 8s linear infinite;
-    transform-origin: left;
+    background: var(--bg-primary-dark, #1a1b1e);
 }
 
 .overlay {
@@ -139,47 +22,165 @@
     background: radial-gradient(
         circle at center,
         transparent 0%,
-        rgba(0, 0, 0, 0.2) 100%
+        rgba(0, 0, 0, 0.05) 100%
     );
     pointer-events: none;
 }
 
-@keyframes hexagonFade {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
+.gradientLayer {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at calc(50% + (var(--mouse-x, 0) * 20%)) calc(50% + (var(--mouse-y, 0) * 20%)),
+        rgba(48, 105, 152, 0.2) 0%,
+        rgba(255, 212, 59, 0.1) 50%,
+        transparent 100%
+    );
+    pointer-events: none;
 }
 
-@keyframes drawCircuit {
-    0% { stroke-dashoffset: 1000; }
-    100% { stroke-dashoffset: 0; }
+.codeContainer {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    opacity: 0.3;
+    transform: rotate(-5deg);
+    animation: float 20s ease-in-out infinite;
 }
 
-@keyframes particleFloat {
+.codeLine {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    color: #2d3436;
+    font-size: 0.9rem;
+    white-space: pre;
+}
+
+.dark .codeLine {
+    color: #dfe6e9;
+}
+
+.lineNumber {
+    color: #636e72;
+    margin-right: 1rem;
+    min-width: 2rem;
+    text-align: right;
+}
+
+.logoContainer {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30vw;
+    max-width: 400px;
+    opacity: 0.2;
+    animation: pulse 10s ease-in-out infinite;
+}
+
+.pythonLogo {
+    width: 100%;
+    height: auto;
+}
+
+.structuresContainer {
+    position: absolute;
+    bottom: 10%;
+    left: 15%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    opacity: 0.25;
+}
+
+.structure {
+    font-size: 1.2rem;
+    color: #306998;
+    animation: glow 4s ease-in-out infinite;
+}
+
+.dark .structure {
+    color: #FFD43B;
+}
+
+.open, .close {
+    display: inline-block;
+    margin: 0 0.5rem;
+}
+
+.importsContainer {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    opacity: 0.3;
+    transform: rotate(5deg);
+}
+
+.importLine {
+    color: #306998;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    white-space: pre;
+    animation: type 4s steps(50) infinite;
+}
+
+.dark .importLine {
+    color: #4B8BBE;
+}
+
+@keyframes float {
     0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(50px, -30px) scale(1.2);
+        transform: rotate(-5deg) translate(0, 0);
     }
     50% {
-        transform: translate(-20px, 50px) scale(0.8);
-    }
-    75% {
-        transform: translate(-40px, -20px) scale(1.1);
+        transform: rotate(-5deg) translate(10px, -10px);
     }
 }
 
-@keyframes lineFlow {
-    0% {
-        transform: translateX(-100%) scaleX(0.5);
-        opacity: 0;
+@keyframes pulse {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+        opacity: 0.2;
     }
     50% {
-        transform: translateX(0%) scaleX(1);
-        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+        opacity: 0.25;
     }
-    100% {
-        transform: translateX(100%) scaleX(0.5);
-        opacity: 0;
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(48, 105, 152, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(48, 105, 152, 0.5);
+    }
+}
+
+.dark @keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(255, 212, 59, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(255, 212, 59, 0.5);
+    }
+}
+
+@keyframes type {
+    0%, 100% {
+        border-right: 2px solid #306998;
+    }
+    50% {
+        border-right: 2px solid transparent;
+    }
+}
+
+.dark @keyframes type {
+    0%, 100% {
+        border-right: 2px solid #4B8BBE;
+    }
+    50% {
+        border-right: 2px solid transparent;
     }
 }
