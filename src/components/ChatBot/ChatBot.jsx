@@ -65,7 +65,11 @@ const ChatMessages = memo(({messages, isLoading}) => {
                 </div>
             )}
             {messages.map((message, index) => (
-                <ChatMessage key={index} message={message.content} type={message.type}/>
+                <ChatMessage 
+                    key={`${message.type}-${index}-${message.content.substring(0, 20)}`} 
+                    message={message.content} 
+                    type={message.type}
+                />
             ))}
             {isLoading && (
                 <div className="text-center text-gray-500 dark:text-gray-400">

@@ -125,32 +125,38 @@ const LoadMoreButton = memo(({ isLoading, onLoadMore, loadingComponent }) => (
 
 const VirtualizedItems = memo(({ items, virtualizeOptions, visibleRange, keyExtractor, renderItem }) => (
     <>
-        {items.map((item, index) => (
-            <ItemRenderer
-                key={keyExtractor(item, index)}
-                item={item}
-                index={index}
-                keyExtractor={keyExtractor}
-                renderItem={renderItem}
-                virtualizeOptions={virtualizeOptions}
-                visibleRange={visibleRange}
-            />
-        ))}
+        {items.map((item, index) => {
+            const itemKey = keyExtractor(item, index);
+            return (
+                <ItemRenderer
+                    key={`virtualized-${itemKey}`}
+                    item={item}
+                    index={index}
+                    keyExtractor={keyExtractor}
+                    renderItem={renderItem}
+                    virtualizeOptions={virtualizeOptions}
+                    visibleRange={visibleRange}
+                />
+            );
+        })}
     </>
 ));
 
 const PaginatedItems = memo(({ items, page, pageSize, keyExtractor, renderItem }) => (
     <>
-        {items.slice(0, page * pageSize).map((item, index) => (
-            <ItemRenderer
-                key={keyExtractor(item, index)}
-                item={item}
-                index={index}
-                keyExtractor={keyExtractor}
-                renderItem={renderItem}
-                virtualizeOptions={{ enabled: false }}
-            />
-        ))}
+        {items.slice(0, page * pageSize).map((item, index) => {
+            const itemKey = keyExtractor(item, index);
+            return (
+                <ItemRenderer
+                    key={`paginated-${itemKey}`}
+                    item={item}
+                    index={index}
+                    keyExtractor={keyExtractor}
+                    renderItem={renderItem}
+                    virtualizeOptions={{ enabled: false }}
+                />
+            );
+        })}
     </>
 ));
 

@@ -250,77 +250,62 @@ const otherSkills = [
 ];
 
 const Skills = () => {
-    const [ref, inView] = useInView({
-        threshold: 0.1,
-        triggerOnce: true,
-    });
-    const isMobile = useDeviceDetect();
-
-    const containerVariants = {
-        hidden: {opacity: 0, y: 50},
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: isMobile ? 0.5 : 0.8,
-                staggerChildren: 0.2,
-            },
-        },
-    };
-
     return (
-        <section className="py-20" id="skills">
-            <motion.div
-                ref={ref}
-                variants={containerVariants}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
-            >
-                <h2 className="text-4xl font-bold text-center mb-16 text-gray-900 dark:text-[#f1f1f1]">
-                    Technical Expertise
-                </h2>
-
-                {/* Skill Bars */}
-                <div className="space-y-8">
-                    {skills.map((skill, index) => (
-                        <OptimizedBlock key={skill.name} enableCache={true} threshold={20}>
-                            <SkillBar key={index} skill={skill}/>
-                        </OptimizedBlock>
-                    ))}
+        <section id="skills" className="py-16 md:py-24">
+            <div className="container px-4 mx-auto">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold leading-tight md:text-4xl text-gray-900 dark:text-white">
+                        My Skills & Expertise
+                    </h2>
+                    <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+                        A comprehensive breakdown of my technical capabilities
+                    </p>
                 </div>
 
-                {/* Skill Areas */}
-                <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {skillsData.map((skill, index) => (
-                        <OptimizedBlock key={skill.title} enableCache={true} threshold={20}>
-                            <SkillCard key={index} title={skill.title} description={skill.description}/>
-                        </OptimizedBlock>
-                    ))}
-                </div>
-
-                {/* Main Skills */}
-                <div className="mt-16">
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8">
-                        Core Technologies
-                    </h3>
-                    <SkillCards skills={mainSkills} />
-                </div>
-
-                {/* Other Skills */}
-                <div className="mt-16">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white text-center mb-8">
-                        Other Technologies
-                    </h3>
-                    <div className="flex flex-wrap justify-center gap-3">
-                        {otherSkills.map((skill, index) => (
-                            <OptimizedBlock key={index} enableCache={true} threshold={20}>
-                                <SkillChip key={index} skill={skill.name} url={skill.url}/>
-                            </OptimizedBlock>
-                        ))}
+                <OptimizedBlock>
+                    <div className="mb-12 md:mb-16">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Skills Distribution</h3>
+                        <div className="rounded-xl p-6 shadow-lg ">
+                            {skills.map((skill, index) => (
+                                <SkillBar key={`skill-bar-${index}`} skill={skill} />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </motion.div>
+                </OptimizedBlock>
+
+                <OptimizedBlock>
+                    <div className="mb-12 md:mb-16">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Main Technologies</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {mainSkills.map((skill, index) => (
+                                <SkillCard key={`main-skill-${index}`} {...skill} />
+                            ))}
+                        </div>
+                    </div>
+                </OptimizedBlock>
+
+                <OptimizedBlock>
+                    <div className="mb-12 md:mb-16">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Specialized Skills</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {skillsData.map((skill, index) => (
+                                <SkillCard key={`specialized-skill-${index}`} {...skill} />
+                            ))}
+                        </div>
+                    </div>
+                </OptimizedBlock>
+
+                <OptimizedBlock>
+                    <div className="relative">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Other Technologies</h3>
+                        <div className="flex flex-wrap gap-3">
+                            {otherSkills.map((skill, index) => (
+                                <SkillChip key={`other-skill-${index}`} skill={skill.name} url={skill.url} />
+                            ))}
+                        </div>
+                    </div>
+                </OptimizedBlock>
+            </div>
         </section>
     );
 };
