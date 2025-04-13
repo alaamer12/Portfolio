@@ -8,6 +8,7 @@ import {LazyLoadImage} from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import {OptimizedBlock, OptimizedLoop} from '../components/OptimizedMillion';
 import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
+import { getProjectsPageSchema } from "../data/schema.js";
 
 
 const ProjectBadge = memo(({badge, settings}) => {
@@ -163,32 +164,6 @@ const ProjectCard = ({project, settings}) => {
     );
 }
 
-const ProjectsSEO = () => (
-    <SEO
-        title="Projects"
-        description="Explore my portfolio of web development projects, including full-stack applications, APIs, and open-source contributions."
-        type="website"
-        schema={{
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": "Projects - Amr Muhamed",
-            "description": "Collection of web development projects and applications built by Amr Muhamed",
-            "author": {
-                "@type": "Person",
-                "name": "Amr Muhamed",
-                "jobTitle": "Full Stack Developer",
-                "url": "https://amrmuhamed.com"
-            },
-            "about": {
-                "@type": "Thing",
-                "name": "Web Development Projects",
-                "description": "A showcase of full-stack development projects including web applications, APIs, and open-source contributions"
-            }
-        }}
-    />
-);
-
-
 const ProjectSection = memo(({title, projects, renderProjectCard}) => (
     <OptimizedBlock className="mb-16" threshold={8}>
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">{title}</h2>
@@ -247,5 +222,17 @@ const Projects = () => {
         </div>
     );
 };
+
+const ProjectsSEO = () => (
+    <SEO
+        title="Projects | Amr Muhamed - Full Stack Developer"
+        description="Explore my portfolio of web development projects, including full-stack applications, APIs, and open-source contributions."
+        type="website"
+        image="/projects-og.png"
+        keywords="web development projects, full stack projects, react projects, django projects, fastapi projects, python projects, javascript projects, github repositories, software engineering, portfolio projects"
+        language="en"
+        schema={getProjectsPageSchema()}
+    />
+);
 
 export default memo(Projects);

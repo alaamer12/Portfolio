@@ -6,6 +6,7 @@ import SEO from '../components/SEO/SEO';
 import {OptimizedBlock, OptimizedLoop} from '../components/OptimizedMillion';
 import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
 import {EXPERIENCE_DATA, SKILLS_DATA} from "../data/config.js";
+import { getAboutPageSchema } from "../data/schema.js";
 
 const ResumeDownloadButton = memo(() => {
     const [isLoading, setIsLoading] = useState(false);
@@ -165,47 +166,8 @@ const AboutSeo = () => {
             description="Learn about Amr Muhamed, a Full Stack Developer with expertise in React, Django, and modern web technologies. Discover my professional journey, skills, and experiences in software development."
             type="profile"
             image="/about-og.png"
-            schema={{
-                "@context": "https://schema.org",
-                "@type": "ProfilePage",
-                "mainEntity": {
-                    "@type": "Person",
-                    "name": "Amr Muhamed",
-                    "jobTitle": "Full Stack Developer",
-                    "description": "Experienced Full Stack Developer specializing in React, Django, and modern web technologies.",
-                    "image": "/profile.jpg",
-                    "url": "https://amrmuhamed.com/about",
-                    "sameAs": [
-                        "https://github.com/alaamer12",
-                        "https://www.linkedin.com/in/al-aamer-0b0709265/"
-                    ],
-                    "knowsAbout": [
-                        "React",
-                        "Django",
-                        "Python",
-                        "JavaScript",
-                        "Full Stack Development",
-                        "Web Development"
-                    ],
-                    "hasCredential": [
-                        {
-                            "@type": "EducationalOccupationalCredential",
-                            "credentialCategory": "degree",
-                            "name": "Bachelor of Computer Science",
-                            "educationalLevel": "Bachelor's Degree",
-                            "recognizedBy": {
-                                "@type": "Organization",
-                                "name": "BFCAI"
-                            }
-                        }
-                    ],
-                    "alumniOf": {
-                        "@type": "CollegeOrUniversity",
-                        "name": "BFCAI",
-                        "url": "https://fci.bu.edu.eg/"
-                    }
-                }
-            }}
+            keywords="full stack developer, react developer, django developer, fastapi developer, web development, javascript, python, about amr muhamed, developer portfolio, software engineer, cairo, egypt"
+            schema={getAboutPageSchema()}
         />
     );
 };

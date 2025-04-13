@@ -6,6 +6,7 @@ import SEO from '../components/SEO/SEO';
 import {OptimizedBlock} from '../components/OptimizedMillion';
 import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
 import useScrollButtonAnimation from "../hooks/useScrollButtonAnimation.js";
+import { getLandingPageSchema } from "../data/schema.js";
 
 
 // Lazy load components with dynamic imports and prefetch
@@ -56,23 +57,9 @@ const LandingPageSEO = () => (
         description="Welcome to my portfolio! I'm Amr Muhamed, a Full Stack Developer specializing in Python, React, and modern web technologies. Explore my projects and expertise in web development."
         type="website"
         image="/home-og.png"
-        schema={{
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "url": "https://amrmuhamed.com",
-            "name": "Amr Muhamed - Full Stack Developer Portfolio",
-            "description": "Portfolio website of Amr Muhamed, showcasing expertise in full-stack development, projects, and professional experience.",
-            "author": {
-                "@type": "Person",
-                "name": "Amr Muhamed",
-                "jobTitle": "Full Stack Developer",
-                "url": "https://amrmuhamed.com",
-                "sameAs": [
-                    "https://github.com/alaamer12",
-                    "https://www.linkedin.com/in/al-aamer-0b0709265/"
-                ]
-            }
-        }}
+        keywords="full stack developer, react developer, django developer, fastapi developer, python, javascript, web development, portfolio, amr muhamed, software engineer, cairo"
+        language="en"
+        schema={getLandingPageSchema()}
     />
 );
 

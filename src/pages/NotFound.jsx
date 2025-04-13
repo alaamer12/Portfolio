@@ -4,13 +4,18 @@ import {useNavigate} from 'react-router-dom';
 import Background from '../components/Background/Background';
 import {FaHome, FaSearch} from 'react-icons/fa';
 import SEO from '../components/SEO/SEO';
+import { getNotFoundPageSchema } from "../data/schema.js";
 
 const NotFoundSEO = () => (
     <SEO
-        title="404 - Page Not Found"
+        title="404 - Page Not Found | Amr Muhamed"
         description="Sorry, the page you're looking for doesn't exist. Return to the homepage to explore my portfolio."
         type="website"
         image="/404-og.png"
+        keywords="page not found, 404 error, amr muhamed, portfolio, missing page"
+        language="en"
+        noindex={true}
+        schema={getNotFoundPageSchema()}
     />
 )
 
