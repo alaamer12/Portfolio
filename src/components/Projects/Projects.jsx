@@ -1,9 +1,11 @@
+
 import {memo, useMemo, useState} from 'react';
 import {motion} from 'framer-motion';
 import {FaExternalLinkAlt, FaGithub} from 'react-icons/fa';
 import {useTheme} from '../../context/ThemeContext';
 import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
 import {OptimizedBlock} from '../OptimizedMillion';
+import {getFeaturedProjectsData} from '../../data/projects';
 
 const ProjectLinks = memo(({github, demo}) => {
     const {settings} = useOptimizedAnimation();
@@ -168,7 +170,6 @@ const ProjectCard = memo(({project, delay}) => {
 
 ProjectCard.displayName = 'ProjectCard';
 
-
 const ProjectsHeader = memo(() => {
     const { settings } = useOptimizedAnimation();
     
@@ -221,33 +222,14 @@ const HeaderDescription = memo(({ settings }) => (
 
 const ProjectList = memo(({ projects }) => (
     <div className="space-y-6">
-        {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} delay={project.delay} />
+        {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} delay={project.delay || index * 0.2} />
         ))}
     </div>
 ));
 
 const Projects = memo(() => {
-    const projects = useMemo(() => [
-        {
-            title: 'Tealim',
-            description: 'A comprehensive e-learning platform built with React and Node.js.',
-            image: '/images/tealim.webp',
-            tags: ['React Native', 'Node.js', 'PostgreSQL', 'Fastapi'],
-            github: 'https://github.com/alaamer12/tealim',
-            demo: 'https://tealim.com',
-            delay: 0.2,
-        },
-        {
-            title: 'True Core',
-            description: 'A Python package that provides core functionality for the True ecosystem.',
-            image: '/images/light_true_core_icon.avif',
-            darkImage: '/images/dark_true_core_icon.avif',
-            tags: ['Python', 'Pypi', 'Boilerplate', 'Utility'],
-            github: 'https://github.com/alaamer12/true-core',
-            delay: 0.4,
-        },
-    ], []);
+    const projects = useMemo(() => getFeaturedProjectsData(), []);
 
     return (
         <section className="py-20" id="projects">

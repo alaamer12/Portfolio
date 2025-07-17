@@ -3,28 +3,22 @@
  * Used for SEO optimization across all pages
  */
 
+import { USER_CONFIG } from './user';
+
 // Base constants
-const BASE_URL = 'https://amrmuhamed.com';
-const PERSON_NAME = 'Amr Muhamed';
-const JOB_TITLE = 'Full Stack Developer';
-const DEFAULT_DESCRIPTION = 'Experienced Full Stack Developer specializing in React, Django, and modern web technologies.';
-const DEFAULT_LANG = 'en-US';
+const BASE_URL = USER_CONFIG.contact.website;
+const PERSON_NAME = USER_CONFIG.personal.fullName;
+const JOB_TITLE = USER_CONFIG.personal.profession;
+const DEFAULT_DESCRIPTION = USER_CONFIG.personal.bio;
+const DEFAULT_LANG = USER_CONFIG.seo.language;
 
 // Language information
-const LANGUAGES = [
-  {
-    '@type': 'Language',
-    'name': 'Arabic',
-    'alternateName': 'ar',
-    'description': 'Native language'
-  },
-  {
-    '@type': 'Language',
-    'name': 'English',
-    'alternateName': 'en',
-    'description': 'Professional working proficiency'
-  }
-];
+const LANGUAGES = USER_CONFIG.skills.languages.map(lang => ({
+  '@type': 'Language',
+  'name': lang.name,
+  'alternateName': lang.code,
+  'description': lang.description
+}));
 
 // Publication dates
 const PUBLICATION_DATES = {
@@ -53,45 +47,31 @@ const memoize = (fn) => {
 };
 
 // Social media profiles
-const SOCIAL_PROFILES = [
-  'https://github.com/alaamer12',
-  'https://www.linkedin.com/in/al-aamer-0b0709265/'
-];
+const SOCIAL_PROFILES = Object.values(USER_CONFIG.social)
+  .filter(social => social.display && social.url)
+  .map(social => social.url);
 
 // Contact information
 const CONTACT_INFO = {
-  email: 'amrmuhamed86@gmail.com',
+  email: USER_CONFIG.contact.email,
   location: {
-    locality: 'Cairo',
-    country: 'Egypt'
+    locality: USER_CONFIG.contact.location.city,
+    country: USER_CONFIG.contact.location.country
   }
 };
 
 // Skills and expertise
-const CORE_SKILLS = [
-    'React',
-    'Django',
-    'FastAPI',
-    'Python',
-    'JavaScript',
-    'Web Development'
-];
-const EXTENDED_SKILLS = [
-  ...CORE_SKILLS,
-  'RESTful APIs',
-  'Database Design',
-  'UI/UX Design',
-  'Software Architecture'
-];
-const DETAILED_SKILLS = 'React, Django, FastAPI, Python, JavaScript, TypeScript, Node.js, HTML, CSS, Tailwind CSS, PostgreSQL, MongoDB, RESTful APIs, Git, GitHub, Docker';
+const CORE_SKILLS = USER_CONFIG.skills.primary;
+const EXTENDED_SKILLS = [...USER_CONFIG.skills.primary, ...USER_CONFIG.skills.secondary];
+const DETAILED_SKILLS = [...USER_CONFIG.skills.primary, ...USER_CONFIG.skills.secondary].join(', ');
 
 // Education information
 const EDUCATION = {
-  institution: 'BFCAI',
-  url: 'https://fci.bu.edu.eg/',
-  degree: 'Bachelor of Computer Science and Artificial Intelligence',
-  startDate: '2023',
-  endDate: '2026'
+  institution: USER_CONFIG.education.institution,
+  url: USER_CONFIG.education.institutionUrl,
+  degree: USER_CONFIG.education.degree,
+  startDate: USER_CONFIG.education.startYear,
+  endDate: USER_CONFIG.education.endYear
 };
 
 // Service types

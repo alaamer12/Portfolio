@@ -1,142 +1,128 @@
-import {memo} from 'react'
 
-import {motion} from 'framer-motion';
-import {FaGithub, FaPython} from 'react-icons/fa';
-import {OptimizedBlock} from '../OptimizedMillion';
+import { memo, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { FaGithub, FaPython } from 'react-icons/fa';
+import { OptimizedBlock } from '../OptimizedMillion';
 import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
+import { getProjectsByCategory, PROJECT_CATEGORIES } from '../../data/projects';
 
-const packages = [
-    {
-        name: 'true-core',
-        description: 'Core foundation for the true ecosystem of Python packages',
-        pypi: 'https://pypi.org/project/true-core/',
-        github: 'https://github.com/alaamer12',
-    },
-    {
-        name: 'true-storage',
-        description: 'Storage management solution in the true ecosystem',
-        pypi: 'https://pypi.org/project/true-storage/',
-        github: 'https://github.com/alaamer12',
-    },
-    {
-        name: 'true-logging',
-        description: 'Advanced logging solution in the true ecosystem',
-        pypi: 'https://pypi.org/project/true-logging/',
-        github: 'https://github.com/alaamer12',
-    },
-    {
-        name: 'fastapi-utilities',
-        description: 'Extended functionality for FastAPI framework',
-        pypi: 'https://pypi.org/project/fastapi-utilities/',
-        github: 'https://github.com/alaamer12',
-    },
-];
-
-const PackageIcon = memo(({Icon, className}) => (
-    <Icon className={`text-accent text-xl md:text-2xl mr-2 ${className}`}/>
+const PackageIcon = memo(({ Icon, className }) => (
+    <Icon className={`text-accent text-xl md:text-2xl mr-2 ${className}`} />
 ));
 
-const PackageTitle = memo(({name}) => (
+const PackageTitle = memo(({ name }) => (
     <h3 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">{name}</h3>
 ));
 
-const PackageDescription = memo(({description}) => (
+const PackageDescription = memo(({ description }) => (
     <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4">{description}</p>
 ));
 
-const PackageLink = memo(({href, Icon, settings}) => (
+const PackageLink = memo(({ href, Icon, settings }) => (
     <motion.a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
         className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+        whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
+        whileTap={settings.shouldAnimate ? { scale: 0.95 } : {}}
     >
-        <Icon className="text-lg md:text-xl"/>
+        <Icon className="text-lg md:text-xl" />
     </motion.a>
 ));
 
-const PackageLinks = memo(({github, pypi, settings}) => (
+const PackageLinks = memo(({ github, pypi, settings }) => (
     <div className="flex space-x-4">
-        <PackageLink href={github} Icon={FaGithub} settings={settings}/>
-        <PackageLink href={pypi} Icon={FaPython} settings={settings}/>
+        {github && <PackageLink href={github} Icon={FaGithub} settings={settings} />}
+        {pypi && <PackageLink href={pypi} Icon={FaPython} settings={settings} />}
     </div>
 ));
 
-const PackageCard = memo(({pkg, index}) => {
-    const {settings, ref, inView} = useOptimizedAnimation({
-        threshold: 0.1,
-        triggerOnce: true
-    });
-
-    const cardAnimation = {
-        initial: settings.shouldAnimate ? {
-            opacity: 0,
-            x: index % 2 === 0 ? -settings.distance : settings.distance
-        } : {},
-        animate: inView && settings.shouldAnimate ? {
-            opacity: 1,
-            x: 0
-        } : {},
-        transition: {
+const PackageCard = memo(({ project, settings }) => (
+    <motion.div
+        className="bg-white dark:bg-surface p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700"
+        initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
+        whileInView={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+        viewport={{ once: true }}
+        transition={{
             duration: settings.duration,
-            delay: index * (settings.isMobile ? 0.05 : 0.1),
             ease: settings.ease,
             useTransform: settings.useTransform
-        }
-    };
+        }}
+    >
+        <div className="flex items-start">
+            <PackageIcon Icon={FaPython} className="text-accent" />
+            <div className="flex-1">
+                <PackageTitle name={project.title} />
+                <PackageDescription description={project.description} />
+                <PackageLinks 
+                    github={project.links.github} 
+                    pypi={project.links.pypi} 
+                    settings={settings} 
+                />
+            </div>
+        </div>
+    </motion.div>
+));
+
+const OpenSourceHeader = memo(({ settings }) => (
+    <motion.div
+        className="text-center mb-8 md:mb-12"
+        initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
+        whileInView={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+        viewport={{ once: true }}
+        transition={{
+            duration: settings.duration,
+            ease: settings.ease,
+        }}
+    >
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Open Source Contributions
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base max-w-2xl mx-auto">
+            Discover my Python packages and libraries that contribute to the open-source community.
+        </p>
+    </motion.div>
+));
+
+const OpenSource = memo(() => {
+    const { settings } = useOptimizedAnimation();
+    
+    const packages = useMemo(() => {
+        // Get True Family projects as they are the main open source contributions
+        const trueFamilyProjects = getProjectsByCategory(PROJECT_CATEGORIES.TRUE_FAMILY.id);
+        const utilityProjects = getProjectsByCategory(PROJECT_CATEGORIES.UTILITY.id);
+        
+        // Combine and filter for packages with PyPI links
+        return [...trueFamilyProjects, ...utilityProjects]
+            .filter(project => project.links.pypi)
+            .slice(0, 4); // Show top 4 packages
+    }, []);
+
+    if (packages.length === 0) {
+        return null;
+    }
 
     return (
         <OptimizedBlock threshold={12}>
-            <motion.div
-                ref={ref}
-                {...cardAnimation}
-                className="bg-surface-light dark:bg-surface rounded-lg p-4 md:p-6 shadow-light-lg dark:shadow-dark-lg hover:shadow-light-xl dark:hover:shadow-dark-xl transition-all"
-            >
-                <div className="flex items-center mb-4">
-                    <PackageIcon Icon={FaPython}/>
-                    <PackageTitle name={pkg.name}/>
+            <section className="py-16 md:py-20 bg-gray-50 dark:bg-gray-900">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <OpenSourceHeader settings={settings} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        {packages.map((project, index) => (
+                            <PackageCard 
+                                key={project.id} 
+                                project={project} 
+                                settings={settings} 
+                            />
+                        ))}
+                    </div>
                 </div>
-                <PackageDescription description={pkg.description}/>
-                <PackageLinks github={pkg.github} pypi={pkg.pypi} settings={settings}/>
-            </motion.div>
+            </section>
         </OptimizedBlock>
     );
 });
 
-const OpenSource = () => {
-    const {settings} = useOptimizedAnimation();
-
-    return (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <motion.div
-                className="space-y-12"
-                initial={settings.shouldAnimate ? {opacity: 0} : {}}
-                whileInView={settings.shouldAnimate ? {opacity: 1} : {}}
-                viewport={{once: true}}
-                transition={{
-                    duration: settings.duration,
-                    staggerChildren: settings.staggerChildren
-                }}
-            >
-                <motion.h2
-                    className="text-3xl sm:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12"
-                    initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
-                    whileInView={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
-                    viewport={{once: true}}
-                >
-                    Open Source Contributions
-                </motion.h2>
-
-                <div className="grid gap-6 md:grid-cols-2">
-                    {packages.map((pkg, index) => (
-                        <PackageCard key={pkg.name} pkg={pkg} index={index}/>
-                    ))}
-                </div>
-            </motion.div>
-        </section>
-    );
-};
+OpenSource.displayName = 'OpenSource';
 
 export default OpenSource;
