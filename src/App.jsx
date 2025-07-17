@@ -10,7 +10,7 @@ import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SpeedInsights from './components/SpeedInsights/SpeedInsights';
 import {OptimizedBlock} from './components/OptimizedMillion';
-import {ROUTES} from "./data/config.js";
+import {ROUTES} from "./data/config.jsx";
 
 // Memoized SEO component
 const SEOHelmet = memo(({title, description, pathname}) => (

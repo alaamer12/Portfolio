@@ -18,7 +18,7 @@ import {
     PROJECT_BADGES,
     sortProjectsByBadge,
     getBadgeConfig
-} from "../data/config.js";
+} from "../data/config.jsx";
 
 const getBadgeIcon = (badgeId) => {
     switch (badgeId) {

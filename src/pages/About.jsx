@@ -12,7 +12,7 @@ import Background from "../components/Background/Background";
 import SEO from "../components/SEO/SEO";
 import { OptimizedBlock, OptimizedLoop } from "../components/OptimizedMillion";
 import useOptimizedAnimation from "../hooks/useOptimizedAnimation";
-import { EXPERIENCE_DATA, SKILLS_DATA } from "../data/config.js";
+import { EXPERIENCE_DATA, SKILLS_DATA } from "../data/config.jsx";
 import { getAboutPageSchema } from "../data/schema.js";
 import { USER_CONFIG } from "../data/user.js";
 

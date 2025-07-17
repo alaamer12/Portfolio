@@ -2,7 +2,7 @@
 
 import {lazy} from "react";
 import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from "react-icons/si";
-import { USER_CONFIG } from "./user";
+import { USER_CONFIG } from "./user.js";
 
 // Import the centralized projects data
 export {
@@ -97,24 +97,24 @@ export const ROUTES = {
         path: '/',
         title: `${USER_CONFIG.personal.fullName} | ${USER_CONFIG.personal.profession}`,
         description: USER_CONFIG.personal.bio,
-        Component: lazy(() => import('../pages/LandingPage')),
+        Component: lazy(() => import('../pages/LandingPage.jsx')),
     },
     ABOUT: {
         path: '/about',
         title: `About Me | ${USER_CONFIG.personal.fullName}`,
         description: `Learn about my journey as a ${USER_CONFIG.personal.profession}, my skills, experiences, and what drives me to create innovative web solutions.`,
-        Component: lazy(() => import('../pages/About')),
+        Component: lazy(() => import('../pages/About.jsx')),
     },
     PROJECTS: {
         path: '/projects',
         title: `Projects | ${USER_CONFIG.personal.fullName}`,
         description: `Explore my portfolio of web development projects, featuring ${USER_CONFIG.skills.primary.slice(0, 3).join(', ')} and other modern technologies.`,
-        Component: lazy(() => import('../pages/Projects')),
+        Component: lazy(() => import('../pages/Projects.jsx')),
     },
     NOT_FOUND: {
         path: '*',
         title: `404 - Page Not Found | ${USER_CONFIG.personal.fullName}`,
         description: 'The page you are looking for could not be found.',
-        Component: lazy(() => import('../pages/NotFound')),
+        Component: lazy(() => import('../pages/NotFound.jsx')),
     },
 };
