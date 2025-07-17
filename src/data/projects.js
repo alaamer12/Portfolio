@@ -14,23 +14,29 @@ export const PROJECT_CATEGORIES = {
     description: 'Professional business applications and platforms',
     order: 1
   },
+  PYTHON: {
+    id: 'python',
+    title: 'Python Projects',
+    description: 'Specialized Python applications and automation tools',
+    order: 2
+  },
   TRUE_FAMILY: {
     id: 'truefamily',
     title: 'True Family Projects',
     description: 'Ecosystem of Python packages and libraries',
-    order: 2
+    order: 3
   },
   UTILITY: {
     id: 'utility',
     title: 'Utility Projects',
     description: 'Tools and utilities for developers',
-    order: 3
+    order: 4
   },
   OPEN_SOURCE: {
     id: 'opensource',
     title: 'Open Source Contributions',
     description: 'Community contributions and open source projects',
-    order: 4
+    order: 5
   }
 };
 
@@ -121,6 +127,69 @@ export const PROJECTS_DATA = {
       'Secure payment processing and monetization tools',
       'Sustainable ecosystem for code reuse and collaboration',
       'Built with modern technologies for scalability and performance'
+    ],
+    delay: 0.4
+  },
+
+  // Python Projects
+  dataAnalyzer: {
+    id: 'data_analyzer',
+    title: 'Data Analyzer Pro',
+    description: 'Advanced Python tool for data analysis and visualization with pandas and matplotlib.',
+    longDescription: 'A comprehensive data analysis tool built with Python, featuring automated data cleaning, statistical analysis, and interactive visualizations.',
+    category: PROJECT_CATEGORIES.PYTHON.id,
+    tags: ['Python', 'Data Analysis', 'Pandas', 'Matplotlib', 'Statistics', 'Visualization'],
+    technologies: ['Python', 'Pandas', 'Matplotlib', 'NumPy', 'Seaborn'],
+    links: {
+      github: 'https://github.com/alaamer12/data-analyzer-pro',
+      demo: null,
+      pypi: 'https://pypi.org/project/data-analyzer-pro'
+    },
+    images: {
+      icon: '/images/python-icon.webp',
+      darkIcon: '/images/python-icon-dark.webp',
+      banner: '/python-banner.svg',
+      screenshots: []
+    },
+    badge: PROJECT_BADGES.NEW.id,
+    available: true,
+    featured: true,
+    details: [
+      'Automated data cleaning and preprocessing',
+      'Statistical analysis with comprehensive reporting',
+      'Interactive visualizations and charts',
+      'Export results in multiple formats (CSV, JSON, PDF)'
+    ],
+    delay: 0.2
+  },
+
+  automationSuite: {
+    id: 'automation_suite',
+    title: 'Python Automation Suite',
+    description: 'Collection of Python scripts for automating daily tasks and workflows.',
+    longDescription: 'A comprehensive suite of Python automation tools for file management, web scraping, email automation, and system monitoring.',
+    category: PROJECT_CATEGORIES.PYTHON.id,
+    tags: ['Python', 'Automation', 'Scripting', 'Web Scraping', 'File Management', 'Scheduling'],
+    technologies: ['Python', 'Selenium', 'BeautifulSoup', 'Schedule', 'Requests'],
+    links: {
+      github: 'https://github.com/alaamer12/python-automation-suite',
+      demo: null,
+      pypi: null
+    },
+    images: {
+      icon: '/images/automation-icon.webp',
+      darkIcon: '/images/automation-icon-dark.webp',
+      banner: '/automation-banner.svg',
+      screenshots: []
+    },
+    badge: PROJECT_BADGES.HOT.id,
+    available: true,
+    featured: false,
+    details: [
+      'File organization and batch processing',
+      'Web scraping with intelligent rate limiting',
+      'Email automation with template support',
+      'System monitoring and alerting'
     ],
     delay: 0.4
   },
@@ -289,6 +358,34 @@ export const getCategoryConfig = (categoryId) => {
   return Object.values(PROJECT_CATEGORIES).find(cat => cat.id === categoryId);
 };
 
+// Get all categories sorted by order
+export const getSortedCategories = () => {
+  return Object.values(PROJECT_CATEGORIES).sort((a, b) => a.order - b.order);
+};
+
+// Get projects data organized by all categories dynamically
+export const getProjectsDataByCategories = (baseUrl = '', isDark = false) => {
+  const processProject = (project) => ({
+    ...project,
+    image: project.images.icon,
+    darkImage: project.images.darkIcon,
+    banner: project.images.banner,
+    github: project.links.github,
+    demo: project.links.demo,
+    pypi: project.links.pypi
+  });
+
+  const categorizedProjects = {};
+
+  // Dynamically create project arrays for each category
+  getSortedCategories().forEach(category => {
+    const categoryProjects = getProjectsByCategory(category.id).map(processProject);
+    categorizedProjects[category.id] = categoryProjects;
+  });
+
+  return categorizedProjects;
+};
+
 // Export organized data for backward compatibility
 export const getProjectsData = (baseUrl = '', isDark = false) => {
   const processProject = (project) => ({
@@ -302,9 +399,10 @@ export const getProjectsData = (baseUrl = '', isDark = false) => {
   });
 
   return {
+    businessProjects: getProjectsByCategory(PROJECT_CATEGORIES.BUSINESS.id).map(processProject),
+    pythonProjects: getProjectsByCategory(PROJECT_CATEGORIES.PYTHON.id).map(processProject),
     trueFamilyProjects: getProjectsByCategory(PROJECT_CATEGORIES.TRUE_FAMILY.id).map(processProject),
     utilityProjects: getProjectsByCategory(PROJECT_CATEGORIES.UTILITY.id).map(processProject),
-    businessProjects: getProjectsByCategory(PROJECT_CATEGORIES.BUSINESS.id).map(processProject),
     openSourceProjects: getProjectsByCategory(PROJECT_CATEGORIES.OPEN_SOURCE.id).map(processProject)
   };
 };

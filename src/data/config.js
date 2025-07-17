@@ -7,6 +7,8 @@ import { USER_CONFIG } from "./user";
 // Import the centralized projects data
 export {
     getProjectsData,
+    getProjectsDataByCategories,
+    getSortedCategories,
     sortProjectsByBadge as sortProjects,
     getBadgeConfig as getBadgeContent,
     PROJECT_BADGES,

@@ -12,12 +12,12 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { OptimizedBlock, OptimizedLoop } from "../components/OptimizedMillion";
 import useOptimizedAnimation from "../hooks/useOptimizedAnimation";
 import { getProjectsPageSchema } from "../data/schema.js";
-import { 
-    getProjectsData, 
-    PROJECT_CATEGORIES, 
-    PROJECT_BADGES, 
-    sortProjectsByBadge, 
-    getBadgeConfig 
+import {
+    getProjectsDataByCategories,
+    getSortedCategories,
+    PROJECT_BADGES,
+    sortProjectsByBadge,
+    getBadgeConfig
 } from "../data/config.js";
 
 const getBadgeIcon = (badgeId) => {
@@ -331,29 +331,28 @@ const Projects = () => {
     const { settings } = useOptimizedAnimation();
     const baseUrl = "";
 
+    // Get all projects organized by categories dynamically
     const projectsData = useMemo(() => {
-        const data = getProjectsData(baseUrl, isDark);
-        return {
-            businessProjects: sortProjectsByBadge(data.businessProjects),
-            trueFamilyProjects: sortProjectsByBadge(data.trueFamilyProjects),
-            utilityProjects: sortProjectsByBadge(data.utilityProjects),
-        };
+        const categorizedData = getProjectsDataByCategories(baseUrl, isDark);
+
+        // Sort projects within each category by badge priority
+        const sortedData = {};
+        Object.keys(categorizedData).forEach(categoryId => {
+            sortedData[categoryId] = sortProjectsByBadge(categorizedData[categoryId]);
+        });
+
+        return sortedData;
     }, [baseUrl, isDark]);
 
-    const projectSections = useMemo(() => [
-        {
-            category: PROJECT_CATEGORIES.BUSINESS,
-            projects: projectsData.businessProjects,
-        },
-        {
-            category: PROJECT_CATEGORIES.TRUE_FAMILY,
-            projects: projectsData.trueFamilyProjects,
-        },
-        {
-            category: PROJECT_CATEGORIES.UTILITY,
-            projects: projectsData.utilityProjects,
-        },
-    ], [projectsData]);
+    // Generate project sections dynamically from all categories
+    const projectSections = useMemo(() => {
+        return getSortedCategories()
+            .filter(category => projectsData[category.id] && projectsData[category.id].length > 0)
+            .map(category => ({
+                category,
+                projects: projectsData[category.id],
+            }));
+    }, [projectsData]);
 
     return (
         <div className="relative min-h-screen w-screen overflow-x-hidden">
