@@ -365,25 +365,34 @@ export const getSortedCategories = () => {
 
 // Get projects data organized by all categories dynamically
 export const getProjectsDataByCategories = (baseUrl = '', isDark = false) => {
+  console.log('getProjectsDataByCategories called with:', { baseUrl, isDark });
+
   const processProject = (project) => ({
     ...project,
-    image: project.images.icon,
-    darkImage: project.images.darkIcon,
-    banner: project.images.banner,
-    github: project.links.github,
-    demo: project.links.demo,
-    pypi: project.links.pypi
+    image: project.images?.icon || '',
+    darkImage: project.images?.darkIcon || '',
+    banner: project.images?.banner || '',
+    github: project.links?.github || null,
+    demo: project.links?.demo || null,
+    pypi: project.links?.pypi || null
   });
 
   const categorizedProjects = {};
 
-  // Dynamically create project arrays for each category
-  getSortedCategories().forEach(category => {
-    const categoryProjects = getProjectsByCategory(category.id).map(processProject);
-    categorizedProjects[category.id] = categoryProjects;
-  });
+  try {
+    // Get all categories and process them
+    const categories = getSortedCategories();
 
-  return categorizedProjects;
+    categories.forEach(category => {
+      const categoryProjects = getProjectsByCategory(category.id);
+      categorizedProjects[category.id] = categoryProjects.map(processProject);
+    });
+
+    return categorizedProjects;
+  } catch (error) {
+    console.error('Error in getProjectsDataByCategories:', error);
+    return {};
+  }
 };
 
 // Export organized data for backward compatibility
