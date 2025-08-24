@@ -273,7 +273,7 @@ const ContactInfo = memo(() => {
 
 const Contact = () => {
     return (
-        <section id="contact" className="py-20 md:py-32">
+        <section id="contact" className="py-32 md:py-48">
             <div className="container px-4 mx-auto">
                 <OptimizedBlock className="mb-16">
                     <div className="text-center">

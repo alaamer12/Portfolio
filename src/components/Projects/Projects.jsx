@@ -104,7 +104,7 @@ const ProjectTags = memo(({tags}) => {
             return (
                 <motion.span
                     key={index}
-                    className="px-2 cursor-pointer py-0.5 text-xs rounded-full bg-gray-50 dark:bg-primary/10 text-gray-600 dark:text-white/50 hover:dark:text-primary-light transition-colors"
+                    className="px-3 cursor-pointer py-1 text-xs font-semibold rounded-full bg-gray-50 dark:bg-primary/10 text-gray-700 dark:text-white/70 border border-gray-200 dark:border-primary/20 hover:border-gray-300 dark:hover:border-primary/40 hover:text-gray-800 dark:hover:text-primary-light transition-all duration-300"
                     onHoverStart={() => setHoveredTag(index)}
                     onHoverEnd={() => setHoveredTag(null)}
                     animate={settings.shouldAnimate && isHovered ? {
@@ -208,7 +208,7 @@ const HeaderTitle = memo(({ settings }) => (
 
 const HeaderDescription = memo(({ settings }) => (
     <motion.p
-        className="text-sm sm:text-base text-text/70 dark:text-white/50 max-w-2xl mx-auto transition-colors duration-300 px-4"
+        className="text-sm sm:text-base text-gray-600 dark:text-white/50 max-w-2xl mx-auto transition-colors duration-300 px-4"
         whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
         transition={{
             type: "spring",
@@ -232,7 +232,7 @@ const Projects = memo(() => {
     const projects = useMemo(() => getFeaturedProjectsData(), []);
 
     return (
-        <section className="py-20" id="projects">
+        <section className="py-32 md:py-48" id="projects">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ProjectsHeader />
                 <ProjectList projects={projects} />

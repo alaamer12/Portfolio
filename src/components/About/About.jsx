@@ -321,7 +321,7 @@ const EducationCard = ({
 
 const About = () => {
     return (
-        <section id="about" className="py-20 md:py-32">
+        <section id="about" className="py-32 md:py-48">
             <div className="container px-4 mx-auto">
                 <Header />
                 <ContactSection />
