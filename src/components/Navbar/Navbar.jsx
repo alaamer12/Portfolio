@@ -113,6 +113,7 @@ const DesktopNav = ({ isDark, toggleTheme }) => {
             ) : (
                 <NavLink to="/about">About</NavLink>
             )}
+            <NavLink to="contact" isScroll={true}>Contact</NavLink>
             <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
         </div>
     );
@@ -159,6 +160,7 @@ const MobileMenu = ({ isOpen, isDark, toggleTheme }) => {
                         ) : (
                             <NavLink to="/about">About</NavLink>
                         )}
+                        <NavLink to="contact" isScroll={true}>Contact</NavLink>
                         <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} isMobile />
                     </div>
                 </motion.div>

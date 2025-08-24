@@ -355,7 +355,7 @@ const Projects = () => {
     }, [projectsData]);
 
     return (
-        <div className="relative min-h-screen w-screen overflow-x-hidden">
+        <div className="relative min-h-screen w-screen overflow-x-hidden mt-20">
             <ProjectsSEO />
             <Background />
             <div className="relative z-10 w-full py-16">
