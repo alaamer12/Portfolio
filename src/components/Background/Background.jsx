@@ -126,19 +126,19 @@ export default memo(function Background() {
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
             <BackgroundShapes
                 themeColors={{
-                    '--shape-color-1': isDark ? 'rgba(255, 99, 132, 0.1)' : 'rgba(255, 99, 132, 0.05)',
-                    '--shape-color-2': isDark ? 'rgba(54, 162, 235, 0.1)' : 'rgba(54, 162, 235, 0.05)',
-                    '--shape-color-3': isDark ? 'rgba(255, 206, 86, 0.1)' : 'rgba(255, 206, 86, 0.05)',
-                    '--shape-color-4': isDark ? 'rgba(75, 192, 192, 0.1)' : 'rgba(75, 192, 192, 0.05)'
+                    '--shape-color-1': isDark ? 'rgba(79, 70, 229, 0.08)' : 'rgba(67, 56, 202, 0.04)', // primary
+                    '--shape-color-2': isDark ? 'rgba(255, 237, 74, 0.08)' : 'rgba(200, 166, 0, 0.04)', // accent
+                    '--shape-color-3': isDark ? 'rgba(255, 153, 163, 0.06)' : 'rgba(255, 77, 106, 0.03)', // strawberry
+                    '--shape-color-4': isDark ? 'rgba(255, 51, 102, 0.06)' : 'rgba(204, 0, 51, 0.03)' // cherry-pie
                 }}
             />
             <Wave
-                className="fill-strawberry/30 dark:fill-cherry-pie/20 transition-colors duration-300"
+                className="fill-primary/20 dark:fill-primary-light/25 transition-colors duration-300"
                 path={WAVE_PATHS.top}
                 style={{ transform: 'rotate(180deg)' }}
             />
             <Wave
-                className="fill-cherry-pie/30 dark:fill-strawberry/20 transition-colors duration-300"
+                className="fill-accent/15 dark:fill-accent-light/20 transition-colors duration-300"
                 path={WAVE_PATHS.bottom}
             />
         </div>
