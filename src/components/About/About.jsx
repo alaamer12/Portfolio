@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { motion } from "framer-motion";
 import {
     FaEnvelope,
@@ -218,26 +218,30 @@ const ContactSection = () => (
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
                     Feel free to reach out through any of these channels. I'm always open to discussing new opportunities and interesting projects.
                 </p>
-                <div className="flex flex-wrap justify-center gap-6">
+                <div className="flex flex-wrap justify-center gap-20 md:gap-26">
                     <ContactLink
                         href={`mailto:${USER_CONFIG.contact.email}`}
                         icon={FaEnvelope}
                         text={USER_CONFIG.contact.email}
+                        delay={0.1}
                     />
                     <ContactLink
                         href={USER_CONFIG.social.github.url}
                         icon={FaGithub}
                         text="GitHub"
+                        delay={0.2}
                     />
                     <ContactLink
                         href={USER_CONFIG.social.linkedin.url}
                         icon={FaLinkedin}
                         text="LinkedIn"
+                        delay={0.3}
                     />
                     <ContactLink
                         href={`https://www.google.com/maps?q=${USER_CONFIG.contact.location.city}, ${USER_CONFIG.contact.location.country}`}
                         icon={FaMapMarkerAlt}
                         text={`${USER_CONFIG.contact.location.city}, ${USER_CONFIG.contact.location.country}`}
+                        delay={0.4}
                     />
                 </div>
                 <motion.div
@@ -263,16 +267,28 @@ const ContactSection = () => (
     </OptimizedBlock>
 );
 
-const ContactLink = ({ href, icon: Icon, text }) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
+const ContactLink = ({ href, icon: Icon, text, delay = 0 }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay, duration: 0.6 }}
+        className="flex flex-col items-center group"
     >
-        <Icon className="w-5 h-5" />
-        <span>{text}</span>
-    </a>
+        <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative block mb-3 transition-transform duration-300 hover:scale-105"
+        >
+            <div className="w-16 h-16 rounded-full border-2 border-gray-200 dark:border-gray-700 flex items-center justify-center bg-white/5 dark:bg-gray-800/20 backdrop-blur-sm group-hover:border-primary dark:group-hover:border-primary-light transition-colors duration-300">
+                <Icon className="w-7 h-7 text-gray-600 dark:text-gray-300 group-hover:text-primary dark:group-hover:text-primary-light transition-colors duration-300" />
+            </div>
+        </a>
+        <span className="text-sm text-gray-600 dark:text-gray-300 text-center max-w-[120px] leading-tight group-hover:text-gray-800 dark:group-hover:text-white transition-colors duration-300">
+            {text}
+        </span>
+    </motion.div>
 );
 
 const SkillChip = ({ skill, url }) => (
