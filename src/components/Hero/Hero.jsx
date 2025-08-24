@@ -214,6 +214,9 @@ const HeroText = memo(({ textAnimation }) => {
             <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-700 dark:text-gray-300 font-light">
                 {USER_CONFIG.personal.jobTitle}
             </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto lg:mx-0">
+                Crafting scalable solutions with modern technologies and clean architecture
+            </p>
         </motion.div>
     );
 });

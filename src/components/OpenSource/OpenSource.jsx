@@ -80,7 +80,7 @@ const OpenSourceHeader = memo(({ settings }) => (
             Open Source Contributions
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base max-w-2xl mx-auto">
-            Discover my Python packages and libraries that contribute to the open-source community.
+            Discover my published Python packages and libraries that contribute to the open-source ecosystem, helping developers build better applications.
         </p>
     </motion.div>
 ));

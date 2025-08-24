@@ -182,7 +182,7 @@ const AboutHighlights = memo(() => (
 ));
 
 const Header = () => (
-    <OptimizedBlock className="mb-16" id="about-header">
+    <OptimizedBlock className="mb-32 md:mb-48" id="about-header">
         <header className="text-center">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -198,41 +198,66 @@ const Header = () => (
                     </p>
                 </div>
                 <AboutHighlights />
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 }}
+                    className="mt-12 text-center"
+                >
+                    <button
+                        onClick={() => {
+                            const contactSection = document.getElementById('contact');
+                            contactSection?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="inline-flex items-center px-8 py-4 bg-primary hover:bg-primary/90 dark:bg-primary-light dark:hover:bg-primary-light/90 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    >
+                        <FaEnvelope className="w-5 h-5 mr-2" />
+                        Contact Me
+                    </button>
+                </motion.div>
             </motion.div>
         </header>
     </OptimizedBlock>
 );
 
 const ContactSection = () => (
-    <OptimizedBlock className="mb-16" id="about-contact">
-        <section aria-label="Contact Information" className="mb-16">
+    <OptimizedBlock className="mb-32 md:mb-48" id="about-contact">
+        <section aria-label="Contact Information" className="mb-32 md:mb-48">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="flex flex-wrap justify-center gap-6"
             >
-                <ContactLink
-                    href={`mailto:${USER_CONFIG.contact.email}`}
-                    icon={FaEnvelope}
-                    text={USER_CONFIG.contact.email}
-                />
-                <ContactLink
-                    href={USER_CONFIG.social.github.url}
-                    icon={FaGithub}
-                    text="GitHub"
-                />
-                <ContactLink
-                    href={USER_CONFIG.social.linkedin.url}
-                    icon={FaLinkedin}
-                    text="LinkedIn"
-                />
-                <ContactLink
-                    href={`https://www.google.com/maps?q=${USER_CONFIG.contact.location.city}, ${USER_CONFIG.contact.location.country}`}
-                    icon={FaMapMarkerAlt}
-                    text={`${USER_CONFIG.contact.location.city}, ${USER_CONFIG.contact.location.country}`}
-                />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+                    Let's Connect
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
+                    Feel free to reach out through any of these channels. I'm always open to discussing new opportunities and interesting projects.
+                </p>
+                <div className="flex flex-wrap justify-center gap-6">
+                    <ContactLink
+                        href={`mailto:${USER_CONFIG.contact.email}`}
+                        icon={FaEnvelope}
+                        text={USER_CONFIG.contact.email}
+                    />
+                    <ContactLink
+                        href={USER_CONFIG.social.github.url}
+                        icon={FaGithub}
+                        text="GitHub"
+                    />
+                    <ContactLink
+                        href={USER_CONFIG.social.linkedin.url}
+                        icon={FaLinkedin}
+                        text="LinkedIn"
+                    />
+                    <ContactLink
+                        href={`https://www.google.com/maps?q=${USER_CONFIG.contact.location.city}, ${USER_CONFIG.contact.location.country}`}
+                        icon={FaMapMarkerAlt}
+                        text={`${USER_CONFIG.contact.location.city}, ${USER_CONFIG.contact.location.country}`}
+                    />
+                </div>
             </motion.div>
         </section>
     </OptimizedBlock>
@@ -258,7 +283,7 @@ const SkillChip = ({ skill, url }) => (
         className="inline-flex items-center px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600"
     >
         <a href={url} target="_blank" rel="noopener noreferrer"
-           className="text-sm font-medium text-gray-800 dark:text-gray-200">
+            className="text-sm font-medium text-gray-800 dark:text-gray-200">
             {skill}
         </a>
     </motion.div>
@@ -321,18 +346,21 @@ const additionalSkills = [
 ];
 
 const AboutSkillsSection = () => (
-    <OptimizedBlock className="mb-16" id="about-skills">
-        <section aria-label="Skills and Expertise" className="mb-16">
+    <OptimizedBlock className="mb-32 md:mb-48" id="about-skills">
+        <section aria-label="Skills and Expertise" className="mb-32 md:mb-48">
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
             >
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
                     Skills & Expertise
                 </h3>
-                
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
+                    A comprehensive overview of my technical skills, specialized areas, and the technologies I work with to deliver exceptional results.
+                </p>
+
                 {/* Core Technologies */}
                 <div className="mb-12">
                     <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Core Technologies</h4>
@@ -371,17 +399,20 @@ const AboutSkillsSection = () => (
 );
 
 const ExperienceSection = () => (
-    <OptimizedBlock className="mb-16" id="about-experience">
-        <section aria-label="Professional Experience" className="mb-16">
+    <OptimizedBlock className="mb-32 md:mb-48" id="about-experience">
+        <section aria-label="Professional Experience" className="mb-32 md:mb-48">
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
             >
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
                     Professional Experience
                 </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
+                    My journey through various roles and projects, showcasing growth, leadership, and technical expertise across different domains.
+                </p>
                 <OptimizedLoop
                     items={EXPERIENCE_DATA || []}
                     renderItem={(exp, index) => (
@@ -396,17 +427,20 @@ const ExperienceSection = () => (
 );
 
 const EducationSection = () => (
-    <OptimizedBlock className="mt-16" id="about-education">
-        <section aria-label="Education" className="mt-16">
+    <OptimizedBlock className="mt-32 md:mt-48" id="about-education">
+        <section aria-label="Education" className="mt-32 md:mt-48">
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
             >
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
                     Education
                 </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
+                    My academic foundation in computer science and artificial intelligence, providing the theoretical knowledge that supports my practical expertise.
+                </p>
                 <EducationCard
                     degree={USER_CONFIG.education.degree}
                     institution={USER_CONFIG.education.institution}
