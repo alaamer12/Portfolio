@@ -1,0 +1,89 @@
+**Overall Design & Theming Guidelines:**
+
+-   Support both light and dark modes for accessibility, with a toggle switch in the Navbar.
+-   Use a minimal, consistent color palette (e.g., primary accent color like blue or green, neutrals for text/backgrounds) to prioritize readability and clarity over flashy elements.
+-   Ensure the entire site is professional, simple, and story-driven, focusing on selling expertise without clutter. Use clean typography, ample white space, and responsive design for all devices.
+
+**Navbar:**
+
+-   Include links to all main sections (Home/Hero, Featured Projects, About, Projects, Skills, Work Experience, Education, Services, Achievements, Testimonials, Contact).
+-   Add a theme toggle (light/dark) and professional links (e.g., LinkedIn, GitHub, Email, Twitter/X with latest icons; make them clickable to open in respective apps/sites).
+-   Include a "Contact Me" button that's prominent and clickable.
+
+**Hero Section:**
+
+-   Two-column layout: Left column includes a strong, professional headline (e.g., "Fullstack Developer Specializing in Web Apps with JavaScript and Node.js"), a short USP/storytelling intro (1-2 sentences highlighting unique expertise and passion), stats (e.g., "52 Projects Completed", "5+ Years Experience"), "Download CV" button (links to a PDF), and "Contact Me" button.
+-   Right column: One strong hero image (professional profile photo, optionally blob-shaped framing; avoid multiple photos). Optionally, include a short demo face-shot video (≤40s) if it adds authentic value.
+-   Make the section engaging and story-driven, using context-smart words to hook visitors.
+
+**Featured Projects:**
+
+-   Showcase 3-4 top projects as interactive cards.
+-   Each card: Clickable to navigate to full project details or live demo/repo. On hover, display extra info like a short summary.
+-   For each project: Include a short description (1-2 sentences, clear and professional), tools/technologies as clickable tags (e.g., React · Node.js · MongoDB linking to official docs or related work), and an image/screenshot.
+-   Avoid duplicate project names; ensure uniqueness.
+-   If any projects are private/under NDA, mention them vaguely (e.g., "Confidential Project at \[Company\] – What happens in Cupertino stays in Cupertino.") without details.
+
+**About Section:**
+
+-   Well-written with USP and storytelling: Start with a narrative about your journey, expertise, and what sets you apart (e.g., "From building scalable web apps to solving complex problems with JavaScript ecosystems...").
+-   Be specific: Avoid vague terms like "I'm a fullstack"; use "I'm a fullstack developer specializing in web apps with JavaScript and Node.js."
+-   Keep it concise, professional, and engaging. Include a "Contact Me to Start Building Your Project" call-to-action instead of generic phrases.
+
+**Projects Section:**
+
+-   Display full list of projects (beyond featured ones) as interactive cards, similar to Featured Projects (clickable, hover info, short desc, clickable tech tags, images).
+-   Include a way to show all projects, such as a "Load More" button, pagination, or infinite scroll.
+-   Mention private/NDA projects as noted above.
+-   Ensure no duplicates; keep descriptions unique and professional.
+
+**Skills Section:**
+
+-   Categorize into: Distribution Skills (e.g., cloud deployment), Technologies (e.g., core tools like React, Node.js), Specialized Skills (e.g., niche areas like API optimization).
+-   List hard, verifiable skills only (no soft skills, no language skills unless relevant, no percentage-based bars).
+-   Use simple, clickable tags or icons for each skill, linking to examples in your projects or official docs.
+-   Keep updated and focused on expertise.
+
+**Work Experience Section:**
+
+-   Use a Timeline component with dates to showcase career history (e.g., job titles, companies, durations, key responsibilities/achievements in bullet points).
+-   Be specific and professional; integrate storytelling where possible.
+
+**Education Section:**
+
+-   List degrees, institutions, and dates in a clean timeline or list format.
+-   Highlight relevant achievements or certifications here if they fit.
+
+**Services Section:**
+
+-   Clearly list offered services (e.g., "Web App Development", "Fullstack Consulting", "API Integration") with short descriptions and "Contact Me to Get Started" buttons.
+-   Make it story-driven and specific to your expertise.
+
+**Achievements Section:**
+
+-   Showcase awards, certifications, contributions (e.g., open-source repos, hackathon wins) in a list or cards.
+-   Include verifiable details and links where possible.
+
+**Testimonials Section:**
+
+-   Display 3-5 genuine testimonials (quotes from clients/colleagues) with names/roles if permitted.
+-   Use a carousel or simple list for presentation.
+
+**Contact Section:**
+
+-   Include a direct contact form (fields: Name, Email, Message; submits without opening external apps).
+-   Provide clickable contact details: Email (opens mail client), Phone (international format, opens dialer), professional links (LinkedIn, GitHub, Twitter/X).
+-   Add multiple "Contact Me" buttons throughout the site for ease.
+-   Location optional for context (e.g., "Based in \[City\]").
+
+**Footer:**
+
+-   Repeat professional links, copyright info, and a small "Contact Me" button.
+-   Include theme toggle if not in Navbar.
+
+**Additional Notes for Implementation:**
+
+-   Ensure all contact details and links are clickable and functional.
+-   Prioritize readability: Use professional language, avoid clutter, and keep content updated.
+-   Make the site interactive and user-friendly, with smooth transitions and accessibility features (e.g., alt text for images, ARIA labels).
+

@@ -64,23 +64,13 @@ const SkillName = memo(({ name }) => (
     </h3>
 ));
 
-const SkillLevel = memo(({ level }) => (
-    <div className="mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-        <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: `${level}%` }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="bg-primary dark:bg-primary-light h-2 rounded-full"
-        />
-    </div>
-));
+// Removed SkillLevel component - no progress bars as per guidelines
 
 const SkillDescription = memo(({ description }) => (
     <p className="mt-4 text-gray-600 dark:text-gray-300">{description || 'No description available'}</p>
 ));
 
-const SkillCard = memo(({ Icon, name, level, description, url }) => {
+const SkillCard = memo(({ Icon, name, description, url }) => {
     const { settings } = useOptimizedAnimation();
 
     return (
@@ -104,7 +94,6 @@ const SkillCard = memo(({ Icon, name, level, description, url }) => {
                 <SkillIcon Icon={Icon} />
                 <div>
                     <SkillName name={name} />
-                    <SkillLevel level={level} settings={settings} />
                 </div>
             </a>
             <SkillDescription description={description} />

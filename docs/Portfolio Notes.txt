@@ -1,0 +1,107 @@
+## Portfolio & Personal Website Guidelines
+
+### 🎨 Design & Theming
+
+-   Avoid **dark-only themes** — always support both light and dark modes for accessibility.
+    
+-   Minimize the use of **many colors**. A clean, consistent palette improves readability.
+    
+-   Prioritize **readability and clarity** over flashy design.
+    
+
+### 📂 Project Cards & Showcases
+
+-   Project cards should be **interactive**:
+    
+    -   Clickable to navigate to the project.
+        
+    -   Display extra info (e.g., a summary) on hover.
+        
+-   Avoid **duplicate project names** — each project should feel unique.
+    
+-   For every project:
+    
+    -   Add a **short description** (1–2 sentences, clear and professional).
+        
+    -   Show **tools & technologies as tags**.
+        
+        -   Example: `React` · `Node.js` · `MongoDB`
+            
+        -   Each tag should be **clickable** (leading to official docs or your related work).
+            
+-   Even if projects are private or under NDA, **mention them** (without details). Use phrases like:  
+    _“What happens in Cupertino stays in Cupertino.”_
+
+    
+
+### 👤 Personal Branding
+
+-   Use **one strong hero image** at most. Avoid multiple personal photos.
+    
+-   A **demo face-shot video (≤40s)** is a good addition if authentic and professional.
+    
+-   If using profile images, **blob-shaped framing** works well, but it’s optional.
+    
+
+### 📞 Contact & Networking
+
+-   Having multiple **“Contact Me” buttons** is good — makes it easier for visitors.
+    
+-   Ensure all **contact details are clickable** (phone → dialer, email → mail client, etc.).
+    
+-   Add a **direct contact form** to avoid forcing users to open Gmail/Outlook.
+    
+-   Provide professional links:
+    
+    -   LinkedIn, GitHub, Email, Twitter (with latest icons), Phone (international format).
+        
+-   Location is optional — it’s just context.
+    
+
+### 📑 Content Guidelines
+
+-   **About section**:
+    
+    -   Don’t include it unless it’s well-written.
+        
+    -   When included, use **USP (Unique Selling Proposition)** and **storytelling techniques**.
+        
+    -   Choose **context-smart words** (e.g., for a marriage counselor, “I do” is clever).
+        
+-   Avoid “Contact me to learn more.” → Instead: “Contact me to start building your project.”
+    
+-   Be specific:
+    
+    -   Bad: “I’m a fullstack.”
+        
+    -   Good: “I’m a fullstack developer specializing in web apps with JavaScript and Node.js.”
+        
+
+### 📊 Skills & Experience
+
+-   Avoid **percentage-based skill bars** — they’re misleading.
+    
+-   Don’t list **soft skills** — focus on hard, verifiable skills.
+    
+-   **Language skills** are not important unless directly relevant to your work.
+    
+-   Always keep skills, projects, and services **updated**.
+    
+-   Use a **Timeline component** (with dates) to showcase career history.
+    
+
+### 🏆 Professional Additions
+
+-   Add **work experience** if available.
+    
+-   List **offered services** clearly.
+    
+-   Showcase **achievements** (awards, certifications, contributions).
+    
+-   Include **testimonials** if possible (ensure they’re genuine).
+    
+
+* * *
+
+✨ In short: Keep it professional, simple, and story-driven. Your portfolio should **sell your expertise without clutter**.
+

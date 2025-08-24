@@ -1,46 +1,11 @@
-import {memo, useState, useEffect, useRef} from 'react';
-import {motion, useReducedMotion} from 'framer-motion';
-import {useInView} from 'react-intersection-observer';
+import {memo, useState, useEffect} from 'react';
+import {motion} from 'framer-motion';
 import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
 import {OptimizedBlock} from '../OptimizedMillion';
 import {useDeviceDetect} from '../../hooks/useDeviceDetect';
 
-const SkillBar = ({skill}) => {
-    const [ref, inView] = useInView({
-        threshold: 0.1,
-        triggerOnce: true,
-    });
+const TechnicalSkillCard = memo(({Icon, name, url}) => {
     const isMobile = useDeviceDetect();
-
-    return (
-        <div className="mb-6">
-            <div className="flex justify-between mb-2">
-                <span className="text-base md:text-lg font-medium text-gray-900 dark:text-white">{skill.name}</span>
-                <span
-                    className="text-base md:text-lg font-medium text-primary dark:text-primary-light">{skill.percentage}%</span>
-            </div>
-            <div
-                ref={ref}
-                className="h-3 md:h-4 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden"
-            >
-                <motion.div
-                    className={`h-full ${skill.color}`}
-                    initial={{width: 0}}
-                    animate={inView ? {width: `${skill.percentage}%`} : {width: 0}}
-                    transition={{
-                        duration: isMobile ? 0.5 : 1,
-                        ease: "easeOut",
-                        useTransform: !isMobile
-                    }}
-                />
-            </div>
-        </div>
-    );
-};
-
-const TechnicalSkillCard = memo(({Icon, name, level, url}) => {
-    const isMobile = useDeviceDetect();
-    const prefersReducedMotion = useReducedMotion();
 
     return (
         <AnimatedCard isMobile={isMobile}>
@@ -48,7 +13,6 @@ const TechnicalSkillCard = memo(({Icon, name, level, url}) => {
                 <SkillIcon Icon={Icon} />
                 <div className="flex-1">
                     <SkillName name={name} />
-                    <SkillProgressBar level={level} isMobile={isMobile} prefersReducedMotion={prefersReducedMotion} />
                 </div>
             </a>
         </AnimatedCard>
@@ -105,82 +69,9 @@ const SkillName = memo(({name}) => (
     <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">{name}</h3>
 ));
 
-const SkillProgressBar = memo(({level, isMobile, prefersReducedMotion}) => {
-    const [isInView, setIsInView] = useState(false);
-    const progressRef = useRef(null);
-    
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsInView(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.1 }
-        );
-        
-        observer.observe(progressRef.current);
-        return () => observer.disconnect();
-    }, []);
-    
-    return (
-        <div ref={progressRef} className="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 md:h-2">
-            <motion.div
-                className="bg-primary dark:bg-primary-light rounded-full h-full"
-                initial={{ width: 0 }}
-                animate={isInView && !prefersReducedMotion ? { width: `${level}%` } : { width: 0 }}
-                transition={{
-                    duration: isMobile ? 0.5 : 1,
-                    ease: "easeOut",
-                    useTransform: !isMobile
-                }}
-            />
-        </div>
-    );
-});
-
-const SkillCards = memo(({ skills }) => {
-    const [visibleCards, setVisibleCards] = useState(new Set());
-    const containerRef = useRef(null);
-    
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        setVisibleCards(prev => new Set([...prev, entry.target.dataset.index]));
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-        
-        const elements = containerRef.current.children;
-        Array.from(elements).forEach((el, index) => {
-            el.dataset.index = index;
-            observer.observe(el);
-        });
-        
-        return () => observer.disconnect();
-    }, []);
-    
-    return (
-        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6">
-            {skills.map((skill, index) => (
-                <div key={skill.title} className="min-h-[150px] sm:min-h-[175px] md:min-h-[200px]">
-                    {visibleCards.has(index.toString()) && (
-                        <TechnicalSkillCard {...skill} />
-                    )}
-                </div>
-            ))}
-        </div>
-    );
-});
-
-const SkillCard = memo(({Icon, name, level, title, description, url}) => {
-    if (Icon && level !== undefined) {
-        return <TechnicalSkillCard Icon={Icon} name={name} level={level} url={url} />;
+const SkillCard = memo(({Icon, name, title, description, url}) => {
+    if (Icon && name) {
+        return <TechnicalSkillCard Icon={Icon} name={name} url={url} />;
     }
     return <RegularSkillCard title={title} description={description} />;
 });
@@ -214,19 +105,13 @@ const skillsData = [
     }
 ];
 
-const skills = [
-    {name: 'Python', percentage: 85, color: 'bg-blue-500'},
-    {name: 'React & React Native', percentage: 10, color: 'bg-cyan-500'},
-    {name: 'Other Technologies', percentage: 5, color: 'bg-purple-500'},
-];
-
 const mainSkills = [
-    {Icon: SiPython, name: 'Python', level: 90, url: 'https://www.python.org/'},
-    {Icon: SiReact, name: 'React', level: 85, url: 'https://reactjs.org/'},
-    {Icon: SiTailwindcss, name: 'TailwindCSS', level: 80, url: 'https://tailwindcss.com/'},
-    {Icon: SiDjango, name: 'Django', level: 88, url: 'https://www.djangoproject.com/'},
-    {Icon: SiPostgresql, name: 'PostgreSQL', level: 85, url: 'https://www.postgresql.org/'},
-    {Icon: SiFastapi, name: 'FastAPI', level: 80, url: 'https://fastapi.tiangolo.com/'},
+    {Icon: SiPython, name: 'Python', url: 'https://www.python.org/'},
+    {Icon: SiReact, name: 'React', url: 'https://reactjs.org/'},
+    {Icon: SiTailwindcss, name: 'TailwindCSS', url: 'https://tailwindcss.com/'},
+    {Icon: SiDjango, name: 'Django', url: 'https://www.djangoproject.com/'},
+    {Icon: SiPostgresql, name: 'PostgreSQL', url: 'https://www.postgresql.org/'},
+    {Icon: SiFastapi, name: 'FastAPI', url: 'https://fastapi.tiangolo.com/'},
 ];
 
 const otherSkills = [
@@ -251,32 +136,21 @@ const otherSkills = [
 
 const Skills = () => {
     return (
-        <section id="skills" className="py-16 md:py-24">
+        <section id="skills" className="py-20 md:py-32">
             <div className="container px-4 mx-auto">
-                <div className="text-center mb-12">
+                <div className="text-center mb-16">
                     <h2 className="text-3xl font-bold leading-tight md:text-4xl text-gray-900 dark:text-white">
                         My Skills & Expertise
                     </h2>
                     <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-                        A comprehensive breakdown of my technical capabilities
+                        Hard, verifiable technical skills and expertise areas
                     </p>
                 </div>
 
                 <OptimizedBlock>
-                    <div className="mb-12 md:mb-16">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Skills Distribution</h3>
-                        <div className="rounded-xl p-6 shadow-lg ">
-                            {skills.map((skill, index) => (
-                                <SkillBar key={`skill-bar-${index}`} skill={skill} />
-                            ))}
-                        </div>
-                    </div>
-                </OptimizedBlock>
-
-                <OptimizedBlock>
-                    <div className="mb-12 md:mb-16">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Main Technologies</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="mb-20 md:mb-24">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Core Technologies</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {mainSkills.map((skill, index) => (
                                 <SkillCard key={`main-skill-${index}`} {...skill} />
                             ))}
@@ -285,9 +159,9 @@ const Skills = () => {
                 </OptimizedBlock>
 
                 <OptimizedBlock>
-                    <div className="mb-12 md:mb-16">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Specialized Skills</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="mb-20 md:mb-24">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Specialized Areas</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {skillsData.map((skill, index) => (
                                 <SkillCard key={`specialized-skill-${index}`} {...skill} />
                             ))}
@@ -297,8 +171,8 @@ const Skills = () => {
 
                 <OptimizedBlock>
                     <div className="relative">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Other Technologies</h3>
-                        <div className="flex flex-wrap gap-3">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Additional Technologies</h3>
+                        <div className="flex flex-wrap gap-4">
                             {otherSkills.map((skill, index) => (
                                 <SkillChip key={`other-skill-${index}`} skill={skill.name} url={skill.url} />
                             ))}

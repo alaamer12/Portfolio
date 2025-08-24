@@ -21,42 +21,36 @@ export const SKILLS_DATA = [
     {
         Icon: SiPython,
         name: 'Python',
-        level: 95,
         description: 'Expert in Python development with extensive experience in automation, data processing, and backend development.',
         url: 'https://www.python.org/'
     },
     {
         Icon: SiDjango,
         name: 'Django',
-        level: 70,
         description: 'Proficient in building scalable web applications using Django and Django REST Framework.',
         url: 'https://www.djangoproject.com/'
     },
     {
         Icon: SiFastapi,
         name: 'FastAPI',
-        level: 95,
         description: 'Proficient in building high-performance APIs with FastAPI and its extensions.',
         url: 'https://fastapi.tiangolo.com/'
     },
     {
         Icon: SiReact,
         name: 'React and React Native',
-        level: 85,
         description: 'Strong frontend development skills with React, including modern hooks and state management.',
         url: 'https://reactjs.org/'
     },
     {
         Icon: SiPostgresql,
         name: 'PostgreSQL',
-        level: 75,
         description: 'Expert in database design, optimization, and management with PostgreSQL.',
         url: 'https://www.postgresql.org/'
     },
     {
         Icon: SiTailwindcss,
         name: 'TailwindCSS',
-        level: 80,
         description: 'Proficient in creating responsive and visually stunning web interfaces with TailwindCSS.',
         url: 'https://tailwindcss.com/'
     }
