@@ -428,6 +428,7 @@ export const getFeaturedProjectsData = () => {
     tags: project.technologies,
     github: project.links.github,
     demo: project.links.demo,
+    screenshots: project.images.screenshots || [],
     delay: project.delay
   }));
 };

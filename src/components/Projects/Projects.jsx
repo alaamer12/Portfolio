@@ -1,42 +1,54 @@
 
-import {memo, useMemo, useState} from 'react';
-import {motion} from 'framer-motion';
-import {FaExternalLinkAlt, FaGithub} from 'react-icons/fa';
-import {useTheme} from '../../context/ThemeContext';
+import { memo, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
+import { FaExternalLinkAlt, FaGithub, FaImages } from 'react-icons/fa';
+import { useTheme } from '../../context/ThemeContext';
 import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
-import {OptimizedBlock} from '../OptimizedMillion';
-import {getFeaturedProjectsData} from '../../data/projects';
+import { OptimizedBlock } from '../OptimizedMillion';
+import { getFeaturedProjectsData } from '../../data/projects';
+import ImageModal from '../ImageModal/ImageModal.jsx';
 
-const ProjectLinks = memo(({github, demo}) => {
-    const {settings} = useOptimizedAnimation();
+const ProjectLinks = memo(({ github, demo, screenshots, onScreenshotsClick }) => {
+    const { settings } = useOptimizedAnimation();
     const links = useMemo(() => [
-        {url: github, Icon: FaGithub},
-        {url: demo, Icon: FaExternalLinkAlt}
+        { url: github, Icon: FaGithub },
+        { url: demo, Icon: FaExternalLinkAlt }
     ], [github, demo]);
 
     return (
         <div className="flex space-x-4 pt-2">
-            {links.map(({url, Icon}) => url && (
+            {links.map(({ url, Icon }) => url && (
                 <motion.a
                     key={url}
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 dark:text-white/40 hover:text-primary dark:hover:text-primary-light transition-colors"
-                    whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                    whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+                    whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
+                    whileTap={settings.shouldAnimate ? { scale: 0.95 } : {}}
                 >
-                    <Icon className="text-lg sm:text-xl"/>
+                    <Icon className="text-lg sm:text-xl" />
                 </motion.a>
             ))}
+            {screenshots && screenshots.length > 0 && (
+                <motion.button
+                    onClick={onScreenshotsClick}
+                    className="bg-[#e6e6e6] dark:bg-gray-800 hover:scale-105 transition-transform rounded-md p-2"
+                    whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
+                    whileTap={settings.shouldAnimate ? { scale: 0.95 } : {}}
+                    title="View Screenshots"
+                >
+                    <FaImages className="text-lg sm:text-xl text-black dark:text-white/40 hover:text-primary dark:hover:text-primary-light transition-colors" />
+                </motion.button>
+            )}
         </div>
     );
 });
 
 ProjectLinks.displayName = 'ProjectLinks';
 
-const ProjectImage = memo(({displayImage, title}) => {
-    const {settings} = useOptimizedAnimation();
+const ProjectImage = memo(({ displayImage, title }) => {
+    const { settings } = useOptimizedAnimation();
     const [isLoaded, setIsLoaded] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -52,7 +64,7 @@ const ProjectImage = memo(({displayImage, title}) => {
             .map(word => word.charAt(0).toUpperCase())
             .join('')
             .slice(0, 2);
-        
+
         // Generate a consistent color based on title
         const colors = [
             'bg-gradient-to-br from-blue-500 to-blue-600',
@@ -64,17 +76,17 @@ const ProjectImage = memo(({displayImage, title}) => {
             'bg-gradient-to-br from-pink-500 to-pink-600',
             'bg-gradient-to-br from-teal-500 to-teal-600'
         ];
-        
+
         const colorIndex = title.length % colors.length;
         const bgColor = colors[colorIndex];
-        
+
         return { initials, bgColor };
     }, [title]);
 
     return (
         <motion.div
             className="relative w-12 h-12 sm:w-24 sm:h-24 flex-shrink-0 flex items-center justify-center"
-            whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+            whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
             transition={{
                 type: "spring",
                 stiffness: settings.isMobile ? 300 : 400,
@@ -84,7 +96,7 @@ const ProjectImage = memo(({displayImage, title}) => {
             {!isLoaded && !isError && (
                 <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-md" />
             )}
-            
+
             {!isError && (
                 <img
                     src={displayImage}
@@ -96,7 +108,7 @@ const ProjectImage = memo(({displayImage, title}) => {
                     onError={() => setIsError(true)}
                 />
             )}
-            
+
             {isError && (
                 <div className="absolute inset-0 flex items-center justify-center bg-transparent border-2 border-gray-300 dark:border-gray-600 rounded-md">
                     <span className="text-gray-600 dark:text-gray-400 font-bold text-lg sm:text-2xl">
@@ -110,7 +122,7 @@ const ProjectImage = memo(({displayImage, title}) => {
 
 ProjectImage.displayName = 'ProjectImage';
 
-const ProjectCaption = memo(({title, description}) => (
+const ProjectCaption = memo(({ title, description }) => (
     <>
         <h3 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-[#7d6b9b] group-hover:text-primary dark:group-hover:text-primary-light transition-colors sm:hidden">
             {title}
@@ -126,8 +138,8 @@ const ProjectCaption = memo(({title, description}) => (
 
 ProjectCaption.displayName = 'ProjectCaption';
 
-const ProjectTags = memo(({tags}) => {
-    const {settings} = useOptimizedAnimation();
+const ProjectTags = memo(({ tags }) => {
+    const { settings } = useOptimizedAnimation();
     const [hoveredTag, setHoveredTag] = useState(null);
 
     const renderedTags = useMemo(() => (
@@ -163,20 +175,29 @@ const ProjectTags = memo(({tags}) => {
 
 ProjectTags.displayName = 'ProjectTags';
 
-const ProjectCard = memo(({project, delay}) => {
-    const {settings} = useOptimizedAnimation();
-    const {isDark} = useTheme();
+const ProjectCard = memo(({ project, delay }) => {
+    const { settings } = useOptimizedAnimation();
+    const { isDark } = useTheme();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const displayImage = useMemo(() =>
-            project.darkImage && isDark ? project.darkImage : project.image
+        project.darkImage && isDark ? project.darkImage : project.image
         , [project.darkImage, isDark, project.image]);
+
+    const handleScreenshotsClick = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <OptimizedBlock threshold={12}>
             <motion.div
                 className="bg-[#e6e6e6] my-5 dark:bg-surface dark:bg-surface-dark rounded-xl p-4 sm:p-6 shadow-md dark:shadow-lg hover:shadow-xl transition-all border border-gray-100 dark:border-none group"
-                initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
-                whileInView={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
-                viewport={{once: true}}
+                initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
+                whileInView={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+                viewport={{ once: true }}
                 transition={{
                     duration: settings.duration,
                     delay: delay * (settings.isMobile ? 0.1 : 0.2),
@@ -186,16 +207,30 @@ const ProjectCard = memo(({project, delay}) => {
             >
                 <div className="flex sm:flex-row sm:gap-6">
                     <div className="flex items-center mr-3 gap-3 mb-3 sm:mb-0">
-                        <ProjectImage displayImage={displayImage} title={project.title}/>
+                        <ProjectImage displayImage={displayImage} title={project.title} />
                     </div>
 
                     <div className="flex-grow space-y-3">
-                        <ProjectCaption title={project.title} description={project.description}/>
-                        <ProjectTags tags={project.tags}/>
-                        <ProjectLinks github={project.github} demo={project.demo}/>
+                        <ProjectCaption title={project.title} description={project.description} />
+                        <ProjectTags tags={project.tags} />
+                        <ProjectLinks
+                            github={project.github}
+                            demo={project.demo}
+                            screenshots={project.screenshots}
+                            onScreenshotsClick={handleScreenshotsClick}
+                        />
                     </div>
                 </div>
             </motion.div>
+
+            {isModalOpen && project.screenshots && project.screenshots.length > 0 && (
+                <ImageModal
+                    images={project.screenshots}
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    title={`${project.title} Screenshots`}
+                />
+            )}
         </OptimizedBlock>
     );
 });
@@ -204,12 +239,12 @@ ProjectCard.displayName = 'ProjectCard';
 
 const ProjectsHeader = memo(() => {
     const { settings } = useOptimizedAnimation();
-    
+
     return (
         <motion.div
-            initial={settings.shouldAnimate ? {opacity: 0} : {}}
-            whileInView={settings.shouldAnimate ? {opacity: 1} : {}}
-            viewport={{once: true}}
+            initial={settings.shouldAnimate ? { opacity: 0 } : {}}
+            whileInView={settings.shouldAnimate ? { opacity: 1 } : {}}
+            viewport={{ once: true }}
             transition={{
                 duration: settings.duration,
                 staggerChildren: settings.staggerChildren
@@ -225,7 +260,7 @@ const ProjectsHeader = memo(() => {
 const HeaderTitle = memo(({ settings }) => (
     <motion.h2
         className="text-3xl sm:text-4xl font-bold text-text dark:text-text-light mb-3 sm:mb-4 inline-block"
-        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+        whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
         transition={{
             type: "spring",
             stiffness: settings.isMobile ? 300 : 400,
@@ -241,7 +276,7 @@ const HeaderTitle = memo(({ settings }) => (
 const HeaderDescription = memo(({ settings }) => (
     <motion.p
         className="text-sm sm:text-base text-gray-600 dark:text-white/50 max-w-2xl mx-auto transition-colors duration-300 px-4"
-        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+        whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
         transition={{
             type: "spring",
             stiffness: settings.isMobile ? 300 : 400,
