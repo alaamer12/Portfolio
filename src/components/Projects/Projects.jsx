@@ -45,6 +45,32 @@ const ProjectImage = memo(({displayImage, title}) => {
         transition: 'opacity 0.3s ease-in-out'
     }), [isLoaded]);
 
+    // Generate fallback based on project title
+    const fallbackContent = useMemo(() => {
+        const initials = title
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase())
+            .join('')
+            .slice(0, 2);
+        
+        // Generate a consistent color based on title
+        const colors = [
+            'bg-gradient-to-br from-blue-500 to-blue-600',
+            'bg-gradient-to-br from-green-500 to-green-600',
+            'bg-gradient-to-br from-purple-500 to-purple-600',
+            'bg-gradient-to-br from-red-500 to-red-600',
+            'bg-gradient-to-br from-yellow-500 to-yellow-600',
+            'bg-gradient-to-br from-indigo-500 to-indigo-600',
+            'bg-gradient-to-br from-pink-500 to-pink-600',
+            'bg-gradient-to-br from-teal-500 to-teal-600'
+        ];
+        
+        const colorIndex = title.length % colors.length;
+        const bgColor = colors[colorIndex];
+        
+        return { initials, bgColor };
+    }, [title]);
+
     return (
         <motion.div
             className="relative w-12 h-12 sm:w-24 sm:h-24 flex-shrink-0 flex items-center justify-center"
@@ -58,18 +84,24 @@ const ProjectImage = memo(({displayImage, title}) => {
             {!isLoaded && !isError && (
                 <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-md" />
             )}
-            <img
-                src={displayImage}
-                alt={title}
-                className="w-full h-full sm:w-auto sm:h-auto sm:max-w-[90%] sm:max-h-[90%] object-contain"
-                loading="lazy"
-                style={imageStyle}
-                onLoad={() => setIsLoaded(true)}
-                onError={() => setIsError(true)}
-            />
+            
+            {!isError && (
+                <img
+                    src={displayImage}
+                    alt={title}
+                    className="w-full h-full sm:w-auto sm:h-auto sm:max-w-[90%] sm:max-h-[90%] object-contain rounded-md"
+                    loading="lazy"
+                    style={imageStyle}
+                    onLoad={() => setIsLoaded(true)}
+                    onError={() => setIsError(true)}
+                />
+            )}
+            
             {isError && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-md">
-                    <span className="text-sm text-gray-500">Failed to load image</span>
+                <div className="absolute inset-0 flex items-center justify-center bg-transparent border-2 border-gray-300 dark:border-gray-600 rounded-md">
+                    <span className="text-gray-600 dark:text-gray-400 font-bold text-lg sm:text-2xl">
+                        {fallbackContent.initials}
+                    </span>
                 </div>
             )}
         </motion.div>
@@ -216,7 +248,7 @@ const HeaderDescription = memo(({ settings }) => (
             damping: settings.isMobile ? 15 : 10
         }}
     >
-        Here are some of my notable projects that showcase my skills and experience in web development.
+        Explore my portfolio of innovative web applications, showcasing expertise in full-stack development, API design, and modern technologies.
     </motion.p>
 ));
 

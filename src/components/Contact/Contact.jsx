@@ -43,10 +43,10 @@ const ContactForm = memo(() => {
                 `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
             );
             const mailtoLink = `mailto:${USER_CONFIG.contact.email}?subject=${subject}&body=${body}`;
-            
+
             // Open default email client
             window.location.href = mailtoLink;
-            
+
             setSubmitStatus('success');
             setFormData({ name: '', email: '', message: '' });
         } catch (error) {
@@ -101,7 +101,7 @@ const ContactForm = memo(() => {
                     />
                 </div>
             </div>
-            
+
             <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Message *
@@ -122,11 +122,10 @@ const ContactForm = memo(() => {
                 <motion.button
                     type="submit"
                     disabled={!isFormValid || isSubmitting}
-                    className={`inline-flex items-center px-8 py-3 rounded-xl text-white font-medium transition-all duration-300 ${
-                        isFormValid && !isSubmitting
-                            ? 'bg-primary dark:bg-primary-light hover:bg-primary/90 dark:hover:bg-primary-light/90 hover:shadow-lg'
-                            : 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed'
-                    }`}
+                    className={`inline-flex items-center px-8 py-3 rounded-xl text-white font-medium transition-all duration-300 ${isFormValid && !isSubmitting
+                        ? 'bg-primary dark:bg-primary-light hover:bg-primary/90 dark:hover:bg-primary-light/90 hover:shadow-lg'
+                        : 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed'
+                        }`}
                     whileHover={isFormValid && !isSubmitting ? { scale: 1.02 } : {}}
                     whileTap={isFormValid && !isSubmitting ? { scale: 0.98 } : {}}
                 >
@@ -142,9 +141,8 @@ const ContactForm = memo(() => {
                     <motion.div
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className={`flex items-center space-x-2 ${
-                            submitStatus === 'success' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
-                        }`}
+                        className={`flex items-center space-x-2 ${submitStatus === 'success' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+                            }`}
                     >
                         {submitStatus === 'success' ? (
                             <FaCheckCircle className="w-5 h-5" />
@@ -152,8 +150,8 @@ const ContactForm = memo(() => {
                             <FaExclamationTriangle className="w-5 h-5" />
                         )}
                         <span className="text-sm font-medium">
-                            {submitStatus === 'success' 
-                                ? 'Email client opened! Please send the message from your email app.' 
+                            {submitStatus === 'success'
+                                ? 'Email client opened! Please send the message from your email app.'
                                 : 'Failed to open email client. Please try again.'
                             }
                         </span>
@@ -166,14 +164,14 @@ const ContactForm = memo(() => {
 
 const DownloadCVButton = memo(() => {
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const handleClick = useCallback(() => {
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
         }, 1500);
     }, []);
-    
+
     return (
         <motion.a
             href={USER_CONFIG.professional.resumeUrl}
@@ -229,7 +227,7 @@ const ContactInfo = memo(() => {
                     Let's Work Together
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    Ready to bring your ideas to life? I'm here to help you build amazing web applications 
+                    Ready to bring your ideas to life? I'm here to help you build amazing web applications
                     with modern technologies. Let's discuss your project and create something extraordinary together.
                 </p>
             </div>
@@ -300,7 +298,7 @@ const Contact = () => {
                     <OptimizedBlock>
                         <ContactInfo />
                     </OptimizedBlock>
-                    
+
                     <OptimizedBlock>
                         <div className="bg-white/5 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/10 dark:border-gray-700/50">
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">

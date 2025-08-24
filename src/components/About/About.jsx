@@ -153,6 +153,34 @@ const TechnologyTag = memo(({ tech, index, settings }) => (
     </motion.span>
 ));
 
+const AboutHighlights = memo(() => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3 }}
+        className="mt-8 max-w-4xl mx-auto"
+    >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 auto-cols-fr">
+            {USER_CONFIG.aboutHighlights?.map((highlight, index) => (
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 + index * 0.1 }}
+                    className="flex items-start space-x-3 w-full"
+                >
+                    <div className="flex-shrink-0 w-2 h-2 bg-primary dark:bg-primary-light rounded-full mt-2"></div>
+                    <p className="text-gray-700 dark:text-gray-300 text-left flex-1 leading-relaxed">
+                        {highlight}
+                    </p>
+                </motion.div>
+            ))}
+        </div>
+    </motion.div>
+));
+
 const Header = () => (
     <OptimizedBlock className="mb-16" id="about-header">
         <header className="text-center">
@@ -164,9 +192,12 @@ const Header = () => (
                 <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                     About Me
                 </h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    {USER_CONFIG.personal.bio}
-                </p>
+                <div className="max-w-4xl mx-auto">
+                    <p className="text-xl text-gray-600 dark:text-gray-300 text-left leading-relaxed">
+                        {USER_CONFIG.personal.bio}
+                    </p>
+                </div>
+                <AboutHighlights />
             </motion.div>
         </header>
     </OptimizedBlock>

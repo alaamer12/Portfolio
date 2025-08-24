@@ -178,7 +178,7 @@ const Navbar = () => {
             animate={{ y: 0 }}
             className="fixed top-0 left-0 right-0 z-50"
         >
-            <div className="absolute inset-0 bg-white/40 dark:bg-gray-900/40 backdrop-blur-md border-b border-white/10 dark:border-gray-800/50" />
+            <div className="absolute inset-0 bg-white/40 dark:bg-gray-900/40 backdrop-blur-md border-b border-white/10 dark:border-gray-800/50 shadow-2xl shadow-blue-500/5 dark:shadow-blue-400/10" />
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <Logo />

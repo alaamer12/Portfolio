@@ -15,8 +15,8 @@ const getInitialTheme = () => {
     if (savedTheme) {
         return savedTheme === 'dark';
     }
-    // Otherwise, default to dark theme
-    return true;
+    // Otherwise, default to light theme
+    return false;
 };
 export const ThemeProvider = ({children}) => {
     const [isDark, setIsDark] = useState(getInitialTheme);
@@ -33,16 +33,16 @@ export const ThemeProvider = ({children}) => {
     // Apply theme changes
     useEffect(() => {
         handleThemeChange(isDark);
-        // Set initial dark theme class
+        // Set initial light theme class
         if (!localStorage.getItem(THEME_KEY)) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem(THEME_KEY, 'dark');
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem(THEME_KEY, 'light');
         }
         // Listen for system theme changes
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const handleSystemThemeChange = (e) => {
             if (!localStorage.getItem(THEME_KEY)) {
-                setIsDark(true); // Default to dark theme even on system change
+                setIsDark(false); // Default to light theme even on system change
             }
         };
         mediaQuery.addEventListener('change', handleSystemThemeChange);

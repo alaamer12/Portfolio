@@ -14,7 +14,7 @@ export const USER_CONFIG = {
     displayName: 'Amr Muhamed',
     jobTitle: 'Python and Backend Expert',
     profession: 'Full Stack Developer',
-    bio: 'Experienced Full Stack Developer specializing in React, Django, and modern web technologies. View my portfolio of innovative projects.',
+    bio: 'From building scalable web applications to architecting complex backend systems, I\'ve spent the last 5+ years mastering the art of Python development and system design. My journey began with a curiosity about how things work under the hood, which led me to specialize in backend technologies, API design, and database optimization. I believe in writing clean, maintainable code that not only solves today\'s problems but scales for tomorrow\'s challenges.',
     nationality: 'Egyptian',
     gender: 'Male',
     profileImage: '/images/hero.avif',
@@ -175,6 +175,14 @@ export const USER_CONFIG = {
     'Web Technologies',
     'Software Architecture',
     'Technology Innovation'
+  ],
+
+  // About Me Highlights/Bullet Points
+  aboutHighlights: [
+    'Expert in Python, Django, FastAPI, and Flask',
+    'Experienced with cloud platforms (AWS, GCP, Azure)',
+    'Strong background in database design and optimization',
+    'Passionate about clean code and system architecture'
   ]
 };
 
