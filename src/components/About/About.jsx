@@ -219,6 +219,76 @@ const ContactLink = ({ href, icon: Icon, text }) => (
     </a>
 );
 
+const SkillChip = ({ skill, url }) => (
+    <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        whileHover={{ scale: 1.05 }}
+        className="inline-flex items-center px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600"
+    >
+        <a href={url} target="_blank" rel="noopener noreferrer"
+           className="text-sm font-medium text-gray-800 dark:text-gray-200">
+            {skill}
+        </a>
+    </motion.div>
+);
+
+const RegularSkillCard = ({ title, description }) => {
+    const { settings } = useOptimizedAnimation();
+
+    return (
+        <motion.div
+            initial={
+                settings.shouldAnimate
+                    ? { opacity: 0, y: settings.distance }
+                    : {}
+            }
+            whileInView={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true, margin: "50px" }}
+            whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
+            className="bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-xl"
+        >
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
+            <p className="text-gray-600 dark:text-gray-300">{description}</p>
+        </motion.div>
+    );
+};
+
+const specializedSkills = [
+    {
+        title: "Backend Development",
+        description: "Specialized in Python-based backend solutions with FastAPI and Django"
+    },
+    {
+        title: "Open Source",
+        description: "Creator of multiple PyPI packages including true-core ecosystem"
+    },
+    {
+        title: "Leadership",
+        description: "CEO of Tealim and Snippet, leading technical teams and projects"
+    }
+];
+
+const additionalSkills = [
+    { name: 'JavaScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+    { name: 'TypeScript', url: 'https://www.typescriptlang.org/' },
+    { name: 'Node.js', url: 'https://nodejs.org/' },
+    { name: 'MongoDB', url: 'https://www.mongodb.com/' },
+    { name: 'MySQL', url: 'https://www.mysql.com/' },
+    { name: 'Git', url: 'https://git-scm.com/' },
+    { name: 'REST APIs', url: 'https://restfulapi.net/' },
+    { name: 'TailwindCSS', url: 'https://tailwindcss.com/' },
+    { name: 'Bootstrap', url: 'https://getbootstrap.com/' },
+    { name: 'Docker', url: 'https://www.docker.com/' },
+    { name: 'Nginx', url: 'https://nginx.org/' },
+    { name: 'Yarn', url: 'https://yarnpkg.com/' },
+    { name: 'NPM', url: 'https://www.npmjs.com/' },
+    { name: 'Vite', url: 'https://vitejs.dev/' },
+    { name: 'Next.js', url: 'https://nextjs.org/' },
+    { name: 'System Architecture', url: 'https://en.wikipedia.org/wiki/Architecture_(computing)' },
+    { name: 'System Design', url: 'https://en.wikipedia.org/wiki/System_design' },
+];
+
 const AboutSkillsSection = () => (
     <OptimizedBlock className="mb-16" id="about-skills">
         <section aria-label="Skills and Expertise" className="mb-16">
@@ -231,14 +301,39 @@ const AboutSkillsSection = () => (
                 <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
                     Skills & Expertise
                 </h3>
-                <OptimizedLoop
-                    items={SKILLS_DATA || []}
-                    renderItem={(skill, index) => (
-                        <SkillCard key={index} {...skill} />
-                    )}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                    enableCache={true}
-                />
+                
+                {/* Core Technologies */}
+                <div className="mb-12">
+                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Core Technologies</h4>
+                    <OptimizedLoop
+                        items={SKILLS_DATA || []}
+                        renderItem={(skill, index) => (
+                            <SkillCard key={index} {...skill} />
+                        )}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        enableCache={true}
+                    />
+                </div>
+
+                {/* Specialized Areas */}
+                <div className="mb-12">
+                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Specialized Areas</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {specializedSkills.map((skill, index) => (
+                            <RegularSkillCard key={`specialized-${index}`} {...skill} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Additional Technologies */}
+                <div>
+                    <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Additional Technologies</h4>
+                    <div className="flex flex-wrap gap-4">
+                        {additionalSkills.map((skill, index) => (
+                            <SkillChip key={`additional-${index}`} skill={skill.name} url={skill.url} />
+                        ))}
+                    </div>
+                </div>
             </motion.div>
         </section>
     </OptimizedBlock>

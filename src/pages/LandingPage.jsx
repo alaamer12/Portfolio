@@ -20,7 +20,7 @@ const Hero = lazy(() => {
 });
 
 const About = lazy(() => import('../components/About/About'));
-const Skills = lazy(() => import('../components/Skills/Skills'));
+
 const Projects = lazy(() => import('../components/Projects/Projects'));
 const OpenSource = lazy(() => import('../components/OpenSource/OpenSource'));
 const Contact = lazy(() => import('../components/Contact/Contact'));
@@ -99,9 +99,7 @@ const ContentSections = memo(() => {
             <OptimizedBlock id="about-section" threshold={8}>
                 <About />
             </OptimizedBlock>
-            <OptimizedBlock id="skills-section" threshold={8}>
-                <Skills />
-            </OptimizedBlock>
+
             <OptimizedBlock id="projects-section" threshold={8}>
                 <Projects />
             </OptimizedBlock>
