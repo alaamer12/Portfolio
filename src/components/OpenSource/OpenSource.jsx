@@ -105,7 +105,7 @@ const OpenSource = memo(() => {
 
     return (
         <OptimizedBlock threshold={12}>
-            <section className="py-32 md:py-48 bg-gray-50 dark:bg-gray-900">
+            <section className="py-32 md:py-48">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <OpenSourceHeader settings={settings} />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
