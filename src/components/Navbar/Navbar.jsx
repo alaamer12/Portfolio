@@ -6,9 +6,32 @@ import {AnimatePresence, motion} from 'framer-motion';
 import {FaBars, FaMoon, FaSun, FaTimes} from 'react-icons/fa';
 import {useTheme} from '../../context/ThemeContext';
 
-const NavLink = ({to, children}) => {
+// Scroll to section function
+const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+};
+
+const NavLink = ({to, children, isScroll = false}) => {
     const location = useLocation();
     const isActive = location.pathname === to;
+    
+    if (isScroll) {
+        return (
+            <div
+                onClick={() => scrollToSection(to)}
+                className="relative px-4 py-2 rounded-full transition-all duration-300 text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light cursor-pointer"
+            >
+                {children}
+            </div>
+        );
+    }
+    
     return (
         <Link
             to={to}
@@ -77,14 +100,23 @@ const ThemeToggle = ({ isDark, toggleTheme, isMobile = false }) => (
     <ThemeToggleButton isDark={isDark} toggleTheme={toggleTheme} isMobile={isMobile} />
 );
 
-const DesktopNav = ({ isDark, toggleTheme }) => (
-    <div className="hidden select-none md:flex items-center space-x-2">
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/projects">Projects</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-    </div>
-);
+const DesktopNav = ({ isDark, toggleTheme }) => {
+    const location = useLocation();
+    const isHomePage = location.pathname === '/';
+    
+    return (
+        <div className="hidden select-none md:flex items-center space-x-2">
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/projects">Projects</NavLink>
+            {isHomePage ? (
+                <NavLink to="about" isScroll={true}>About</NavLink>
+            ) : (
+                <NavLink to="/about">About</NavLink>
+            )}
+            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+        </div>
+    );
+};
 
 const MobileMenuButton = ({ isOpen, toggleMenu }) => (
     <motion.button
@@ -105,26 +137,35 @@ const MobileMenuButton = ({ isOpen, toggleMenu }) => (
     </motion.button>
 );
 
-const MobileMenu = ({ isOpen, isDark, toggleTheme }) => (
-    <AnimatePresence>
-        {isOpen && (
-            <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="relative md:hidden"
-            >
-                <div className="absolute inset-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-b border-white/10 dark:border-gray-800/50" />
-                <div className="relative px-4 py-4 space-y-3">
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/projects">Projects</NavLink>
-                    <NavLink to="/about">About</NavLink>
-                    <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} isMobile />
-                </div>
-            </motion.div>
-        )}
-    </AnimatePresence>
-);
+const MobileMenu = ({ isOpen, isDark, toggleTheme }) => {
+    const location = useLocation();
+    const isHomePage = location.pathname === '/';
+    
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="relative md:hidden"
+                >
+                    <div className="absolute inset-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-b border-white/10 dark:border-gray-800/50" />
+                    <div className="relative px-4 py-4 space-y-3">
+                        <NavLink to="/">Home</NavLink>
+                        <NavLink to="/projects">Projects</NavLink>
+                        {isHomePage ? (
+                            <NavLink to="about" isScroll={true}>About</NavLink>
+                        ) : (
+                            <NavLink to="/about">About</NavLink>
+                        )}
+                        <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} isMobile />
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+};
 
 const Navbar = () => {
     const { isDark, toggleTheme } = useTheme();

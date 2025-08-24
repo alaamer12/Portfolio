@@ -1,8 +1,8 @@
 // noinspection JSValidateTypes
 
-import { lazy, memo, Suspense, useState, useEffect, useMemo } from "react";
+import { lazy, memo, Suspense, useState, useEffect, useMemo, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaDownload, FaSpinner } from "react-icons/fa";
 import { OptimizedBlock } from "../OptimizedMillion";
 import { useDeviceDetect } from "../../hooks/useDeviceDetect";
 import { USER_CONFIG, getDisplayedSocialLinks } from "../../data/user";
@@ -100,6 +100,56 @@ const SocialLink = memo(({ href, icon: Icon }) => {
 });
 
 SocialLink.displayName = "SocialLink";
+
+// Resume Download Button Component
+const ResumeDownloadButton = memo(() => {
+    const [isLoading, setIsLoading] = useState(false);
+    const prefersReducedMotion = useReducedMotion();
+    
+    const handleClick = useCallback(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1500);
+    }, []);
+    
+    const animation = prefersReducedMotion ? false : {
+        whileHover: { scale: 1.02, y: -2 },
+        whileTap: { scale: 0.98 }
+    };
+    
+    return (
+        <motion.a
+            href={USER_CONFIG.professional.resumeUrl}
+            download="resume.pdf"
+            onClick={handleClick}
+            className="inline-flex items-center px-5 py-2.5 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-gray-800 dark:text-white rounded-full text-base font-medium hover:bg-white/20 dark:hover:bg-white/10 hover:border-white/30 dark:hover:border-white/20 transition-all duration-300 shadow-lg hover:shadow-xl"
+            aria-label="Download Resume"
+            style={{ textDecoration: "none" }}
+            {...animation}
+        >
+            {isLoading ? (
+                <FaSpinner className="mr-2 w-4 h-4 animate-spin" aria-hidden="true" />
+            ) : (
+                <FaDownload className="mr-2 w-4 h-4" aria-hidden="true" />
+            )}
+            {isLoading ? "Loading..." : "Download CV"}
+        </motion.a>
+    );
+});
+
+ResumeDownloadButton.displayName = "ResumeDownloadButton";
+
+// Scroll to section function
+const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        element.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+};
 
 // Optimize hero image loading
 const useHeroImage = () => {
@@ -216,7 +266,7 @@ const HeroImage = memo(({ imageAnimation, isMobile }) => (
         <div className="absolute inset-0 bg-gradient-to-r from-strawberry/20 to-cherry-pie/20 dark:from-strawberry-dark/20 dark:to-cherry-pie-dark/20 rounded-3xl filter blur-xl opacity-50" />
         <div
             className="relative group cursor-pointer transition-all duration-300 hover:shadow-2xl"
-            onClick={() => (window.location.href = "/about")}
+            onClick={() => scrollToSection('about')}
         >
             <div className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-full mx-auto overflow-hidden rounded-3xl">
                 <img
@@ -252,7 +302,7 @@ const Hero = memo(() => {
                         )}
                     />
                     <StatsSection stats={useOptimizedStats(isMobile)} />
-                    <SocialLinks />
+                    <ActionButtonsAndSocial />
                 </LeftColumn>
                 <RightColumn>
                     <HeroImage
@@ -283,8 +333,40 @@ const HeroContent = ({ children }) => (
 );
 
 const LeftColumn = ({ children }) => (
-    <div className="space-y-8">{children}</div>
+    <div className="space-y-6">{children}</div>
 );
+
+const ActionButtonsAndSocial = memo(() => {
+    const socialLinks = getDisplayedSocialLinks();
+    
+    const getIconForPlatform = (platform) => {
+        switch (platform) {
+            case 'github':
+                return FaGithub;
+            case 'linkedin':
+                return FaLinkedin;
+            default:
+                return FaGithub;
+        }
+    };
+
+    return (
+        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center lg:items-start">
+            <ResumeDownloadButton />
+            <div className="flex space-x-4">
+                {socialLinks.map(({ platform, url }) => (
+                    <SocialLink 
+                        key={platform}
+                        href={url} 
+                        icon={getIconForPlatform(platform)} 
+                    />
+                ))}
+            </div>
+        </div>
+    );
+});
+
+ActionButtonsAndSocial.displayName = "ActionButtonsAndSocial";
 
 const RightColumn = ({ children }) => children;
 

@@ -93,12 +93,6 @@ export const ROUTES = {
         description: USER_CONFIG.personal.bio,
         Component: lazy(() => import('../pages/LandingPage.jsx')),
     },
-    ABOUT: {
-        path: '/about',
-        title: `About Me | ${USER_CONFIG.personal.fullName}`,
-        description: `Learn about my journey as a ${USER_CONFIG.personal.profession}, my skills, experiences, and what drives me to create innovative web solutions.`,
-        Component: lazy(() => import('../pages/About.jsx')),
-    },
     PROJECTS: {
         path: '/projects',
         title: `Projects | ${USER_CONFIG.personal.fullName}`,

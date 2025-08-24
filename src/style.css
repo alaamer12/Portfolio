@@ -134,6 +134,17 @@ button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Remove focus outline for navbar buttons */
+nav button:focus,
+nav button:focus-visible,
+nav button:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-focus-ring-color: transparent !important;
+}
+
 /* Hide horizontal scrollbar */
 html, body {
     overflow-x: hidden;

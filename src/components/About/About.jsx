@@ -1,58 +1,15 @@
-import { memo, useCallback, useState } from "react";
+import { memo } from "react";
 import { motion } from "framer-motion";
 import {
-    FaDownload,
     FaEnvelope,
     FaGithub,
     FaLinkedin,
     FaMapMarkerAlt,
-    FaSpinner,
 } from "react-icons/fa";
-import Background from "../components/Background/Background";
-import SEO from "../components/SEO/SEO";
-import { OptimizedBlock, OptimizedLoop } from "../components/OptimizedMillion";
-import useOptimizedAnimation from "../hooks/useOptimizedAnimation";
-import { EXPERIENCE_DATA, SKILLS_DATA } from "../data/config.jsx";
-import { getAboutPageSchema } from "../data/schema.js";
-import { USER_CONFIG } from "../data/user.js";
-
-// Helper function to safely access nested properties with fallback
-const safeGet = (obj, path, fallback = '') => {
-    try {
-        return path.split('.').reduce((current, key) => current?.[key], obj) ?? fallback;
-    } catch {
-        return fallback;
-    }
-};
-
-const ResumeDownloadButton = memo(() => {
-    const [isLoading, setIsLoading] = useState(false);
-    const handleClick = useCallback(() => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1500);
-    }, []);
-    return (
-        <motion.a
-            href={USER_CONFIG.professional.resumeUrl}
-            download="resume.pdf"
-            onClick={handleClick}
-            className="inline-flex items-center px-6 py-3 bg-primary dark:bg-primary-light text-white rounded-full text-lg font-semibold"
-            aria-label="Download Resume"
-            style={{ textDecoration: "none" }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-        >
-            {isLoading ? (
-                <FaSpinner className="mr-2 animate-spin" aria-hidden="true" />
-            ) : (
-                <FaDownload className="mr-2" aria-hidden="true" />
-            )}
-            {isLoading ? "Loading..." : "Download Resume"}
-        </motion.a>
-    );
-});
+import { OptimizedBlock, OptimizedLoop } from "../OptimizedMillion";
+import useOptimizedAnimation from "../../hooks/useOptimizedAnimation";
+import { EXPERIENCE_DATA, SKILLS_DATA } from "../../data/config.jsx";
+import { USER_CONFIG } from "../../data/user.js";
 
 const SkillIcon = memo(({ Icon }) => (
     <Icon className="w-8 h-8 text-primary dark:text-primary-light" />
@@ -63,8 +20,6 @@ const SkillName = memo(({ name }) => (
         <span className="hover:underline">{name}</span>
     </h3>
 ));
-
-// Removed SkillLevel component - no progress bars as per guidelines
 
 const SkillDescription = memo(({ description }) => (
     <p className="mt-4 text-gray-600 dark:text-gray-300">{description || 'No description available'}</p>
@@ -198,54 +153,17 @@ const TechnologyTag = memo(({ tech, index, settings }) => (
     </motion.span>
 ));
 
-const AboutSeo = () => {
-    return (
-        <SEO
-            title={`About Me | ${USER_CONFIG.personal.firstName} ${USER_CONFIG.personal.lastName} - ${USER_CONFIG.personal.jobTitle}`}
-            description={`Learn about ${USER_CONFIG.personal.firstName} ${USER_CONFIG.personal.lastName}, a ${USER_CONFIG.personal.jobTitle} with expertise in React, Django, and modern web technologies. Discover my professional journey, skills, and experiences in software development.`}
-            type="profile"
-            image="/about-og.png"
-            keywords={`full stack developer, react developer, django developer, fastapi developer, web development, javascript, python, about ${USER_CONFIG.personal.firstName.toLowerCase()} ${USER_CONFIG.personal.lastName.toLowerCase()}, developer portfolio, software engineer, ${USER_CONFIG.contact.location.city.toLowerCase()}`}
-            schema={getAboutPageSchema()}
-        />
-    );
-};
-
-const About = () => {
-    return (
-        <>
-            <AboutSeo />
-            <div className="relative min-h-screen w-screen overflow-x-hidden">
-                <Background />
-                <MainContent />
-            </div>
-        </>
-    );
-};
-
-const MainContent = () => (
-    <div className="relative z-10 w-full pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Header />
-            <ContactSection />
-            <ResumeSection />
-            <SkillsSection />
-            <ExperienceSection />
-            <EducationSection />
-        </div>
-    </div>
-);
-
 const Header = () => (
-    <OptimizedBlock className="mb-16" id="header-section">
+    <OptimizedBlock className="mb-16" id="about-header">
         <header className="text-center">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
             >
-                <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                     About Me
-                </h1>
+                </h2>
                 <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                     {USER_CONFIG.personal.bio}
                 </p>
@@ -255,11 +173,12 @@ const Header = () => (
 );
 
 const ContactSection = () => (
-    <OptimizedBlock className="mb-16" id="contact-section">
+    <OptimizedBlock className="mb-16" id="about-contact">
         <section aria-label="Contact Information" className="mb-16">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
                 className="flex flex-wrap justify-center gap-6"
             >
@@ -300,31 +219,18 @@ const ContactLink = ({ href, icon: Icon, text }) => (
     </a>
 );
 
-const ResumeSection = () => (
-    <OptimizedBlock className="mb-16" id="resume-section">
-        <section aria-label="Resume Download" className="text-center mb-16">
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-            >
-                <ResumeDownloadButton />
-            </motion.div>
-        </section>
-    </OptimizedBlock>
-);
-
-const SkillsSection = () => (
-    <OptimizedBlock className="mb-16" id="skills-section">
+const AboutSkillsSection = () => (
+    <OptimizedBlock className="mb-16" id="about-skills">
         <section aria-label="Skills and Expertise" className="mb-16">
             <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
             >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
                     Skills & Expertise
-                </h2>
+                </h3>
                 <OptimizedLoop
                     items={SKILLS_DATA || []}
                     renderItem={(skill, index) => (
@@ -339,16 +245,17 @@ const SkillsSection = () => (
 );
 
 const ExperienceSection = () => (
-    <OptimizedBlock className="mb-16" id="experience-section">
+    <OptimizedBlock className="mb-16" id="about-experience">
         <section aria-label="Professional Experience" className="mb-16">
             <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
             >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
                     Professional Experience
-                </h2>
+                </h3>
                 <OptimizedLoop
                     items={EXPERIENCE_DATA || []}
                     renderItem={(exp, index) => (
@@ -363,16 +270,17 @@ const ExperienceSection = () => (
 );
 
 const EducationSection = () => (
-    <OptimizedBlock className="mt-16" id="education-section">
+    <OptimizedBlock className="mt-16" id="about-education">
         <section aria-label="Education" className="mt-16">
             <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
             >
-                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
                     Education
-                </h2>
+                </h3>
                 <EducationCard
                     degree={USER_CONFIG.education.degree}
                     institution={USER_CONFIG.education.institution}
@@ -410,4 +318,19 @@ const EducationCard = ({
         <p className="mt-4 text-gray-700 dark:text-gray-300">{description}</p>
     </div>
 );
+
+const About = () => {
+    return (
+        <section id="about" className="py-20 md:py-32">
+            <div className="container px-4 mx-auto">
+                <Header />
+                <ContactSection />
+                <AboutSkillsSection />
+                <ExperienceSection />
+                <EducationSection />
+            </div>
+        </section>
+    );
+};
+
 export default memo(About);
