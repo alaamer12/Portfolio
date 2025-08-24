@@ -115,7 +115,7 @@ export const PROJECTS_DATA = {
       pypi: null
     },
     images: {
-      icon: '/images/tealim.webp',
+      icon: '/images/screens/screenshot.PNG',
       banner: '/tealim.svg',
       screenshots: []
     },
@@ -372,6 +372,7 @@ export const getProjectsDataByCategories = (baseUrl = '', isDark = false) => {
     image: project.images?.icon || '',
     darkImage: project.images?.darkIcon || '',
     banner: project.images?.banner || '',
+    screenshots: project.images?.screenshots || [],
     github: project.links?.github || null,
     demo: project.links?.demo || null,
     pypi: project.links?.pypi || null
@@ -402,6 +403,7 @@ export const getProjectsData = (baseUrl = '', isDark = false) => {
     image: project.images.icon,
     darkImage: project.images.darkIcon,
     banner: project.images.banner,
+    screenshots: project.images.screenshots,
     github: project.links.github,
     demo: project.links.demo,
     pypi: project.links.pypi

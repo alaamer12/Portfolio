@@ -1,7 +1,7 @@
 
-import { memo, useMemo } from "react";
+import { memo, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { FaFire, FaGithub, FaPython } from "react-icons/fa";
+import { FaFire, FaGithub, FaPython, FaExpand } from "react-icons/fa";
 import { IoSparkles } from "react-icons/io5";
 import { BsClock } from "react-icons/bs";
 import { useTheme } from "../context/ThemeContext";
@@ -12,6 +12,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { OptimizedBlock, OptimizedLoop } from "../components/OptimizedMillion";
 import useOptimizedAnimation from "../hooks/useOptimizedAnimation";
 import { getProjectsPageSchema } from "../data/schema.js";
+import ImageModal from "../components/ImageModal/ImageModal.jsx";
 import {
     getProjectsDataByCategories,
     getSortedCategories,
@@ -194,7 +195,49 @@ const ProjectLinks = memo(({ project, settings }) => {
     );
 });
 
-const ProjectCard = ({ project, settings }) => {
+const ProjectScreenshot = memo(({ screenshots, title, onImageClick }) => {
+    console.log('ProjectScreenshot:', { screenshots, title }); // Debug log
+    if (!screenshots || screenshots.length === 0) {
+        console.log('No screenshots found for:', title);
+        return null;
+    }
+    
+    return (
+        <div className="mb-4 relative group">
+            <div 
+                className="relative cursor-pointer overflow-hidden rounded-lg"
+                onClick={() => onImageClick(0)}
+            >
+                <img
+                    src={screenshots[0]}
+                    alt={`${title} screenshot`}
+                    className="w-full h-48 sm:h-56 object-cover shadow-md border border-gray-200 dark:border-gray-700 transition-transform duration-300 group-hover:scale-105"
+                    onError={(e) => {
+                        console.error('Image failed to load:', screenshots[0]);
+                        e.target.style.display = 'none';
+                    }}
+                    onLoad={() => console.log('Image loaded successfully:', screenshots[0])}
+                />
+                
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
+                        <FaExpand className="w-5 h-5 text-gray-800 dark:text-white" />
+                    </div>
+                </div>
+                
+                {/* Multiple images indicator */}
+                {screenshots.length > 1 && (
+                    <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
+                        +{screenshots.length - 1} more
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+});
+
+const ProjectCard = ({ project, settings, onImageClick }) => {
     return (
         <motion.div
             initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
@@ -210,6 +253,11 @@ const ProjectCard = ({ project, settings }) => {
             <ProjectBanner banner={project.banner} />
             <div className="relative z-10">
                 <ProjectHeader icon={project.icon} title={project.title} />
+                <ProjectScreenshot 
+                    screenshots={project.screenshots} 
+                    title={project.title}
+                    onImageClick={(index) => onImageClick(project, index)}
+                />
                 <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
                     {project.description}
                 </p>
@@ -310,26 +358,51 @@ const GitHubLink = memo(({ settings }) => (
     </motion.div>
 ));
 
-const renderProjectCard = (project, settings, index) => (
-    <motion.div
-        key={project.title}
-        initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
-        animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
-        transition={{
-            duration: settings.duration,
-            delay: index * (settings.isMobile ? 0.05 : 0.1),
-            ease: settings.ease,
-            useTransform: settings.useTransform,
-        }}
-    >
-        <ProjectCard project={project} settings={settings} />
-    </motion.div>
-);
-
 const Projects = () => {
     const { isDark } = useTheme();
     const { settings } = useOptimizedAnimation();
     const baseUrl = "";
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        images: [],
+        initialIndex: 0,
+        title: ''
+    });
+
+    const handleImageClick = (project, index) => {
+        if (project.screenshots && project.screenshots.length > 0) {
+            setModalState({
+                isOpen: true,
+                images: project.screenshots,
+                initialIndex: index,
+                title: project.title
+            });
+        }
+    };
+
+    const closeModal = () => {
+        setModalState(prev => ({ ...prev, isOpen: false }));
+    };
+
+    const renderProjectCard = (project, settings, index) => (
+        <motion.div
+            key={project.title}
+            initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
+            animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            transition={{
+                duration: settings.duration,
+                delay: index * (settings.isMobile ? 0.05 : 0.1),
+                ease: settings.ease,
+                useTransform: settings.useTransform,
+            }}
+        >
+            <ProjectCard 
+                project={project} 
+                settings={settings} 
+                onImageClick={handleImageClick}
+            />
+        </motion.div>
+    );
 
     // Get all projects organized by categories dynamically
     const projectsData = useMemo(() => {
@@ -383,6 +456,15 @@ const Projects = () => {
                     <GitHubLink settings={settings} />
                 </div>
             </div>
+            
+            {/* Image Modal */}
+            <ImageModal
+                isOpen={modalState.isOpen}
+                onClose={closeModal}
+                images={modalState.images}
+                initialIndex={modalState.initialIndex}
+                title={modalState.title}
+            />
         </div>
     );
 };
