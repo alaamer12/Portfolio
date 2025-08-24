@@ -1,14 +1,13 @@
 // noinspection JSValidateTypes
 
-import { lazy, memo, Suspense, useState, useEffect, useMemo, useCallback } from "react";
+import { memo, useState, useEffect, useMemo, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaDownload, FaSpinner } from "react-icons/fa";
 import { OptimizedBlock } from "../OptimizedMillion";
 import { useDeviceDetect } from "../../hooks/useDeviceDetect";
 import { USER_CONFIG, getDisplayedSocialLinks } from "../../data/user";
 
-// Lazy load ShimmerEffect
-const ShimmerEffect = lazy(() => import("./ShimmerEffect"));
+
 
 // Preload hero image
 const heroImage = new URL(USER_CONFIG.personal.profileImage, import.meta.url).href;
@@ -234,54 +233,26 @@ const StatsSection = memo(({ stats }) => (
     </div>
 ));
 
-const SocialLinks = memo(() => {
-    const socialLinks = getDisplayedSocialLinks();
-    
-    const getIconForPlatform = (platform) => {
-        switch (platform) {
-            case 'github':
-                return FaGithub;
-            case 'linkedin':
-                return FaLinkedin;
-            default:
-                return FaGithub;
-        }
-    };
 
-    return (
-        <div className="flex justify-center lg:justify-start space-x-4">
-            {socialLinks.map(({ platform, url }) => (
-                <SocialLink 
-                    key={platform}
-                    href={url} 
-                    icon={getIconForPlatform(platform)} 
-                />
-            ))}
-        </div>
-    );
-});
 
-const HeroImage = memo(({ imageAnimation, isMobile }) => (
+const HeroImage = memo(({ imageAnimation }) => (
     <motion.div {...imageAnimation} className="relative mt-8 lg:mt-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-strawberry/20 to-cherry-pie/20 dark:from-strawberry-dark/20 dark:to-cherry-pie-dark/20 rounded-3xl filter blur-xl opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary-light/10 filter blur-xl opacity-50" />
         <div
             className="relative group cursor-pointer transition-all duration-300 hover:shadow-2xl"
             onClick={() => scrollToSection('about')}
         >
-            <div className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-full mx-auto overflow-hidden rounded-3xl">
-                <img
-                    src={heroImage}
-                    alt={USER_CONFIG.personal.profileImageAlt}
-                    className="w-full h-auto rounded-3xl shadow-xl transform transition-transform duration-300 group-hover:scale-105"
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                />
-                {!isMobile && (
-                    <Suspense fallback={null}>
-                        <ShimmerEffect />
-                    </Suspense>
-                )}
+            <div className="relative w-3/4 sm:w-2/3 md:w-1/2 lg:w-full mx-auto">
+                <div className="relative aspect-square overflow-hidden rounded-3xl">
+                    <img
+                        src={heroImage}
+                        alt={USER_CONFIG.personal.profileImageAlt}
+                        className="absolute inset-0 w-full h-full object-cover object-top transform transition-transform duration-300 group-hover:scale-105 shadow-xl"
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                    />
+                </div>
             </div>
         </div>
     </motion.div>
@@ -310,7 +281,6 @@ const Hero = memo(() => {
                             prefersReducedMotion,
                             isMobile,
                         )}
-                        isMobile={isMobile}
                     />
                 </RightColumn>
             </HeroContent>
