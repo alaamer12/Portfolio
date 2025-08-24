@@ -37,11 +37,15 @@ const ContactForm = memo(() => {
         setSubmitStatus(null);
 
         try {
-            // Simulate form submission - replace with your actual form handling
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Create mailto link as fallback
+            const subject = encodeURIComponent(`Contact from ${formData.name}`);
+            const body = encodeURIComponent(
+                `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+            );
+            const mailtoLink = `mailto:${USER_CONFIG.contact.email}?subject=${subject}&body=${body}`;
             
-            // For now, we'll just show success. In real implementation, you'd send to your backend
-            console.log('Form submitted:', formData);
+            // Open default email client
+            window.location.href = mailtoLink;
             
             setSubmitStatus('success');
             setFormData({ name: '', email: '', message: '' });
@@ -149,8 +153,8 @@ const ContactForm = memo(() => {
                         )}
                         <span className="text-sm font-medium">
                             {submitStatus === 'success' 
-                                ? 'Message sent successfully!' 
-                                : 'Failed to send message. Please try again.'
+                                ? 'Email client opened! Please send the message from your email app.' 
+                                : 'Failed to open email client. Please try again.'
                             }
                         </span>
                     </motion.div>
