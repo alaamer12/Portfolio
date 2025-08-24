@@ -204,9 +204,9 @@ const HeroText = memo(({ textAnimation }) => {
             }`}
         >
             <h1 className="lg:text-7xl md:text-7xl font-bold relative">
-                <span className="inline-block bg-gradient-to-r from-primary via-strawberry to-cherry-pie dark:from-primary-light dark:via-strawberry-light dark:to-cherry-pie-light bg-clip-text text-transparent">
+                <span className="inline-block bg-gradient-to-r from-primary to-primary-light dark:from-primary-light dark:to-primary bg-clip-text text-transparent">
                     {USER_CONFIG.personal.firstName}{" "}
-                    <span className="inline-block bg-gradient-to-r from-cherry-pie via-accent to-strawberry dark:from-cherry-pie-light dark:via-accent-light dark:to-strawberry-light bg-clip-text text-transparent">
+                    <span className="inline-block bg-gradient-to-r from-accent to-strawberry dark:from-accent-light dark:to-strawberry-light bg-clip-text text-transparent">
                         {USER_CONFIG.personal.lastName}
                     </span>
                 </span>
