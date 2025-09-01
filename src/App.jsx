@@ -10,6 +10,7 @@ import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SpeedInsights from './components/SpeedInsights/SpeedInsights';
 import ToastProvider from './components/Toast/ToastProvider';
+import FloatingContactButton from './components/FloatingContactButton';
 import {OptimizedBlock} from './components/OptimizedMillion';
 import {ROUTES} from "./data/config.jsx";
 
@@ -87,7 +88,7 @@ const App = () => (
                         ))}
                     </Routes>
                 </Suspense>
-
+                <FloatingContactButton />
             </Router>
         </ThemeProvider>
     </ErrorBoundary>
