@@ -9,6 +9,7 @@ import Footer from './components/Footer/Footer';
 import Breadcrumb from './components/Breadcrumb/Breadcrumb';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import SpeedInsights from './components/SpeedInsights/SpeedInsights';
+import ToastProvider from './components/Toast/ToastProvider';
 import {OptimizedBlock} from './components/OptimizedMillion';
 import {ROUTES} from "./data/config.jsx";
 
@@ -60,6 +61,7 @@ const App = () => (
             <Router>
                 <ScrollToTop/>
                 <SpeedInsights/>
+                <ToastProvider />
                 <OptimizedBlock>
                     <Navbar/>
                     {/* <OptimizedBlock>

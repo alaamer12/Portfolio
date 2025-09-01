@@ -13,6 +13,8 @@ import {
 } from "react-icons/fa";
 import { OptimizedBlock } from "../OptimizedMillion";
 import { USER_CONFIG } from "../../data/user.js";
+import { sendContactEmail } from "../../services/emailService.js";
+import { showSuccessToast, showErrorToast, showLoadingToast, dismissToast } from "../../utils/toast.js";
 
 const ContactForm = memo(() => {
     const [formData, setFormData] = useState({
@@ -22,6 +24,7 @@ const ContactForm = memo(() => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+    const [showMailtoFallback, setShowMailtoFallback] = useState(false);
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
@@ -31,31 +34,69 @@ const ContactForm = memo(() => {
         }));
     }, []);
 
-    const handleSubmit = useCallback(async (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setSubmitStatus(null);
-
+    const handleMailtoFallback = useCallback(() => {
         try {
-            // Create mailto link as fallback
             const subject = encodeURIComponent(`Contact from ${formData.name}`);
             const body = encodeURIComponent(
                 `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
             );
             const mailtoLink = `mailto:${USER_CONFIG.contact.email}?subject=${subject}&body=${body}`;
-
-            // Open default email client
             window.location.href = mailtoLink;
 
-            setSubmitStatus('success');
-            setFormData({ name: '', email: '', message: '' });
+            // Show success toast for mailto
+            showSuccessToast('Opening your email client. Please send the message from your email app.');
+        } catch (error) {
+            console.error('Mailto fallback failed:', error);
+            showErrorToast('Failed to open email client. Please try copying the email address manually.');
+        }
+    }, [formData]);
+
+    const handleSubmit = useCallback(async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus(null);
+        setShowMailtoFallback(false);
+
+        // Show loading toast
+        const loadingToastId = showLoadingToast('Sending your message...');
+
+        try {
+            // Try to send email via Resend API
+            const emailResult = await sendContactEmail(formData);
+
+            if (emailResult.success) {
+                setSubmitStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                
+                // Dismiss loading toast and show success
+                dismissToast(loadingToastId);
+                showSuccessToast('🎉 Message sent successfully! I\'ll get back to you soon.');
+            } else {
+                throw new Error(emailResult.message);
+            }
         } catch (error) {
             console.error('Form submission error:', error);
             setSubmitStatus('error');
+            setShowMailtoFallback(true);
+
+            // Dismiss loading toast
+            dismissToast(loadingToastId);
+
+            // Check if it's a development mode issue
+            if (error.message.includes('npx vercel dev')) {
+                showErrorToast('⚠️ Development Mode: API not available with Vite dev server. Use "npx vercel dev" to test the contact form, or use the "Send via Email Client" button below.');
+            } else if (error.message.includes('Email service is not properly configured')) {
+                showErrorToast('🔧 Email service configuration issue. Please use the "Send via Email Client" button below.');
+            } else {
+                showErrorToast('❌ Failed to send message via our email service. Please try the "Send via Email Client" button below.');
+            }
         } finally {
             setIsSubmitting(false);
-            // Clear status after 5 seconds
-            setTimeout(() => setSubmitStatus(null), 5000);
+            // Clear status after 10 seconds
+            setTimeout(() => {
+                setSubmitStatus(null);
+                setShowMailtoFallback(false);
+            }, 10000);
         }
     }, [formData]);
 
@@ -118,11 +159,12 @@ const ContactForm = memo(() => {
                 />
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
+            <div className="flex flex-col gap-4">
+                {/* Main Submit Button */}
                 <motion.button
                     type="submit"
                     disabled={!isFormValid || isSubmitting}
-                    className={`inline-flex items-center px-8 py-3 rounded-xl text-white font-medium transition-all duration-300 ${isFormValid && !isSubmitting
+                    className={`inline-flex items-center justify-center px-8 py-3 rounded-xl text-white font-medium transition-all duration-300 relative ${isFormValid && !isSubmitting
                         ? 'bg-primary dark:bg-primary-light hover:bg-primary/90 dark:hover:bg-primary-light/90 hover:shadow-lg'
                         : 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed'
                         }`}
@@ -130,29 +172,53 @@ const ContactForm = memo(() => {
                     whileTap={isFormValid && !isSubmitting ? { scale: 0.98 } : {}}
                 >
                     {isSubmitting ? (
-                        <FaSpinner className="mr-2 w-4 h-4 animate-spin" />
+                        <>
+                            <div className="mr-2 w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            <span>Sending...</span>
+                        </>
                     ) : (
-                        <FaPaperPlane className="mr-2 w-4 h-4" />
+                        <>
+                            <FaPaperPlane className="mr-2 w-4 h-4" />
+                            <span>Send Message</span>
+                        </>
                     )}
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
                 </motion.button>
 
+                {/* Mailto Fallback Button - Only shown when API fails */}
+                {showMailtoFallback && (
+                    <motion.button
+                        type="button"
+                        onClick={handleMailtoFallback}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="inline-flex items-center justify-center px-6 py-2 rounded-lg border-2 border-orange-500 dark:border-orange-400 text-orange-600 dark:text-orange-400 font-medium hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-all duration-300"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                    >
+                        <FaEnvelope className="mr-2 w-4 h-4" />
+                        <span>Send via Email Client</span>
+                    </motion.button>
+                )}
+
+                {/* Status Messages */}
                 {submitStatus && (
                     <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className={`flex items-center space-x-2 ${submitStatus === 'success' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`flex items-center space-x-2 p-3 rounded-lg ${submitStatus === 'success'
+                            ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800'
+                            : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
                             }`}
                     >
                         {submitStatus === 'success' ? (
-                            <FaCheckCircle className="w-5 h-5" />
+                            <FaCheckCircle className="w-5 h-5 flex-shrink-0" />
                         ) : (
-                            <FaExclamationTriangle className="w-5 h-5" />
+                            <FaExclamationTriangle className="w-5 h-5 flex-shrink-0" />
                         )}
                         <span className="text-sm font-medium">
                             {submitStatus === 'success'
-                                ? 'Email client opened! Please send the message from your email app.'
-                                : 'Failed to open email client. Please try again.'
+                                ? 'Message sent successfully! I\'ll get back to you soon.'
+                                : 'Email service temporarily unavailable. Please use the "Send via Email Client" button above.'
                             }
                         </span>
                     </motion.div>
