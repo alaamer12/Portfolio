@@ -14,7 +14,7 @@ export const USER_CONFIG = {
     displayName: 'Amr Muhamed',
     jobTitle: 'Data Engineer & AI Specialist',
     profession: 'Data Engineer',
-    bio: 'Data Engineer with extensive experience building scalable data pipelines, aggregating large-scale datasets, and optimizing data processing workflows. I develop and maintain robust ETL/ELT systems using Python, leveraging tools like Pandas, NumPy, and advanced frameworks for data manipulation and visualization. My expertise spans creating advanced data hubs, scraping frameworks, and integrating APIs for machine learning and analytics applications. I design and implement static code analysis tools with rich-terminal dashboards to enhance data quality and pipeline observability, driving data engineering innovation through strong team leadership and high-impact project delivery.',
+    bio: 'Passionate Data Engineer and AI Specialist with 3+ years of experience building scalable data pipelines, machine learning systems, and full-stack applications. I specialize in developing robust ETL/ELT systems using Python, creating advanced data hubs that aggregate datasets from multiple sources, and implementing AI-powered tools for automation and analytics. My expertise spans from low-level systems programming in C/C++ and Rust to modern web development with React and TypeScript. I have published 5+ PyPI packages, contributed to multiple open-source organizations, and led teams through complex technical projects. Currently pursuing a Bachelor\'s in Computer Science and AI at Benha University while working as a Full Stack Developer, I combine academic knowledge with practical industry experience to deliver innovative solutions that drive business value and technical excellence.',
     nationality: 'Egyptian',
     gender: 'Male',
     profileImage: '/images/hero.avif',
@@ -98,8 +98,8 @@ export const USER_CONFIG = {
 
   // Skills & Technologies
   skills: {
-    primary: ['Python', 'Pandas', 'NumPy', 'ETL/ELT', 'Machine Learning', 'Data Visualization'],
-    secondary: ['PyTorch', 'TensorFlow', 'MongoDB', 'Supabase', 'Streamlit', 'Plotly'],
+    primary: ['Python', 'JavaScript/TypeScript', 'React', 'Data Engineering', 'Machine Learning', 'ETL/ELT Pipelines'],
+    secondary: ['C/C++', 'Rust', 'C#', 'Pandas', 'NumPy', 'PyTorch', 'TensorFlow', 'MongoDB', 'PostgreSQL', 'Supabase', 'Streamlit', 'Plotly', 'Three.js', 'OpenGL', 'Unity', 'Godot'],
     languages: [
       {
         name: 'Arabic',
@@ -162,10 +162,14 @@ export const USER_CONFIG = {
 
   // Awards & Achievements
   achievements: [
-    'Honor student at BFCAI',
-    'Open Source Contributor',
-    '10+ PyPI Packages Published',
-    '150+ GitHub Repositories'
+    'Published 5+ PyPI packages enhancing data engineering workflows',
+    'Contributed to multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AI)',
+    '55+ GitHub repositories spanning multiple programming languages and domains',
+    'Led successful academic and professional teams through complex technical projects',
+    'Completed government DEPI Data Engineering track with informal instructor assistant role',
+    'Built production-ready applications serving real users and solving practical problems',
+    'Honor student at Benha Faculty of Computer Science and Artificial Intelligence',
+    'Expertise across 8+ programming languages and 20+ frameworks/technologies'
   ],
 
   // Interests & Hobbies
@@ -179,10 +183,14 @@ export const USER_CONFIG = {
 
   // About Me Highlights/Bullet Points
   aboutHighlights: [
-    'Expert in building scalable ETL/ELT pipelines with Python, Pandas, and NumPy',
-    'Specialized in machine learning model development and deployment',
-    'Strong background in data visualization with Plotly, Chart.js, and Streamlit',
-    'Passionate about data quality, pipeline observability, and team leadership'
+    'Built comprehensive data engineering solutions including MedData hub aggregating datasets from HuggingFace, Kaggle, Medium, and Dev.to with automated ETL pipelines',
+    'Developed AI-powered tools like c4f for intelligent Git automation and Fragma for NLP sentence fragment detection using modern LLM integration',
+    'Created high-performance systems including CascadeSearch multi-language file utility (Rust/C/Python) and jsdfile binary JSON parser with C integration',
+    'Published 5+ PyPI packages and contributed to multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AI)',
+    'Led cross-functional teams through complex projects, managing 3-7 members with structured communication, documentation, and agile methodologies',
+    'Expertise spans full-stack development with React/TypeScript, 3D graphics with OpenGL/WebGL, game development in Unity/Godot, and VR experiences',
+    'Advanced skills in machine learning frameworks (PyTorch, TensorFlow), data visualization (Plotly, Chart.js, Streamlit), and modern web technologies',
+    'Strong foundation in computer science fundamentals including data structures, algorithms, design patterns, and performance optimization techniques'
   ]
 };
 
