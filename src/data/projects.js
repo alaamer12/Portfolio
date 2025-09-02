@@ -2120,11 +2120,13 @@ export const getProjectsData = (baseUrl = '', isDark = false) => {
   });
 
   return {
-    businessProjects: getProjectsByCategory(PROJECT_CATEGORIES.BUSINESS.id).map(processProject),
-    pythonProjects: getProjectsByCategory(PROJECT_CATEGORIES.PYTHON.id).map(processProject),
+    dataEngineeringProjects: getProjectsByCategory(PROJECT_CATEGORIES.DATA_ENGINEERING.id).map(processProject),
+    mlAiProjects: getProjectsByCategory(PROJECT_CATEGORIES.ML_AI.id).map(processProject),
+    webFrontendProjects: getProjectsByCategory(PROJECT_CATEGORIES.WEB_FRONTEND.id).map(processProject),
+    gameDevelopmentProjects: getProjectsByCategory(PROJECT_CATEGORIES.GAME_DEVELOPMENT.id).map(processProject),
+    developerToolsProjects: getProjectsByCategory(PROJECT_CATEGORIES.DEVELOPER_TOOLS.id).map(processProject),
     trueFamilyProjects: getProjectsByCategory(PROJECT_CATEGORIES.TRUE_FAMILY.id).map(processProject),
-    utilityProjects: getProjectsByCategory(PROJECT_CATEGORIES.UTILITY.id).map(processProject),
-    openSourceProjects: getProjectsByCategory(PROJECT_CATEGORIES.OPEN_SOURCE.id).map(processProject)
+    educationalProjects: getProjectsByCategory(PROJECT_CATEGORIES.EDUCATIONAL.id).map(processProject)
   };
 };
 

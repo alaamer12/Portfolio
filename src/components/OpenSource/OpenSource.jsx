@@ -91,11 +91,11 @@ const OpenSource = memo(() => {
     const packages = useMemo(() => {
         // Get True Family projects as they are the main open source contributions
         const trueFamilyProjects = getProjectsByCategory(PROJECT_CATEGORIES.TRUE_FAMILY.id);
-        const utilityProjects = getProjectsByCategory(PROJECT_CATEGORIES.UTILITY.id);
+        const developerToolsProjects = getProjectsByCategory(PROJECT_CATEGORIES.DEVELOPER_TOOLS.id);
         
         // Combine and filter for packages with PyPI links
-        return [...trueFamilyProjects, ...utilityProjects]
-            .filter(project => project.links.pypi)
+        return [...trueFamilyProjects, ...developerToolsProjects]
+            .filter(project => project.links && project.links.pypi)
             .slice(0, 4); // Show top 4 packages
     }, []);
 
