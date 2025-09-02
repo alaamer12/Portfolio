@@ -328,29 +328,26 @@ const RegularSkillCard = ({title, description}) => {
 const specializedSkills = [
     {
         title: "Data Engineering & Analytics",
-        description: "Expert in building scalable ETL/ELT pipelines, data aggregation systems, and processing workflows. Developed MedData hub aggregating datasets from multiple sources, and CodeLyzer for static code analysis with rich-terminal dashboards."
+        description: "Excel in building scalable ETL/ELT pipelines, data aggregation systems, and processing workflows. Build MedData hub aggregating datasets from multiple sources, and CodeLyzer for static code analysis with rich-terminal dashboards."
     },
     {
         title: "Machine Learning & AI",
-        description: "Specialized in ML model development, NLP applications, and neural networks. Created Fragma for sentence fragment detection, SafeVision for content classification, and c4f for AI-powered Git automation using LLMs."
+        description: "Specialize in ML model development, NLP applications, and neural networks. Create Fragma for sentence fragment detection, SafeVision for content classification, and c4f for AI-powered Git automation using LLMs."
     },
     {
         title: "Full-Stack Web Development",
-        description: "Proficient in React, TypeScript, and modern web technologies. Built TeamUp collaboration platform, NotaShare real-time note-sharing app, and multiple interactive 3D experiences using React Three Fiber."
+        description: "Work with React, TypeScript, and modern web technologies. Build TeamUp collaboration platform, NotaShare real-time note-sharing app, and multiple interactive 3D experiences using React Three Fiber."
     },
     {
         title: "Systems Programming & Performance",
-        description: "Advanced skills in C/C++, Rust, and performance optimization. Developed CascadeSearch multi-language file search utility, ArtSpace 3D graphics engine with OpenGL, and high-performance binary JSON parser jsdfile."
+        description: "Apply advanced skills in Python, Rust, and performance optimization. Create CascadeSearch multi-language file search utility, ArtSpace 3D graphics engine with OpenGL, and high-performance binary JSON parser jsdfile."
     },
     {
         title: "Developer Tools & Automation",
-        description: "Created comprehensive CLI tools and utilities including GHRepoLens for repository analysis, PixCrawler for dataset building, fScan for advanced file search, and multiple PyPI packages for developer productivity."
+        description: "Create comprehensive CLI tools and utilities including GHRepoLens for repository analysis, PixCrawler for dataset building, fScan for advanced file search, and multiple PyPI packages for developer productivity."
     },
-    {
-        title: "Game Development & Graphics",
-        description: "Experience in Unity C# and Godot for game development. Built DrumVerse VR music experience, Gigamon multiplayer card game, and advanced 3D graphics applications with real-time rendering and physics simulation."
-    }
 ];
+
 
 const additionalSkills = [
     // Machine Learning & AI
@@ -358,24 +355,19 @@ const additionalSkills = [
     {name: 'TensorFlow', url: 'https://www.tensorflow.org/'},
     {name: 'scikit-learn', url: 'https://scikit-learn.org/'},
     {name: 'Hugging Face', url: 'https://huggingface.co/'},
-    {name: 'OpenAI API', url: 'https://openai.com/api/'},
-    {name: 'LangChain', url: 'https://langchain.com/'},
 
     // Data Engineering & Analytics
     {name: 'Apache Spark', url: 'https://spark.apache.org/'},
     {name: 'Apache Kafka', url: 'https://kafka.apache.org/'},
     {name: 'Airflow', url: 'https://airflow.apache.org/'},
-    {name: 'Parquet', url: 'https://parquet.apache.org/'},
     {name: 'ETL Pipelines', url: 'https://en.wikipedia.org/wiki/Extract,_transform,_load'},
     {name: 'Data Warehousing', url: 'https://en.wikipedia.org/wiki/Data_warehouse'},
 
     // Visualization & Analytics
     {name: 'Plotly', url: 'https://plotly.com/'},
-    {name: 'Chart.js', url: 'https://www.chartjs.org/'},
     {name: 'D3.js', url: 'https://d3js.org/'},
     {name: 'Streamlit', url: 'https://streamlit.io/'},
     {name: 'Jupyter', url: 'https://jupyter.org/'},
-    {name: 'Tableau', url: 'https://www.tableau.com/'},
 
     // Databases & Storage
     {name: 'MongoDB', url: 'https://www.mongodb.com/'},
@@ -383,22 +375,21 @@ const additionalSkills = [
     {name: 'Supabase', url: 'https://supabase.com/'},
     {name: 'Redis', url: 'https://redis.io/'},
     {name: 'SQLite', url: 'https://www.sqlite.org/'},
-    {name: 'InfluxDB', url: 'https://www.influxdata.com/'},
 
     // Web Technologies
     {name: 'React Three Fiber', url: 'https://docs.pmnd.rs/react-three-fiber'},
     {name: 'Three.js', url: 'https://threejs.org/'},
-    {name: 'WebGL', url: 'https://www.khronos.org/webgl/'},
-    {name: 'Fabric.js', url: 'http://fabricjs.com/'},
-    {name: 'Zustand', url: 'https://zustand-demo.pmnd.rs/'},
+    {name: 'Fabric.js', url: 'https://fabricjs.com/'},
     {name: 'Framer Motion', url: 'https://www.framer.com/motion/'},
+    {name: 'Next.js', url: 'https://nextjs.org/'},
+
+    // Backend Technologies
+    {name: 'FastAPI', url: 'https://fastapi.tiangolo.com/'},
 
     // Systems & Performance
     {name: 'OpenGL', url: 'https://www.opengl.org/'},
-    {name: 'CUDA', url: 'https://developer.nvidia.com/cuda-zone'},
     {name: 'WebAssembly', url: 'https://webassembly.org/'},
     {name: 'Docker', url: 'https://www.docker.com/'},
-    {name: 'Kubernetes', url: 'https://kubernetes.io/'},
     {name: 'Nginx', url: 'https://nginx.org/'},
 
     // Development Tools
@@ -406,16 +397,16 @@ const additionalSkills = [
     {name: 'GitHub Actions', url: 'https://github.com/features/actions'},
     {name: 'Vercel', url: 'https://vercel.com/'},
     {name: 'Vite', url: 'https://vitejs.dev/'},
-    {name: 'Webpack', url: 'https://webpack.js.org/'},
     {name: 'ESLint', url: 'https://eslint.org/'},
+    {name: 'Auth0', url: 'https://auth0.com/'},
+    {name: 'Sentry', url: 'https://sentry.io/'},
 
     // Specialized Tools
     {name: 'Web Scraping', url: 'https://en.wikipedia.org/wiki/Web_scraping'},
-    {name: 'Statistical Analysis', url: 'https://en.wikipedia.org/wiki/Statistics'},
     {name: 'Computer Vision', url: 'https://opencv.org/'},
+    {name: 'Reinforcement Learning', url: 'https://en.wikipedia.org/wiki/Reinforcement_learning'},
+    {name: 'Deep Learning', url: 'https://en.wikipedia.org/wiki/Deep_learning'},
     {name: 'Natural Language Processing', url: 'https://spacy.io/'},
-    {name: 'Game Development', url: 'https://unity.com/'},
-    {name: 'Virtual Reality', url: 'https://www.oculus.com/'}
 ];
 
 const AboutSkillsSection = () => (

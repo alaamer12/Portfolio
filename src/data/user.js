@@ -97,8 +97,8 @@ export const USER_CONFIG = {
 
     // Skills & Technologies
     skills: {
-        primary: ['Python', 'JavaScript/TypeScript', 'React', 'Data Engineering', 'Machine Learning', 'ETL/ELT Pipelines'],
-        secondary: ['C/C++', 'Rust', 'C#', 'Pandas', 'NumPy', 'PyTorch', 'TensorFlow', 'MongoDB', 'PostgreSQL', 'Supabase', 'Streamlit', 'Plotly', 'Three.js', 'OpenGL', 'Unity', 'Godot'],
+        primary: ['Data Engineering', 'Machine Learning', 'ETL/ELT Pipelines', 'Python', 'JavaScript/TypeScript', 'React'],
+        secondary: ['C/C++', 'Rust', 'Pandas', 'NumPy', 'PyTorch', 'TensorFlow', 'MongoDB', 'PostgreSQL', 'Supabase', 'Streamlit', 'Plotly', 'Three.js'],
         languages: [
             {
                 name: 'Arabic',
@@ -159,48 +159,38 @@ export const USER_CONFIG = {
         logoAlt: 'Amr Muhamed Logo'
     },
 
-    // Awards & Achievements
-    achievements: [
-        'Published 5+ PyPI packages enhancing data engineering workflows',
-        'Contributed to multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AI)',
-        '55+ GitHub repositories spanning multiple programming languages and domains',
-        'Led successful academic and professional teams through complex technical projects',
-        'Completed government DEPI Data Engineering track with informal instructor assistant role',
-        'Built production-ready applications serving real users and solving practical problems',
-        'Honor student at Benha Faculty of Computer Science and Artificial Intelligence',
-        'Expertise across 8+ programming languages and 20+ frameworks/technologies'
-    ],
+// Awards & Achievements
+achievements: [
+    'Publish 5+ PyPI packages enhancing data engineering workflows',
+    'Contribute and operate in multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AIDE)',
+    'Maintain 50+ GitHub repositories spanning multiple programming languages and domains',
+    'Complete government DEPI Data Engineering track',
+    'Build production-ready applications solving practical problems',
+    'Honor student at Benha Faculty of Computer Science and Artificial Intelligence'
+],
 
-    // Interests & Hobbies
-    interests: [
-        'Open Source Development',
-        'Machine Learning',
-        'Web Technologies',
-        'Software Architecture',
-        'Technology Innovation'
-    ],
+// Interests & Hobbies
+interests: [
+    'Open Source Development',
+    'Machine Learning',
+    'Web Technologies',
+    'Software Architecture',
+    'Technology Innovation'
+],
 
-    // About Me Highlights/Bullet Points
-    aboutHighlights: [
-        'Built comprehensive data engineering solutions including MedData hub aggregating datasets from HuggingFace, Kaggle, Medium, and Dev.to with automated ETL pipelines',
-        'Developed AI-powered tools like c4f for intelligent Git automation and Fragma for NLP sentence fragment detection using modern LLM integration',
-        'Created high-performance systems including CascadeSearch multi-language file utility (Rust/C/Python) and jsdfile binary JSON parser with C integration',
-        'Published 5+ PyPI packages and contributed to multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AI)',
-        'Led cross-functional teams through complex projects, managing 3-7 members with structured communication, documentation, and agile methodologies',
-        'Expertise spans full-stack development with React/TypeScript, 3D graphics with OpenGL/WebGL, game development in Unity/Godot, and VR experiences',
-        'Advanced skills in machine learning frameworks (PyTorch, TensorFlow), data visualization (Plotly, Chart.js, Streamlit), and modern web technologies',
-        'Strong foundation in computer science fundamentals including data structures, algorithms, design patterns, and performance optimization techniques'
-    ]
+// About Me Highlights/Bullet Points
+aboutHighlights: [
+    'Build comprehensive data engineering solutions including MedData hub aggregating datasets from HuggingFace, Kaggle, Medium, and Dev.to with automated ETL pipelines',
+    'Develop AI-powered tools like c4f for intelligent Git automation and Fragma for NLP sentence fragment detection using modern LLM integration',
+    'Create high-performance systems including CascadeSearch multi-language file utility (Rust/C/Python) and jsdfile binary JSON parser with C integration',
+    'Publish 5+ PyPI packages and contribute to multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AI)',
+    'Lead cross-functional teams through complex projects, managing members with structured communication, documentation, and agile methodologies',
+    'Specialize in full-stack development with React/TypeScript, 3D graphics experiences',
+    'Demonstrate advanced skills in machine learning frameworks (PyTorch, TensorFlow), data visualization (Plotly, Chart.js, Streamlit), and modern web technologies',
+    'Apply strong foundation in computer science fundamentals including data structures, algorithms, design patterns, and performance optimization techniques'
+]
+
 };
-
-// Helper functions to get specific user data
-export const getUserName = () => USER_CONFIG.personal.fullName;
-export const getUserEmail = () => USER_CONFIG.contact.email;
-export const getUserWebsite = () => USER_CONFIG.contact.website;
-export const getUserJobTitle = () => USER_CONFIG.personal.jobTitle;
-export const getUserLocation = () => `${USER_CONFIG.contact.location.city}, ${USER_CONFIG.contact.location.country}`;
-
-// Get only displayed social links
 export const getDisplayedSocialLinks = () => {
     return Object.entries(USER_CONFIG.social)
         .filter(([_, config]) => config.display && config.url)
@@ -210,24 +200,3 @@ export const getDisplayedSocialLinks = () => {
             username: config.username
         }));
 };
-
-// Get primary skills as array
-export const getPrimarySkills = () => USER_CONFIG.skills.primary;
-
-// Get contact information formatted
-export const getContactInfo = () => ({
-    email: USER_CONFIG.contact.email,
-    location: getUserLocation(),
-    website: USER_CONFIG.contact.website,
-    social: getDisplayedSocialLinks()
-});
-
-// Get SEO metadata
-export const getSEOData = () => ({
-    title: `${USER_CONFIG.personal.fullName} | ${USER_CONFIG.personal.profession}`,
-    description: USER_CONFIG.personal.bio,
-    keywords: USER_CONFIG.seo.keywords.join(', '),
-    author: USER_CONFIG.seo.author,
-    ogImage: USER_CONFIG.seo.ogImage,
-    canonicalUrl: USER_CONFIG.seo.canonicalUrl
-});
