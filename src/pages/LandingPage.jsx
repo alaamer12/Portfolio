@@ -82,20 +82,15 @@ const HeroSection = memo(() => {
 });
 
 const ContentSections = memo(() => {
-    const {ref, inView} = useOptimizedAnimation({
-        threshold: 0.1,
-        triggerOnce: false,
-        rootMargin: '100px'
-    });
+    const [isMounted, setIsMounted] = useState(false);
+    
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
-    const sectionStyles = useMemo(() => ({
-        opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'opacity 0.5s ease-out, transform 0.5s ease-out'
-    }), [inView]);
-
+    // Simple approach: just render the sections without complex intersection observer logic
     return (
-        <motion.div ref={ref} style={sectionStyles}>
+        <div style={{ opacity: isMounted ? 1 : 0, transition: 'opacity 0.5s ease-out' }}>
             <OptimizedBlock id="about-section" threshold={8}>
                 <About/>
             </OptimizedBlock>
@@ -109,7 +104,7 @@ const ContentSections = memo(() => {
             <OptimizedBlock id="contact-section" threshold={8}>
                 <Contact/>
             </OptimizedBlock>
-        </motion.div>
+        </div>
     );
 });
 
