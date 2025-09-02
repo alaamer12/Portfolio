@@ -1,0 +1,25 @@
+### Most Common Soft Skills in CVs and Resumes
+
+Soft skills, often referred to as personal skills, are non-technical abilities that demonstrate how you interact with others, approach work, and handle challenges. Based on an analysis of multiple career advice sources, including job sites, resume builders, and industry reports, the following are the most frequently mentioned soft skills that appear in resumes and CVs across various professions. These skills are valued by employers because they are transferable and essential for workplace success.
+
+I've compiled a list of the top 15 most common ones, ranked by frequency of mention across sources. Each includes a brief description and examples of how it might be demonstrated in a resume context.
+
+| Skill                  | Description                                                                 | Examples in Resumes                                      |
+|------------------------|-----------------------------------------------------------------------------|----------------------------------------------------------|
+| Communication         | The ability to convey information clearly and effectively, both verbally and in writing. | "Led team meetings to align on project goals, resulting in 20% faster delivery." |
+| Teamwork              | Working collaboratively with others to achieve shared goals.                | "Collaborated with cross-functional teams to launch a new product ahead of schedule." |
+| Adaptability          | Adjusting to new conditions, changes, or challenges with ease.              | "Adapted to remote work during the pandemic, maintaining 100% productivity." |
+| Problem-Solving       | Identifying issues and developing effective solutions.                      | "Resolved customer complaints, improving satisfaction scores by 15%." |
+| Leadership            | Guiding and motivating others to achieve objectives.                        | "Managed a team of 5 in a project that exceeded targets by 25%." |
+| Time Management       | Prioritizing tasks and using time efficiently.                              | "Handled multiple deadlines simultaneously in a fast-paced environment." |
+| Creativity            | Generating innovative ideas and approaches.                                 | "Developed creative marketing strategies that increased engagement by 30%." |
+| Emotional Intelligence| Recognizing and managing emotions in yourself and others.                   | "Navigated team conflicts with empathy, fostering a positive work environment." |
+| Critical Thinking     | Analyzing information objectively to make reasoned decisions.               | "Evaluated data to optimize processes, reducing costs by 10%." |
+| Work Ethic            | Demonstrating dedication, reliability, and a strong commitment to quality.  | "Consistently met or exceeded performance goals in high-pressure roles." |
+| Attention to Detail   | Being thorough and accurate in tasks.                                       | "Reviewed contracts meticulously to prevent errors." |
+| Interpersonal Skills  | Building and maintaining relationships with others.                         | "Facilitated client interactions to secure long-term partnerships." |
+| Active Listening      | Fully concentrating on and understanding what others are saying.             | "Gathered feedback from stakeholders to refine project plans." |
+| Empathy               | Understanding and sharing the feelings of others.                           | "Supported team members during transitions, improving morale." |
+| Conflict Resolution   | Addressing disagreements constructively.                                    | "Mediated disputes between departments to ensure smooth operations." |
+
+When including these in your CV or resume, back them up with specific achievements rather than just listing them, as this makes your application more credible. Skills can vary by industry, so tailor them to the job description for better results.
