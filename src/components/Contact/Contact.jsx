@@ -1,21 +1,21 @@
-import { memo, useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import {memo, useCallback, useState} from "react";
+import {motion} from "framer-motion";
 import {
+    FaCheckCircle,
+    FaDownload,
     FaEnvelope,
+    FaExclamationTriangle,
     FaGithub,
     FaLinkedin,
     FaMapMarkerAlt,
     FaPaperPlane,
-    FaSpinner,
-    FaCheckCircle,
-    FaExclamationTriangle,
-    FaDownload
+    FaSpinner
 } from "react-icons/fa";
-import { OptimizedBlock } from "../OptimizedMillion";
-import { USER_CONFIG } from "../../data/user.js";
+import {OptimizedBlock} from "../OptimizedMillion";
+import {USER_CONFIG} from "../../data/user.js";
 import Checkpoint from "../Checkpoint/Checkpoint.jsx";
-import { sendContactEmail } from "../../services/emailService.js";
-import { showSuccessToast, showErrorToast, showLoadingToast, dismissToast } from "../../utils/toast.js";
+import {sendContactEmail} from "../../services/emailService.js";
+import {dismissToast, showErrorToast, showLoadingToast, showSuccessToast} from "../../utils/toast.js";
 
 const ContactForm = memo(() => {
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const ContactForm = memo(() => {
     const [showMailtoFallback, setShowMailtoFallback] = useState(false);
 
     const handleInputChange = useCallback((e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -70,11 +70,11 @@ const ContactForm = memo(() => {
 
             if (emailResult.success) {
                 setSubmitStatus('success');
-                setFormData({ name: '', email: '', message: '' });
-                
+                setFormData({name: '', email: '', message: ''});
+
                 // Dispatch custom event for checkpoint tracking
                 window.dispatchEvent(new CustomEvent('messageSent'));
-                
+
                 // Dismiss loading toast and show success
                 dismissToast(loadingToastId);
                 showSuccessToast('🎉 Message sent successfully! I\'ll get back to you soon.');
@@ -112,9 +112,9 @@ const ContactForm = memo(() => {
     return (
         <motion.form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={{opacity: 0, y: 20}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true}}
             className="space-y-6"
         >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -174,18 +174,19 @@ const ContactForm = memo(() => {
                     className={`inline-flex items-center justify-center px-8 py-3 rounded-xl text-white font-medium transition-all duration-300 relative ${isFormValid && !isSubmitting
                         ? 'bg-primary dark:bg-primary-light hover:bg-primary/90 dark:hover:bg-primary-light/90 hover:shadow-lg'
                         : 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed'
-                        }`}
-                    whileHover={isFormValid && !isSubmitting ? { scale: 1.02 } : {}}
-                    whileTap={isFormValid && !isSubmitting ? { scale: 0.98 } : {}}
+                    }`}
+                    whileHover={isFormValid && !isSubmitting ? {scale: 1.02} : {}}
+                    whileTap={isFormValid && !isSubmitting ? {scale: 0.98} : {}}
                 >
                     {isSubmitting ? (
                         <>
-                            <div className="mr-2 w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            <div
+                                className="mr-2 w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                             <span>Sending...</span>
                         </>
                     ) : (
                         <>
-                            <FaPaperPlane className="mr-2 w-4 h-4" />
+                            <FaPaperPlane className="mr-2 w-4 h-4"/>
                             <span>Send Message</span>
                         </>
                     )}
@@ -196,13 +197,13 @@ const ContactForm = memo(() => {
                     <motion.button
                         type="button"
                         onClick={handleMailtoFallback}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{opacity: 0, y: 10}}
+                        animate={{opacity: 1, y: 0}}
                         className="inline-flex items-center justify-center px-6 py-2 rounded-lg border-2 border-orange-500 dark:border-orange-400 text-orange-600 dark:text-orange-400 font-medium hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-all duration-300"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        whileHover={{scale: 1.02}}
+                        whileTap={{scale: 0.98}}
                     >
-                        <FaEnvelope className="mr-2 w-4 h-4" />
+                        <FaEnvelope className="mr-2 w-4 h-4"/>
                         <span>Send via Email Client</span>
                     </motion.button>
                 )}
@@ -210,17 +211,17 @@ const ContactForm = memo(() => {
                 {/* Status Messages */}
                 {submitStatus && (
                     <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{opacity: 0, y: 10}}
+                        animate={{opacity: 1, y: 0}}
                         className={`flex items-center space-x-2 p-3 rounded-lg ${submitStatus === 'success'
                             ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800'
                             : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
-                            }`}
+                        }`}
                     >
                         {submitStatus === 'success' ? (
-                            <FaCheckCircle className="w-5 h-5 flex-shrink-0" />
+                            <FaCheckCircle className="w-5 h-5 flex-shrink-0"/>
                         ) : (
-                            <FaExclamationTriangle className="w-5 h-5 flex-shrink-0" />
+                            <FaExclamationTriangle className="w-5 h-5 flex-shrink-0"/>
                         )}
                         <span className="text-sm font-medium">
                             {submitStatus === 'success'
@@ -240,10 +241,10 @@ const DownloadCVButton = memo(() => {
 
     const handleClick = useCallback(() => {
         setIsLoading(true);
-        
+
         // Dispatch custom event for checkpoint tracking
         window.dispatchEvent(new CustomEvent('cvDownloaded'));
-        
+
         setTimeout(() => {
             setIsLoading(false);
         }, 1500);
@@ -255,14 +256,14 @@ const DownloadCVButton = memo(() => {
             download="resume.pdf"
             onClick={handleClick}
             className="flex items-center justify-center w-full px-6 py-3 bg-primary dark:bg-primary-light text-white rounded-xl text-base font-medium hover:bg-primary/90 dark:hover:bg-primary-light/90 hover:shadow-lg transition-all duration-300"
-            style={{ textDecoration: "none" }}
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
+            style={{textDecoration: "none"}}
+            whileHover={{scale: 1.02, y: -2}}
+            whileTap={{scale: 0.98}}
         >
             {isLoading ? (
-                <FaSpinner className="mr-2 w-4 h-4 animate-spin" />
+                <FaSpinner className="mr-2 w-4 h-4 animate-spin"/>
             ) : (
-                <FaDownload className="mr-2 w-4 h-4" />
+                <FaDownload className="mr-2 w-4 h-4"/>
             )}
             {isLoading ? "Loading..." : "Download CV"}
         </motion.a>
@@ -316,14 +317,15 @@ const ContactInfo = memo(() => {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
+                        initial={{opacity: 0, x: -20}}
+                        whileInView={{opacity: 1, x: 0}}
+                        viewport={{once: true}}
+                        transition={{delay: index * 0.1}}
                         className="flex items-center space-x-4 p-4 bg-white/5 dark:bg-gray-800/30 backdrop-blur-md rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/50 transition-all duration-300 group"
                     >
-                        <div className="flex-shrink-0 w-12 h-12 bg-primary/10 dark:bg-primary-light/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 dark:group-hover:bg-primary-light/20 transition-colors">
-                            <link.icon className="w-5 h-5 text-primary dark:text-primary-light" />
+                        <div
+                            className="flex-shrink-0 w-12 h-12 bg-primary/10 dark:bg-primary-light/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 dark:group-hover:bg-primary-light/20 transition-colors">
+                            <link.icon className="w-5 h-5 text-primary dark:text-primary-light"/>
                         </div>
                         <div>
                             <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -338,13 +340,13 @@ const ContactInfo = memo(() => {
             </div>
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5 }}
+                initial={{opacity: 0, y: 20}}
+                whileInView={{opacity: 1, y: 0}}
+                viewport={{once: true}}
+                transition={{delay: 0.5}}
                 className="pt-6 border-t border-white/10 dark:border-gray-700/50"
             >
-                <DownloadCVButton />
+                <DownloadCVButton/>
             </motion.div>
         </div>
     );
@@ -357,15 +359,16 @@ const Contact = () => {
                 <OptimizedBlock className="mb-16">
                     <div className="text-center">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            initial={{opacity: 0, y: 20}}
+                            whileInView={{opacity: 1, y: 0}}
+                            viewport={{once: true}}
                         >
                             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                                 Get In Touch
                             </h2>
                             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                                Ready to start your next project? Let's collaborate to build innovative solutions that drive results and exceed expectations.
+                                Ready to start your next project? Let's collaborate to build innovative solutions that
+                                drive results and exceed expectations.
                             </p>
                         </motion.div>
                     </div>
@@ -373,15 +376,16 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     <OptimizedBlock>
-                        <ContactInfo />
+                        <ContactInfo/>
                     </OptimizedBlock>
 
                     <OptimizedBlock>
-                        <div className="bg-white/5 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/10 dark:border-gray-700/50">
+                        <div
+                            className="bg-white/5 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl p-8 shadow-xl border border-white/10 dark:border-gray-700/50">
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                                 Send Me a Message
                             </h3>
-                            <ContactForm />
+                            <ContactForm/>
                         </div>
                     </OptimizedBlock>
                 </div>
@@ -389,7 +393,7 @@ const Contact = () => {
                 {/* Checkpoint Component - Below Contact Form */}
                 <OptimizedBlock className="mt-16">
                     <div className="flex justify-center">
-                        <Checkpoint />
+                        <Checkpoint/>
                     </div>
                 </OptimizedBlock>
             </div>

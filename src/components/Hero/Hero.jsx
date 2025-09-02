@@ -1,12 +1,11 @@
 // noinspection JSValidateTypes
 
-import { memo, useState, useEffect, useMemo, useCallback } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaDownload, FaSpinner } from "react-icons/fa";
-import { OptimizedBlock } from "../OptimizedMillion";
-import { useDeviceDetect } from "../../hooks/useDeviceDetect";
-import { USER_CONFIG, getDisplayedSocialLinks } from "../../data/user";
-
+import {memo, useCallback, useEffect, useMemo, useState} from "react";
+import {motion, useReducedMotion} from "framer-motion";
+import {FaDownload, FaGithub, FaLinkedin, FaSpinner} from "react-icons/fa";
+import {OptimizedBlock} from "../OptimizedMillion";
+import {useDeviceDetect} from "../../hooks/useDeviceDetect";
+import {getDisplayedSocialLinks, USER_CONFIG} from "../../data/user";
 
 
 // Preload hero image
@@ -20,13 +19,13 @@ if (typeof window !== "undefined") {
 }
 
 // Memoized StatBox component with optimized animations
-const AnimatedContainer = memo(({ children, animation }) => (
+const AnimatedContainer = memo(({children, animation}) => (
     <motion.div {...animation} className="text-center group">
         {children}
     </motion.div>
 ));
 
-const StatNumber = memo(({ number, color, hoverColor }) => (
+const StatNumber = memo(({number, color, hoverColor}) => (
     <div
         className={`text-3xl sm:text-3xl md:text-4xl font-bold transition-colors ${color} group-hover:${hoverColor}`}
     >
@@ -34,7 +33,7 @@ const StatNumber = memo(({ number, color, hoverColor }) => (
     </div>
 ));
 
-const StatText = memo(({ text, hoverColor }) => (
+const StatText = memo(({text, hoverColor}) => (
     <div
         className={`text-sm sm:text-sm text-gray-700 dark:text-gray-300 transition-colors group-hover:${hoverColor}`}
     >
@@ -46,27 +45,27 @@ const useStatAnimation = (prefersReducedMotion, isMobile, delay) => {
     if (prefersReducedMotion) return false;
 
     return {
-        initial: isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.5 },
-        animate: isMobile ? { opacity: 1 } : { opacity: 1, scale: 1 },
-        transition: { duration: isMobile ? 0.2 : 0.3, delay },
+        initial: isMobile ? {opacity: 0} : {opacity: 0, scale: 0.5},
+        animate: isMobile ? {opacity: 1} : {opacity: 1, scale: 1},
+        transition: {duration: isMobile ? 0.2 : 0.3, delay},
         ...(isMobile
             ? {}
             : {
-                  whileHover: { scale: 1.1 },
-                  whileTap: { scale: 0.95 },
-              }),
+                whileHover: {scale: 1.1},
+                whileTap: {scale: 0.95},
+            }),
     };
 };
 
-const StatBox = memo(({ number, text, delay, color, hoverColor }) => {
+const StatBox = memo(({number, text, delay, color, hoverColor}) => {
     const prefersReducedMotion = useReducedMotion();
     const isMobile = useDeviceDetect();
     const animation = useStatAnimation(prefersReducedMotion, isMobile, delay);
 
     return (
         <AnimatedContainer animation={animation}>
-            <StatNumber number={number} color={color} hoverColor={hoverColor} />
-            <StatText text={text} hoverColor={hoverColor} />
+            <StatNumber number={number} color={color} hoverColor={hoverColor}/>
+            <StatText text={text} hoverColor={hoverColor}/>
         </AnimatedContainer>
     );
 });
@@ -74,16 +73,16 @@ const StatBox = memo(({ number, text, delay, color, hoverColor }) => {
 StatBox.displayName = "StatBox";
 
 // Memoized social link component with conditional animations
-const SocialLink = memo(({ href, icon: Icon }) => {
+const SocialLink = memo(({href, icon: Icon}) => {
     const prefersReducedMotion = useReducedMotion();
     const isMobile = useDeviceDetect();
 
     const animation = prefersReducedMotion
         ? false
         : {
-              whileHover: isMobile ? undefined : { scale: 1.1 },
-              whileTap: isMobile ? undefined : { scale: 0.9 },
-          };
+            whileHover: isMobile ? undefined : {scale: 1.1},
+            whileTap: isMobile ? undefined : {scale: 0.9},
+        };
 
     return (
         <motion.a
@@ -93,7 +92,7 @@ const SocialLink = memo(({ href, icon: Icon }) => {
             className="text-3xl text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-light transition-colors"
             {...animation}
         >
-            <Icon />
+            <Icon/>
         </motion.a>
     );
 });
@@ -104,23 +103,23 @@ SocialLink.displayName = "SocialLink";
 const ResumeDownloadButton = memo(() => {
     const [isLoading, setIsLoading] = useState(false);
     const prefersReducedMotion = useReducedMotion();
-    
+
     const handleClick = useCallback(() => {
         setIsLoading(true);
-        
+
         // Dispatch custom event for checkpoint tracking
         window.dispatchEvent(new CustomEvent('cvDownloaded'));
-        
+
         setTimeout(() => {
             setIsLoading(false);
         }, 1500);
     }, []);
-    
+
     const animation = prefersReducedMotion ? false : {
-        whileHover: { scale: 1.02, y: -2 },
-        whileTap: { scale: 0.98 }
+        whileHover: {scale: 1.02, y: -2},
+        whileTap: {scale: 0.98}
     };
-    
+
     return (
         <motion.a
             href={USER_CONFIG.professional.resumeUrl}
@@ -128,13 +127,13 @@ const ResumeDownloadButton = memo(() => {
             onClick={handleClick}
             className="inline-flex items-center px-5 py-2.5 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-gray-800 dark:text-white rounded-full text-base font-medium hover:bg-white/20 dark:hover:bg-white/10 hover:border-white/30 dark:hover:border-white/20 transition-all duration-300 shadow-lg hover:shadow-xl"
             aria-label="Download Resume"
-            style={{ textDecoration: "none" }}
+            style={{textDecoration: "none"}}
             {...animation}
         >
             {isLoading ? (
-                <FaSpinner className="mr-2 w-4 h-4 animate-spin" aria-hidden="true" />
+                <FaSpinner className="mr-2 w-4 h-4 animate-spin" aria-hidden="true"/>
             ) : (
-                <FaDownload className="mr-2 w-4 h-4" aria-hidden="true" />
+                <FaDownload className="mr-2 w-4 h-4" aria-hidden="true"/>
             )}
             {isLoading ? "Loading..." : "Download CV"}
         </motion.a>
@@ -147,7 +146,7 @@ ResumeDownloadButton.displayName = "ResumeDownloadButton";
 const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-        element.scrollIntoView({ 
+        element.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });
@@ -197,7 +196,7 @@ const useOptimizedStats = (isMobile) => {
     ); // Only recompute when device type changes
 };
 
-const HeroText = memo(({ textAnimation }) => {
+const HeroText = memo(({textAnimation}) => {
     const imageLoaded = useHeroImage();
 
     return (
@@ -208,9 +207,11 @@ const HeroText = memo(({ textAnimation }) => {
             }`}
         >
             <h1 className="lg:text-7xl md:text-7xl font-bold relative">
-                <span className="inline-block bg-gradient-to-r from-primary to-primary-light dark:from-primary-light dark:to-primary bg-clip-text text-transparent">
+                <span
+                    className="inline-block bg-gradient-to-r from-primary to-primary-light dark:from-primary-light dark:to-primary bg-clip-text text-transparent">
                     {USER_CONFIG.personal.firstName}{" "}
-                    <span className="inline-block bg-gradient-to-r from-accent to-strawberry dark:from-accent-light dark:to-strawberry-light bg-clip-text text-transparent">
+                    <span
+                        className="inline-block bg-gradient-to-r from-accent to-strawberry dark:from-accent-light dark:to-strawberry-light bg-clip-text text-transparent">
                         {USER_CONFIG.personal.lastName}
                     </span>
                 </span>
@@ -225,7 +226,7 @@ const HeroText = memo(({ textAnimation }) => {
     );
 });
 
-const StatsSection = memo(({ stats }) => (
+const StatsSection = memo(({stats}) => (
     <div className="flex justify-center lg:justify-start space-x-8 sm:space-x-12 md:space-x-16 cursor-default">
         {stats.map((stat) => (
             <OptimizedBlock
@@ -241,10 +242,10 @@ const StatsSection = memo(({ stats }) => (
 ));
 
 
-
-const HeroImage = memo(({ imageAnimation }) => (
+const HeroImage = memo(({imageAnimation}) => (
     <motion.div {...imageAnimation} className="relative mt-8 lg:mt-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary-light/10 filter blur-xl opacity-50" />
+        <div
+            className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary-light/10 filter blur-xl opacity-50"/>
         <div
             className="relative group cursor-pointer transition-all duration-300 hover:shadow-2xl"
             onClick={() => scrollToSection('about')}
@@ -279,8 +280,8 @@ const Hero = memo(() => {
                             isMobile,
                         )}
                     />
-                    <StatsSection stats={useOptimizedStats(isMobile)} />
-                    <ActionButtonsAndSocial />
+                    <StatsSection stats={useOptimizedStats(isMobile)}/>
+                    <ActionButtonsAndSocial/>
                 </LeftColumn>
                 <RightColumn>
                     <HeroImage
@@ -295,7 +296,7 @@ const Hero = memo(() => {
     );
 });
 
-const HeroSection = ({ children }) => (
+const HeroSection = ({children}) => (
     <section className="w-full min-h-screen flex items-center justify-center py-20">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {children}
@@ -303,19 +304,19 @@ const HeroSection = ({ children }) => (
     </section>
 );
 
-const HeroContent = ({ children }) => (
+const HeroContent = ({children}) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {children}
     </div>
 );
 
-const LeftColumn = ({ children }) => (
+const LeftColumn = ({children}) => (
     <div className="space-y-6">{children}</div>
 );
 
 const ActionButtonsAndSocial = memo(() => {
     const socialLinks = getDisplayedSocialLinks();
-    
+
     const getIconForPlatform = (platform) => {
         switch (platform) {
             case 'github':
@@ -329,13 +330,13 @@ const ActionButtonsAndSocial = memo(() => {
 
     return (
         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center lg:items-start">
-            <ResumeDownloadButton />
+            <ResumeDownloadButton/>
             <div className="flex space-x-4">
-                {socialLinks.map(({ platform, url }) => (
-                    <SocialLink 
+                {socialLinks.map(({platform, url}) => (
+                    <SocialLink
                         key={platform}
-                        href={url} 
-                        icon={getIconForPlatform(platform)} 
+                        href={url}
+                        icon={getIconForPlatform(platform)}
                     />
                 ))}
             </div>
@@ -345,25 +346,25 @@ const ActionButtonsAndSocial = memo(() => {
 
 ActionButtonsAndSocial.displayName = "ActionButtonsAndSocial";
 
-const RightColumn = ({ children }) => children;
+const RightColumn = ({children}) => children;
 
 const useTextAnimation = (prefersReducedMotion, isMobile) =>
     prefersReducedMotion
         ? false
         : {
-              initial: isMobile ? { opacity: 0 } : { opacity: 0, y: 20 },
-              animate: isMobile ? { opacity: 1 } : { opacity: 1, y: 0 },
-              transition: { duration: isMobile ? 0.2 : 0.5 },
-          };
+            initial: isMobile ? {opacity: 0} : {opacity: 0, y: 20},
+            animate: isMobile ? {opacity: 1} : {opacity: 1, y: 0},
+            transition: {duration: isMobile ? 0.2 : 0.5},
+        };
 
 const useImageAnimation = (prefersReducedMotion, isMobile) =>
     prefersReducedMotion
         ? false
         : {
-              initial: isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.8 },
-              animate: isMobile ? { opacity: 1 } : { opacity: 1, scale: 1 },
-              transition: { duration: isMobile ? 0.2 : 0.5 },
-          };
+            initial: isMobile ? {opacity: 0} : {opacity: 0, scale: 0.8},
+            animate: isMobile ? {opacity: 1} : {opacity: 1, scale: 1},
+            transition: {duration: isMobile ? 0.2 : 0.5},
+        };
 
 Hero.displayName = "Hero";
 

@@ -1,6 +1,6 @@
-import {memo, useState, useEffect} from 'react';
+import {memo, useEffect, useState} from 'react';
 import {motion} from 'framer-motion';
-import {SiPython, SiPandas, SiNumpy, SiTensorflow, SiPytorch, SiMongodb, SiStreamlit, SiPlotly, SiJupyter} from 'react-icons/si';
+import {SiJupyter, SiNumpy, SiPandas, SiPython, SiStreamlit, SiTensorflow} from 'react-icons/si';
 import {OptimizedBlock} from '../OptimizedMillion';
 import {useDeviceDetect} from '../../hooks/useDeviceDetect';
 
@@ -10,9 +10,9 @@ const TechnicalSkillCard = memo(({Icon, name, url}) => {
     return (
         <AnimatedCard isMobile={isMobile}>
             <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4">
-                <SkillIcon Icon={Icon} />
+                <SkillIcon Icon={Icon}/>
                 <div className="flex-1">
-                    <SkillName name={name} />
+                    <SkillName name={name}/>
                 </div>
             </a>
         </AnimatedCard>
@@ -48,18 +48,18 @@ const AnimatedCard = memo(({children, isMobile}) => (
 
 const SkillIcon = memo(({Icon}) => {
     const [isLoaded, setIsLoaded] = useState(false);
-    
+
     useEffect(() => {
         setIsLoaded(true);
     }, []);
-    
+
     return (
         <div className="relative w-6 h-6 md:w-8 md:h-8">
             {!isLoaded && (
-                <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full" />
+                <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full"/>
             )}
             {isLoaded && (
-                <Icon className="w-full h-full text-primary dark:text-primary-light" />
+                <Icon className="w-full h-full text-primary dark:text-primary-light"/>
             )}
         </div>
     );
@@ -71,9 +71,9 @@ const SkillName = memo(({name}) => (
 
 const SkillCard = memo(({Icon, name, title, description, url}) => {
     if (Icon && name) {
-        return <TechnicalSkillCard Icon={Icon} name={name} url={url} />;
+        return <TechnicalSkillCard Icon={Icon} name={name} url={url}/>;
     }
-    return <RegularSkillCard title={title} description={description} />;
+    return <RegularSkillCard title={title} description={description}/>;
 });
 
 const SkillChip = ({skill, url}) => (
@@ -171,10 +171,11 @@ const Skills = () => {
 
                 <OptimizedBlock>
                     <div className="relative">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Additional Technologies</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Additional
+                            Technologies</h3>
                         <div className="flex flex-wrap gap-4">
                             {otherSkills.map((skill, index) => (
-                                <SkillChip key={`other-skill-${index}`} skill={skill.name} url={skill.url} />
+                                <SkillChip key={`other-skill-${index}`} skill={skill.name} url={skill.url}/>
                             ))}
                         </div>
                     </div>

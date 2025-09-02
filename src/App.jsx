@@ -62,7 +62,7 @@ const App = () => (
             <Router>
                 <ScrollToTop/>
                 <SpeedInsights/>
-                <ToastProvider />
+                <ToastProvider/>
                 <OptimizedBlock>
                     <Navbar/>
                     {/* <OptimizedBlock>
@@ -88,7 +88,7 @@ const App = () => (
                         ))}
                     </Routes>
                 </Suspense>
-                <FloatingContactButton />
+                <FloatingContactButton/>
             </Router>
         </ThemeProvider>
     </ErrorBoundary>

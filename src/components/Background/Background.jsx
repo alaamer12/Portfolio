@@ -47,14 +47,14 @@ const AnimatedShape = memo(({number}) => {
 
     const animate = useCallback(() => {
         if (!shapeRef.current) return;
-        
+
         const element = shapeRef.current;
         const computedStyle = window.getComputedStyle(element);
         const transform = new WebKitCSSMatrix(computedStyle.transform);
-        
+
         const newY = transform.m42 + Math.sin(Date.now() / 1000) * 0.5;
         element.style.transform = `translateY(${newY}px)`;
-        
+
         frameRef.current = requestAnimationFrame(animate);
     }, []);
 
@@ -69,10 +69,10 @@ const AnimatedShape = memo(({number}) => {
 
     return (
         <OptimizedBlock threshold={8}>
-            <div 
+            <div
                 ref={shapeRef}
                 className={`${styles.shape} ${styles[`shape-${number}`]}`}
-                style={{ willChange: 'transform' }}
+                style={{willChange: 'transform'}}
             />
         </OptimizedBlock>
     );
@@ -88,7 +88,7 @@ const BackgroundShapes = memo(({themeColors}) => {
             ([entry]) => {
                 setIsVisible(entry.isIntersecting);
             },
-            { threshold: 0.1 }
+            {threshold: 0.1}
         );
 
         if (containerRef.current) {
@@ -99,9 +99,9 @@ const BackgroundShapes = memo(({themeColors}) => {
     }, []);
 
     return (
-        <OptimizedBlock 
+        <OptimizedBlock
             ref={containerRef}
-            className={styles['background-shapes']} 
+            className={styles['background-shapes']}
             style={{
                 ...themeColors,
                 visibility: isVisible ? 'visible' : 'hidden'
@@ -121,7 +121,7 @@ BackgroundShapes.displayName = 'BackgroundShapes';
 
 export default memo(function Background() {
     const {isDark} = useTheme();
-    
+
     return (
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
             <BackgroundShapes
@@ -135,7 +135,7 @@ export default memo(function Background() {
             <Wave
                 className="fill-primary/20 dark:fill-primary-light/25 transition-colors duration-300"
                 path={WAVE_PATHS.top}
-                style={{ transform: 'rotate(180deg)' }}
+                style={{transform: 'rotate(180deg)'}}
             />
             <Wave
                 className="fill-accent/15 dark:fill-accent-light/20 transition-colors duration-300"

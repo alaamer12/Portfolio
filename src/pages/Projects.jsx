@@ -1,48 +1,47 @@
-
-import { memo, useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { FaFire, FaGithub, FaPython, FaExpand } from "react-icons/fa";
-import { IoSparkles } from "react-icons/io5";
-import { BsClock } from "react-icons/bs";
-import { useTheme } from "../context/ThemeContext";
+import {memo, useMemo, useState} from "react";
+import {motion} from "framer-motion";
+import {FaExpand, FaFire, FaGithub, FaPython} from "react-icons/fa";
+import {IoSparkles} from "react-icons/io5";
+import {BsClock} from "react-icons/bs";
+import {useTheme} from "../context/ThemeContext";
 import Background from "../components/Background/Background";
 import SEO from "../components/SEO/SEO";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { OptimizedBlock, OptimizedLoop } from "../components/OptimizedMillion";
+import {OptimizedBlock, OptimizedLoop} from "../components/OptimizedMillion";
 import useOptimizedAnimation from "../hooks/useOptimizedAnimation";
-import { getProjectsPageSchema } from "../data/schema.js";
+import {getProjectsPageSchema} from "../data/schema.js";
 import ImageModal from "../components/ImageModal/ImageModal.jsx";
 import {
+    getBadgeConfig,
     getProjectsDataByCategories,
     getSortedCategories,
     PROJECT_BADGES,
-    sortProjectsByBadge,
-    getBadgeConfig
+    sortProjectsByBadge
 } from "../data/config.jsx";
 import OrganizationBadge from "../components/OrganizationBadge/OrganizationBadge.jsx";
 
 const getBadgeIcon = (badgeId) => {
     switch (badgeId) {
         case PROJECT_BADGES.HOT.id:
-            return <FaFire className="mr-1" />;
+            return <FaFire className="mr-1"/>;
         case PROJECT_BADGES.NEW.id:
-            return <IoSparkles className="mr-1" />;
+            return <IoSparkles className="mr-1"/>;
         case PROJECT_BADGES.COMING_SOON.id:
-            return <BsClock className="mr-1" />;
+            return <BsClock className="mr-1"/>;
         default:
             return null;
     }
 };
 
-const ProjectBadge = memo(({ badge, settings }) => {
+const ProjectBadge = memo(({badge, settings}) => {
     const badgeConfig = getBadgeConfig(badge);
     if (!badgeConfig || badgeConfig.id === PROJECT_BADGES.NONE.id) return null;
 
     return (
         <motion.div
-            initial={settings.shouldAnimate ? { scale: 0.8, opacity: 0 } : {}}
-            animate={settings.shouldAnimate ? { scale: 1, opacity: 1 } : {}}
+            initial={settings.shouldAnimate ? {scale: 0.8, opacity: 0} : {}}
+            animate={settings.shouldAnimate ? {scale: 1, opacity: 1} : {}}
             transition={{
                 duration: settings.duration,
                 ease: settings.ease,
@@ -60,7 +59,7 @@ const ProjectBadge = memo(({ badge, settings }) => {
 });
 
 const ProjectBanner = memo(
-    ({ banner }) =>
+    ({banner}) =>
         banner && (
             <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity">
                 <LazyLoadImage
@@ -75,7 +74,7 @@ const ProjectBanner = memo(
         ),
 );
 
-const ProjectHeader = memo(({ icon, title }) => (
+const ProjectHeader = memo(({icon, title}) => (
     <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
         {icon && (
             <LazyLoadImage
@@ -93,10 +92,10 @@ const ProjectHeader = memo(({ icon, title }) => (
     </div>
 ));
 
-const ProjectTags = memo(({ tags, organization }) => (
+const ProjectTags = memo(({tags, organization}) => (
     <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
         {organization && (
-            <OrganizationBadge organizationId={organization} />
+            <OrganizationBadge organizationId={organization}/>
         )}
         {tags.map((tag, index) => (
             <span
@@ -109,7 +108,7 @@ const ProjectTags = memo(({ tags, organization }) => (
     </div>
 ));
 
-const ProjectDetails = memo(({ details }) => (
+const ProjectDetails = memo(({details}) => (
     <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
         {details.map((detail, index) => (
             <div key={index} className="flex items-start">
@@ -124,20 +123,20 @@ const ProjectDetails = memo(({ details }) => (
     </div>
 ));
 
-const ProjectButton = memo(({ href, className, children, settings }) => (
+const ProjectButton = memo(({href, className, children, settings}) => (
     <motion.a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
         className={`px-4 py-2 text-sm sm:text-base rounded-full transition-colors text-center ${className}`}
-        whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
-        whileTap={settings.shouldAnimate ? { scale: 0.95 } : {}}
+        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
     >
         {children}
     </motion.a>
 ));
 
-const DisabledButton = memo(({ className, children }) => (
+const DisabledButton = memo(({className, children}) => (
     <button
         disabled
         className={`px-4 py-2 text-sm sm:text-base rounded-full cursor-not-allowed opacity-60 text-center ${className}`}
@@ -146,8 +145,8 @@ const DisabledButton = memo(({ className, children }) => (
     </button>
 ));
 
-const ProjectLinks = memo(({ project, settings }) => {
-    const { github, demo, pypi } = project;
+const ProjectLinks = memo(({project, settings}) => {
+    const {github, demo, pypi} = project;
     const isActive = project.badge === PROJECT_BADGES.HOT.id || project.badge === PROJECT_BADGES.NEW.id;
 
     return (
@@ -160,7 +159,7 @@ const ProjectLinks = memo(({ project, settings }) => {
                             className="bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white"
                             settings={settings}
                         >
-                            <FaGithub className="inline mr-2" />
+                            <FaGithub className="inline mr-2"/>
                             GitHub
                         </ProjectButton>
                     )}
@@ -179,7 +178,7 @@ const ProjectLinks = memo(({ project, settings }) => {
                             className="bg-blue-500 hover:bg-blue-600 text-white"
                             settings={settings}
                         >
-                            <FaPython className="inline mr-2" />
+                            <FaPython className="inline mr-2"/>
                             PyPI
                         </ProjectButton>
                     )}
@@ -187,7 +186,7 @@ const ProjectLinks = memo(({ project, settings }) => {
             ) : (
                 <>
                     <DisabledButton className="bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
-                        <FaGithub className="inline mr-2" />
+                        <FaGithub className="inline mr-2"/>
                         GitHub
                     </DisabledButton>
                     <DisabledButton className="bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
@@ -199,8 +198,8 @@ const ProjectLinks = memo(({ project, settings }) => {
     );
 });
 
-const ProjectScreenshot = memo(({ screenshots, title, onImageClick }) => {
-    console.log('ProjectScreenshot:', { screenshots, title }); // Debug log
+const ProjectScreenshot = memo(({screenshots, title, onImageClick}) => {
+    console.log('ProjectScreenshot:', {screenshots, title}); // Debug log
     if (!screenshots || screenshots.length === 0) {
         console.log('No screenshots found for:', title);
         return null;
@@ -224,9 +223,11 @@ const ProjectScreenshot = memo(({ screenshots, title, onImageClick }) => {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
-                        <FaExpand className="w-5 h-5 text-gray-800 dark:text-white" />
+                <div
+                    className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                    <div
+                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
+                        <FaExpand className="w-5 h-5 text-gray-800 dark:text-white"/>
                     </div>
                 </div>
 
@@ -241,11 +242,11 @@ const ProjectScreenshot = memo(({ screenshots, title, onImageClick }) => {
     );
 });
 
-const ProjectCard = ({ project, settings, onImageClick }) => {
+const ProjectCard = ({project, settings, onImageClick}) => {
     return (
         <motion.div
-            initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
-            animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+            animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
             transition={{
                 duration: settings.duration,
                 ease: settings.ease,
@@ -253,10 +254,10 @@ const ProjectCard = ({ project, settings, onImageClick }) => {
             }}
             className={`bg-[#f5f4f4] dark:bg-surface p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow relative overflow-hidden group ${!project.available ? "opacity-75" : ""}`}
         >
-            <ProjectBadge badge={project.badge} settings={settings} />
-            <ProjectBanner banner={project.banner} />
+            <ProjectBadge badge={project.badge} settings={settings}/>
+            <ProjectBanner banner={project.banner}/>
             <div className="relative z-10">
-                <ProjectHeader icon={project.icon} title={project.title} />
+                <ProjectHeader icon={project.icon} title={project.title}/>
                 <ProjectScreenshot
                     screenshots={project.screenshots}
                     title={project.title}
@@ -265,19 +266,19 @@ const ProjectCard = ({ project, settings, onImageClick }) => {
                 <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
                     {project.description}
                 </p>
-                <ProjectTags tags={project.tags} organization={project.organization} />
-                <ProjectDetails details={project.details} />
-                <ProjectLinks project={project} settings={settings} />
+                <ProjectTags tags={project.tags} organization={project.organization}/>
+                <ProjectDetails details={project.details}/>
+                <ProjectLinks project={project} settings={settings}/>
             </div>
         </motion.div>
     );
 };
 
-const CategoryHeader = memo(({ category, settings }) => (
+const CategoryHeader = memo(({category, settings}) => (
     <motion.div
         className="mb-8 sm:mb-12"
-        initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
-        animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
         transition={{
             duration: settings.duration,
             ease: settings.ease,
@@ -292,9 +293,9 @@ const CategoryHeader = memo(({ category, settings }) => (
     </motion.div>
 ));
 
-const ProjectSection = memo(({ category, projects, renderProjectCard }) => (
+const ProjectSection = memo(({category, projects, renderProjectCard}) => (
     <OptimizedBlock className="mb-16" threshold={8}>
-        <CategoryHeader category={category} settings={useOptimizedAnimation().settings} />
+        <CategoryHeader category={category} settings={useOptimizedAnimation().settings}/>
         <OptimizedLoop
             items={projects}
             renderItem={renderProjectCard}
@@ -304,12 +305,12 @@ const ProjectSection = memo(({ category, projects, renderProjectCard }) => (
     </OptimizedBlock>
 ));
 
-const ProjectsHeader = memo(({ settings }) => (
+const ProjectsHeader = memo(({settings}) => (
     <OptimizedBlock className="mb-12" threshold={8}>
         <motion.div
             className="text-center"
-            initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
-            animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+            animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
             transition={{
                 duration: settings.duration,
                 ease: settings.ease,
@@ -319,17 +320,18 @@ const ProjectsHeader = memo(({ settings }) => (
                 My Projects Portfolio
             </h1>
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
-                Explore my complete portfolio spanning data engineering, machine learning, web development, game development, and developer tools. From ETL pipelines to interactive applications.
+                Explore my complete portfolio spanning data engineering, machine learning, web development, game
+                development, and developer tools. From ETL pipelines to interactive applications.
             </p>
         </motion.div>
     </OptimizedBlock>
 ));
 
-const GitHubLink = memo(({ settings }) => (
+const GitHubLink = memo(({settings}) => (
     <motion.div
         className="mt-12 sm:mt-16 flex justify-center"
-        initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
-        animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
         transition={{
             duration: settings.duration,
             delay: 0.2,
@@ -341,8 +343,8 @@ const GitHubLink = memo(({ settings }) => (
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-base sm:text-lg font-semibold"
-            whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
-            whileTap={settings.shouldAnimate ? { scale: 0.95 } : {}}
+            whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
+            whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
         >
             <span>View More Projects on GitHub</span>
             <svg
@@ -363,8 +365,8 @@ const GitHubLink = memo(({ settings }) => (
 ));
 
 const Projects = () => {
-    const { isDark } = useTheme();
-    const { settings } = useOptimizedAnimation();
+    const {isDark} = useTheme();
+    const {settings} = useOptimizedAnimation();
     const baseUrl = "";
     const [modalState, setModalState] = useState({
         isOpen: false,
@@ -385,14 +387,14 @@ const Projects = () => {
     };
 
     const closeModal = () => {
-        setModalState(prev => ({ ...prev, isOpen: false }));
+        setModalState(prev => ({...prev, isOpen: false}));
     };
 
     const renderProjectCard = (project, settings, index) => (
         <motion.div
             key={project.title}
-            initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
-            animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+            animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
             transition={{
                 duration: settings.duration,
                 delay: index * (settings.isMobile ? 0.05 : 0.1),
@@ -433,22 +435,22 @@ const Projects = () => {
 
     return (
         <div className="relative min-h-screen w-screen overflow-x-hidden mt-20">
-            <ProjectsSEO />
-            <Background />
+            <ProjectsSEO/>
+            <Background/>
             <div className="relative z-10 w-full py-16">
                 <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-                    <ProjectsHeader settings={settings} />
+                    <ProjectsHeader settings={settings}/>
                     <motion.div
                         className="space-y-8 sm:space-y-12 md:space-y-16"
-                        initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
-                        animate={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+                        initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
+                        animate={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
                         transition={{
                             duration: settings.duration,
                             ease: settings.ease,
                             staggerChildren: settings.staggerChildren,
                         }}
                     >
-                        {projectSections.map(({ category, projects }) => (
+                        {projectSections.map(({category, projects}) => (
                             <ProjectSection
                                 key={category.id}
                                 category={category}
@@ -457,7 +459,7 @@ const Projects = () => {
                             />
                         ))}
                     </motion.div>
-                    <GitHubLink settings={settings} />
+                    <GitHubLink settings={settings}/>
                 </div>
             </div>
 

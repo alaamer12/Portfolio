@@ -65,9 +65,9 @@ const ChatMessages = memo(({messages, isLoading}) => {
                 </div>
             )}
             {messages.map((message, index) => (
-                <ChatMessage 
-                    key={`${message.type}-${index}-${message.content.substring(0, 20)}`} 
-                    message={message.content} 
+                <ChatMessage
+                    key={`${message.type}-${index}-${message.content.substring(0, 20)}`}
+                    message={message.content}
                     type={message.type}
                 />
             ))}
@@ -120,7 +120,7 @@ const ChatWindow = memo(({isOpen, onClose, messages, isLoading, input, setInput,
     </AnimatePresence>
 ));
 
-const ChatButton = memo(({ onClick, isOpen, settings }) => (
+const ChatButton = memo(({onClick, isOpen, settings}) => (
     <motion.button
         onClick={onClick}
         className={`fixed bottom-24 right-8 z-[9999] p-4 rounded-full bg-primary dark:bg-primary-light text-white shadow-lg hover:shadow-xl transition-shadow ${isOpen ? 'hidden' : ''} ${styles.pulse}`}
@@ -138,7 +138,7 @@ const useChatState = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    return { isOpen, setIsOpen, messages, setMessages, input, setInput, isLoading, setIsLoading };
+    return {isOpen, setIsOpen, messages, setMessages, input, setInput, isLoading, setIsLoading};
 };
 
 const useChatSubmit = (input, isLoading, setInput, setMessages, setIsLoading) => {
@@ -178,14 +178,14 @@ const useChatSubmit = (input, isLoading, setInput, setMessages, setIsLoading) =>
 };
 
 const ChatBot = () => {
-    const { isDark } = useTheme();
-    const { settings } = useOptimizedAnimation();
-    const { isOpen, setIsOpen, messages, setMessages, input, setInput, isLoading, setIsLoading } = useChatState();
+    const {isDark} = useTheme();
+    const {settings} = useOptimizedAnimation();
+    const {isOpen, setIsOpen, messages, setMessages, input, setInput, isLoading, setIsLoading} = useChatState();
     const handleSubmit = useChatSubmit(input, isLoading, setInput, setMessages, setIsLoading);
 
     return (
         <>
-            <ChatButton onClick={() => setIsOpen(true)} isOpen={isOpen} settings={settings} />
+            <ChatButton onClick={() => setIsOpen(true)} isOpen={isOpen} settings={settings}/>
             <ChatWindow
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}

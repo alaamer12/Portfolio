@@ -1,12 +1,12 @@
 import {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import Loading from './Loading/Loading';
 
-const RenderTimeTracker = memo(({ threshold, onRender, id }) => {
+const RenderTimeTracker = memo(({threshold, onRender, id}) => {
     useEffect(() => {
         const start = performance.now();
         return () => {
             const time = performance.now() - start;
-            onRender?.({ renderTime: time, isSlowRender: time > threshold, component: id || 'OptimizedBlock' });
+            onRender?.({renderTime: time, isSlowRender: time > threshold, component: id || 'OptimizedBlock'});
             if (process.env.NODE_ENV === 'development' && time > threshold) {
                 console.warn(`Slow render detected (${time.toFixed(2)}ms) in OptimizedBlock${id ? ` [${id}]` : ''}`);
             }
@@ -19,11 +19,11 @@ const RenderTimeTracker = memo(({ threshold, onRender, id }) => {
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { hasError: false };
+        this.state = {hasError: false};
     }
 
     static getDerivedStateFromError() {
-        return { hasError: true };
+        return {hasError: true};
     }
 
     componentDidCatch(error, errorInfo) {
@@ -40,17 +40,17 @@ class ErrorBoundary extends React.Component {
 }
 
 const OptimizedBlock = memo(({
-    children,
-    className = '',
-    enableCache = true,
-    onRender,
-    fallback = null,
-    threshold = 16,
-    ...props
-}) => (
+                                 children,
+                                 className = '',
+                                 enableCache = true,
+                                 onRender,
+                                 fallback = null,
+                                 threshold = 16,
+                                 ...props
+                             }) => (
     <ErrorBoundary fallback={fallback}>
         <div className={className} {...props}>
-            <RenderTimeTracker threshold={threshold} onRender={onRender} id={props.id} />
+            <RenderTimeTracker threshold={threshold} onRender={onRender} id={props.id}/>
             {children}
         </div>
     </ErrorBoundary>
@@ -58,29 +58,29 @@ const OptimizedBlock = memo(({
 OptimizedBlock.displayName = 'OptimizedBlock';
 
 
-const useVirtualizedItems = ({ items, virtualizeOptions, visibleRange }) => {
+const useVirtualizedItems = ({items, virtualizeOptions, visibleRange}) => {
     return useMemo(() => {
         if (!virtualizeOptions.enabled) return items;
-        const { overscan = 3 } = virtualizeOptions;
+        const {overscan = 3} = virtualizeOptions;
         const start = Math.max(0, visibleRange.start - overscan);
         const end = Math.min(items.length, visibleRange.end + overscan);
         return items.slice(start, end);
     }, [items, virtualizeOptions, visibleRange]);
 };
 
-const useScrollHandler = ({ virtualizeOptions, onScroll }) => {
+const useScrollHandler = ({virtualizeOptions, onScroll}) => {
     return useCallback((e) => {
         if (!virtualizeOptions.enabled) return;
         const container = e.target;
-        const { itemHeight } = virtualizeOptions;
+        const {itemHeight} = virtualizeOptions;
         const scrollTop = container.scrollTop;
         const start = Math.floor(scrollTop / itemHeight);
         const visibleItems = Math.ceil(container.clientHeight / itemHeight);
-        onScroll({ start, end: start + visibleItems });
+        onScroll({start, end: start + visibleItems});
     }, [virtualizeOptions, onScroll]);
 };
 
-const ItemRenderer = memo(({ item, index, keyExtractor, renderItem, virtualizeOptions, visibleRange }) => (
+const ItemRenderer = memo(({item, index, keyExtractor, renderItem, virtualizeOptions, visibleRange}) => (
     <OptimizedBlock
         key={keyExtractor(item, index)}
         style={virtualizeOptions.enabled ? {
@@ -93,10 +93,11 @@ const ItemRenderer = memo(({ item, index, keyExtractor, renderItem, virtualizeOp
     </OptimizedBlock>
 ));
 
-const LoadMoreButton = memo(({ isLoading, onLoadMore, loadingComponent }) => (
+const LoadMoreButton = memo(({isLoading, onLoadMore, loadingComponent}) => (
     <div className="w-full flex items-center justify-center py-16">
         {isLoading ? (
-            <div className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl shadow-xl">
+            <div
+                className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#e6e6e6]/10 dark:bg-gray-800/50 backdrop-blur-md rounded-xl shadow-xl">
                 {loadingComponent}
             </div>
         ) : (
@@ -123,7 +124,7 @@ const LoadMoreButton = memo(({ isLoading, onLoadMore, loadingComponent }) => (
     </div>
 ));
 
-const VirtualizedItems = memo(({ items, virtualizeOptions, visibleRange, keyExtractor, renderItem }) => (
+const VirtualizedItems = memo(({items, virtualizeOptions, visibleRange, keyExtractor, renderItem}) => (
     <>
         {items.map((item, index) => {
             const itemKey = keyExtractor(item, index);
@@ -142,7 +143,7 @@ const VirtualizedItems = memo(({ items, virtualizeOptions, visibleRange, keyExtr
     </>
 ));
 
-const PaginatedItems = memo(({ items, page, pageSize, keyExtractor, renderItem }) => (
+const PaginatedItems = memo(({items, page, pageSize, keyExtractor, renderItem}) => (
     <>
         {items.slice(0, page * pageSize).map((item, index) => {
             const itemKey = keyExtractor(item, index);
@@ -153,19 +154,19 @@ const PaginatedItems = memo(({ items, page, pageSize, keyExtractor, renderItem }
                     index={index}
                     keyExtractor={keyExtractor}
                     renderItem={renderItem}
-                    virtualizeOptions={{ enabled: false }}
+                    virtualizeOptions={{enabled: false}}
                 />
             );
         })}
     </>
 ));
 
-const PerformanceTracker = memo(({ items, threshold, onRender }) => {
+const PerformanceTracker = memo(({items, threshold, onRender}) => {
     useEffect(() => {
         const start = performance.now();
         return () => {
             const time = performance.now() - start;
-            onRender?.({ renderTime: time, isSlowRender: time > threshold, itemCount: items.length });
+            onRender?.({renderTime: time, isSlowRender: time > threshold, itemCount: items.length});
             if (process.env.NODE_ENV === 'development' && time > threshold) {
                 console.warn(`Slow render detected (${time.toFixed(2)}ms) in OptimizedLoop with ${items.length} items`);
             }
@@ -176,28 +177,28 @@ const PerformanceTracker = memo(({ items, threshold, onRender }) => {
 });
 
 const OptimizedLoop = memo(({
-    items = [],
-    renderItem,
-    pageSize = 10,
-    virtualizeOptions = {
-        enabled: false,
-        itemHeight: 50,
-        overscan: 3,
-        scrollContainer: null
-    },
-    onRender,
-    className = '',
-    loadingComponent = <Loading/>,
-    emptyComponent = null,
-    threshold = 16,
-    keyExtractor = (item, index) => item?.id || index,
-}) => {
+                                items = [],
+                                renderItem,
+                                pageSize = 10,
+                                virtualizeOptions = {
+                                    enabled: false,
+                                    itemHeight: 50,
+                                    overscan: 3,
+                                    scrollContainer: null
+                                },
+                                onRender,
+                                className = '',
+                                loadingComponent = <Loading/>,
+                                emptyComponent = null,
+                                threshold = 16,
+                                keyExtractor = (item, index) => item?.id || index,
+                            }) => {
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [visibleRange, setVisibleRange] = useState({start: 0, end: pageSize});
 
-    const virtualizedItems = useVirtualizedItems({ items, virtualizeOptions, visibleRange });
-    const handleScroll = useScrollHandler({ virtualizeOptions, onScroll: setVisibleRange });
+    const virtualizedItems = useVirtualizedItems({items, virtualizeOptions, visibleRange});
+    const handleScroll = useScrollHandler({virtualizeOptions, onScroll: setVisibleRange});
 
     const loadMore = useCallback(async () => {
         if (isLoading) return;
@@ -216,7 +217,7 @@ const OptimizedLoop = memo(({
 
     return (
         <div>
-            <PerformanceTracker items={items} threshold={threshold} onRender={onRender} />
+            <PerformanceTracker items={items} threshold={threshold} onRender={onRender}/>
             <div className={`optimized-loop ${className}`} onScroll={handleScroll}>
                 {virtualizeOptions.enabled ? (
                     <VirtualizedItems

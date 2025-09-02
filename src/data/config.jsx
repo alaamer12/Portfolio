@@ -1,8 +1,8 @@
 // noinspection t
 
 import {lazy} from "react";
-import {SiPython, SiPandas, SiNumpy, SiTensorflow, SiPytorch, SiMongodb, SiStreamlit, SiPlotly, SiJupyter} from "react-icons/si";
-import { USER_CONFIG } from "./user.js";
+import {SiJupyter, SiMongodb, SiPandas, SiPython, SiStreamlit, SiTensorflow} from "react-icons/si";
+import {USER_CONFIG} from "./user.js";
 
 // Import the centralized projects data
 export {

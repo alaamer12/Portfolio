@@ -3,7 +3,7 @@
  * Used for SEO optimization across all pages
  */
 
-import { USER_CONFIG } from './user';
+import {USER_CONFIG} from './user';
 
 // Base constants
 const BASE_URL = USER_CONFIG.contact.website;
@@ -14,17 +14,17 @@ const DEFAULT_LANG = USER_CONFIG.seo.language;
 
 // Language information
 const LANGUAGES = USER_CONFIG.skills.languages.map(lang => ({
-  '@type': 'Language',
-  'name': lang.name,
-  'alternateName': lang.code,
-  'description': lang.description
+    '@type': 'Language',
+    'name': lang.name,
+    'alternateName': lang.code,
+    'description': lang.description
 }));
 
 // Publication dates
 const PUBLICATION_DATES = {
-  website: '2024-12-01',
-  about: '2024-12-10',
-  projects: '2024-12-15'
+    website: '2024-12-01',
+    about: '2024-12-10',
+    projects: '2024-12-15'
 };
 
 // Helper to get current date in ISO format
@@ -32,32 +32,32 @@ const getCurrentDate = () => new Date().toISOString().split('T')[0];
 
 // Simple memoization helper
 const memoize = (fn) => {
-  let cached = null;
-  let lastUpdateDate = null;
-  const currentDate = getCurrentDate();
-  
-  return () => {
-    // Only recalculate if the date has changed or cache is empty
-    if (!cached || lastUpdateDate !== currentDate) {
-      lastUpdateDate = currentDate;
-      cached = fn(currentDate);
-    }
-    return cached;
-  };
+    let cached = null;
+    let lastUpdateDate = null;
+    const currentDate = getCurrentDate();
+
+    return () => {
+        // Only recalculate if the date has changed or cache is empty
+        if (!cached || lastUpdateDate !== currentDate) {
+            lastUpdateDate = currentDate;
+            cached = fn(currentDate);
+        }
+        return cached;
+    };
 };
 
 // Social media profiles
 const SOCIAL_PROFILES = Object.values(USER_CONFIG.social)
-  .filter(social => social.display && social.url)
-  .map(social => social.url);
+    .filter(social => social.display && social.url)
+    .map(social => social.url);
 
 // Contact information
 const CONTACT_INFO = {
-  email: USER_CONFIG.contact.email,
-  location: {
-    locality: USER_CONFIG.contact.location.city,
-    country: USER_CONFIG.contact.location.country
-  }
+    email: USER_CONFIG.contact.email,
+    location: {
+        locality: USER_CONFIG.contact.location.city,
+        country: USER_CONFIG.contact.location.country
+    }
 };
 
 // Skills and expertise
@@ -67,11 +67,11 @@ const DETAILED_SKILLS = [...USER_CONFIG.skills.primary, ...USER_CONFIG.skills.se
 
 // Education information
 const EDUCATION = {
-  institution: USER_CONFIG.education.institution,
-  url: USER_CONFIG.education.institutionUrl,
-  degree: USER_CONFIG.education.degree,
-  startDate: USER_CONFIG.education.startYear,
-  endDate: USER_CONFIG.education.endYear
+    institution: USER_CONFIG.education.institution,
+    url: USER_CONFIG.education.institutionUrl,
+    degree: USER_CONFIG.education.degree,
+    startDate: USER_CONFIG.education.startYear,
+    endDate: USER_CONFIG.education.endYear
 };
 
 // Service types
@@ -92,101 +92,101 @@ const SERVICE_TYPES = [
 
 // Create a standard image object schema
 const createImageObject = (path, width, height, caption) => ({
-  '@type': 'ImageObject',
-  'url': path.startsWith('http') ? path : `${BASE_URL}${path}`,
-  'width': width.toString(),
-  'height': height.toString(),
-  ...(caption && { 'caption': caption })
+    '@type': 'ImageObject',
+    'url': path.startsWith('http') ? path : `${BASE_URL}${path}`,
+    'width': width.toString(),
+    'height': height.toString(),
+    ...(caption && {'caption': caption})
 });
 
 // Create a postal address schema
 const createPostalAddress = (locality, country) => ({
-  '@type': 'PostalAddress',
-  'addressLocality': locality,
-  'addressCountry': country
+    '@type': 'PostalAddress',
+    'addressLocality': locality,
+    'addressCountry': country
 });
 
 // Create a breadcrumb schema
 const createBreadcrumbList = (items) => ({
-  '@type': 'BreadcrumbList',
-  'itemListElement': items.map((item, index) => ({
-    '@type': 'ListItem',
-    'position': index + 1,
-    'name': item.name,
-    'item': item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url}`
-  }))
+    '@type': 'BreadcrumbList',
+    'itemListElement': items.map((item, index) => ({
+        '@type': 'ListItem',
+        'position': index + 1,
+        'name': item.name,
+        'item': item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url}`
+    }))
 });
 
 // Create a person schema (basic version)
 const createBasicPersonSchema = (includeSameAs = true) => ({
-  '@type': 'Person',
-  'name': PERSON_NAME,
-  'jobTitle': JOB_TITLE,
-  'url': `${BASE_URL}`,
-  'image': `${BASE_URL}/profile.jpg`,
-  ...(includeSameAs && { 'sameAs': SOCIAL_PROFILES })
+    '@type': 'Person',
+    'name': PERSON_NAME,
+    'jobTitle': JOB_TITLE,
+    'url': `${BASE_URL}`,
+    'image': `${BASE_URL}/profile.jpg`,
+    ...(includeSameAs && {'sameAs': SOCIAL_PROFILES})
 });
 
 // Create a detailed person schema
 const createDetailedPersonSchema = () => ({
-  '@type': 'Person',
-  'name': PERSON_NAME,
-  'givenName': 'Amr',
-  'familyName': 'Muhamed',
-  'alternateName': 'Al-Aamer',
-  'gender': 'Male',
-  'nationality': 'Egyptian',
-  'jobTitle': JOB_TITLE,
-  'description': DEFAULT_DESCRIPTION,
-  'image': createImageObject('/profile.jpg', '500', '500', `Profile photo of ${PERSON_NAME}`),
-  'url': `${BASE_URL}/about`,
-  'email': CONTACT_INFO.email,
-  'address': createPostalAddress(CONTACT_INFO.location.locality, CONTACT_INFO.location.country),
-  'sameAs': SOCIAL_PROFILES,
-  'knowsAbout': EXTENDED_SKILLS,
-  'knowsLanguage': LANGUAGES,
-  'hasCredential': [
-    {
-      '@type': 'EducationalOccupationalCredential',
-      'credentialCategory': 'degree',
-      'name': EDUCATION.degree,
-      'educationalLevel': 'Bachelor\'s Degree',
-      'recognizedBy': {
+    '@type': 'Person',
+    'name': PERSON_NAME,
+    'givenName': 'Amr',
+    'familyName': 'Muhamed',
+    'alternateName': 'Al-Aamer',
+    'gender': 'Male',
+    'nationality': 'Egyptian',
+    'jobTitle': JOB_TITLE,
+    'description': DEFAULT_DESCRIPTION,
+    'image': createImageObject('/profile.jpg', '500', '500', `Profile photo of ${PERSON_NAME}`),
+    'url': `${BASE_URL}/about`,
+    'email': CONTACT_INFO.email,
+    'address': createPostalAddress(CONTACT_INFO.location.locality, CONTACT_INFO.location.country),
+    'sameAs': SOCIAL_PROFILES,
+    'knowsAbout': EXTENDED_SKILLS,
+    'knowsLanguage': LANGUAGES,
+    'hasCredential': [
+        {
+            '@type': 'EducationalOccupationalCredential',
+            'credentialCategory': 'degree',
+            'name': EDUCATION.degree,
+            'educationalLevel': 'Bachelor\'s Degree',
+            'recognizedBy': {
+                '@type': 'Organization',
+                'name': EDUCATION.institution
+            },
+            'dateCreated': '2023-01-01',
+            'validFor': 'Lifetime'
+        }
+    ],
+    'alumniOf': {
+        '@type': 'CollegeOrUniversity',
+        'name': EDUCATION.institution,
+        'url': EDUCATION.url,
+        'startDate': EDUCATION.startDate,
+        'endDate': EDUCATION.endDate
+    },
+    'workLocation': {
+        '@type': 'Place',
+        'address': createPostalAddress(CONTACT_INFO.location.locality, CONTACT_INFO.location.country)
+    },
+    'workExample': [
+        {
+            '@type': 'CreativeWork',
+            'name': 'Portfolio Website',
+            'url': BASE_URL
+        }
+    ],
+    'skills': DETAILED_SKILLS,
+    'award': [
+        'Honor student at BFCAI',
+        'Open Source Contributor'
+    ],
+    'worksFor': {
         '@type': 'Organization',
-        'name': EDUCATION.institution
-      },
-      'dateCreated': '2023-01-01',
-      'validFor': 'Lifetime'
-    }
-  ],
-  'alumniOf': {
-    '@type': 'CollegeOrUniversity',
-    'name': EDUCATION.institution,
-    'url': EDUCATION.url,
-    'startDate': EDUCATION.startDate,
-    'endDate': EDUCATION.endDate
-  },
-  'workLocation': {
-    '@type': 'Place',
-    'address': createPostalAddress(CONTACT_INFO.location.locality, CONTACT_INFO.location.country)
-  },
-  'workExample': [
-    {
-      '@type': 'CreativeWork',
-      'name': 'Portfolio Website',
-      'url': BASE_URL
-    }
-  ],
-  'skills': DETAILED_SKILLS,
-  'award': [
-    'Honor student at BFCAI',
-    'Open Source Contributor'
-  ],
-  'worksFor': {
-    '@type': 'Organization',
-    'name': 'Independent Developer and Consultant'
-  },
-  'seeks': 'Freelance opportunities and collaboration on innovative projects'
+        'name': 'Independent Developer and Consultant'
+    },
+    'seeks': 'Freelance opportunities and collaboration on innovative projects'
 });
 
 /**
@@ -195,139 +195,139 @@ const createDetailedPersonSchema = () => ({
 
 // Static part of landing page schema
 const LANDING_PAGE_SCHEMA_STATIC = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  'url': BASE_URL,
-  'name': `${PERSON_NAME} - Full Stack Developer Portfolio`,
-  'description': 'Portfolio website of Amr Muhamed, showcasing expertise in full-stack development, projects, and professional experience.',
-  'inLanguage': DEFAULT_LANG,
-  'availableLanguage': ['en', 'ar'],
-  'datePublished': PUBLICATION_DATES.website,
-  'image': createImageObject('/home-og.png', '1200', '630', `${PERSON_NAME} - Full Stack Developer`),
-  'potentialAction': {
-    '@type': 'SearchAction',
-    'target': `${BASE_URL}/search?q={search_term_string}`,
-    'query-input': 'required name=search_term_string'
-  },
-  'author': {
-    ...createBasicPersonSchema(),
-    'address': createPostalAddress(CONTACT_INFO.location.locality, CONTACT_INFO.location.country),
-    'email': CONTACT_INFO.email,
-    'knowsAbout': CORE_SKILLS
-  },
-  'breadcrumb': createBreadcrumbList([
-    { name: 'Home', url: '' }
-  ]),
-  'mainEntity': {
-    '@type': 'ProfessionalService',
-    'name': `${PERSON_NAME} - Full Stack Development Services`,
-    'description': 'Professional web development services specializing in full-stack solutions, custom applications, and more.',
-    'provider': {
-      '@type': 'Person',
-      'name': PERSON_NAME
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'url': BASE_URL,
+    'name': `${PERSON_NAME} - Full Stack Developer Portfolio`,
+    'description': 'Portfolio website of Amr Muhamed, showcasing expertise in full-stack development, projects, and professional experience.',
+    'inLanguage': DEFAULT_LANG,
+    'availableLanguage': ['en', 'ar'],
+    'datePublished': PUBLICATION_DATES.website,
+    'image': createImageObject('/home-og.png', '1200', '630', `${PERSON_NAME} - Full Stack Developer`),
+    'potentialAction': {
+        '@type': 'SearchAction',
+        'target': `${BASE_URL}/search?q={search_term_string}`,
+        'query-input': 'required name=search_term_string'
     },
-    'serviceType': SERVICE_TYPES,
-    'areaServed': {
-      '@type': 'Country',
-      'name': 'Global'
+    'author': {
+        ...createBasicPersonSchema(),
+        'address': createPostalAddress(CONTACT_INFO.location.locality, CONTACT_INFO.location.country),
+        'email': CONTACT_INFO.email,
+        'knowsAbout': CORE_SKILLS
+    },
+    'breadcrumb': createBreadcrumbList([
+        {name: 'Home', url: ''}
+    ]),
+    'mainEntity': {
+        '@type': 'ProfessionalService',
+        'name': `${PERSON_NAME} - Full Stack Development Services`,
+        'description': 'Professional web development services specializing in full-stack solutions, custom applications, and more.',
+        'provider': {
+            '@type': 'Person',
+            'name': PERSON_NAME
+        },
+        'serviceType': SERVICE_TYPES,
+        'areaServed': {
+            '@type': 'Country',
+            'name': 'Global'
+        }
     }
-  }
 };
 
 // Static part of about page schema
 const ABOUT_PAGE_SCHEMA_STATIC = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfilePage',
-  'datePublished': PUBLICATION_DATES.about,
-  'inLanguage': DEFAULT_LANG,
-  'url': `${BASE_URL}/about`,
-  'breadcrumb': createBreadcrumbList([
-    { name: 'Home', url: '' },
-    { name: 'About Me', url: '/about' }
-  ]),
-  'mainEntity': createDetailedPersonSchema()
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    'datePublished': PUBLICATION_DATES.about,
+    'inLanguage': DEFAULT_LANG,
+    'url': `${BASE_URL}/about`,
+    'breadcrumb': createBreadcrumbList([
+        {name: 'Home', url: ''},
+        {name: 'About Me', url: '/about'}
+    ]),
+    'mainEntity': createDetailedPersonSchema()
 };
 
 // Static part of projects page schema
 const PROJECTS_PAGE_SCHEMA_STATIC = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  'name': `Projects - ${PERSON_NAME}`,
-  'description': `Collection of web development projects and applications built by ${PERSON_NAME}`,
-  'inLanguage': DEFAULT_LANG,
-  'datePublished': PUBLICATION_DATES.projects,
-  'url': `${BASE_URL}/projects`,
-  'image': createImageObject('/projects-og.png', '1200', '630'),
-  'author': {
-    ...createBasicPersonSchema(false),
-    'image': `${BASE_URL}/profile.jpg`
-  },
-  'breadcrumb': createBreadcrumbList([
-    { name: 'Home', url: '' },
-    { name: 'Projects', url: '/projects' }
-  ]),
-  'mainEntity': {
-    '@type': 'ItemList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Business Projects',
-        'url': `${BASE_URL}/projects#business-projects`,
-        'item': {
-          '@type': 'ItemList',
-          'name': 'Business Projects',
-          'description': 'Professional applications developed for business use cases'
-        }
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'True Family Projects',
-        'url': `${BASE_URL}/projects#true-family-projects`,
-        'item': {
-          '@type': 'ItemList',
-          'name': 'True Family Projects',
-          'description': 'Collaborative projects developed with a focus on team skills'
-        }
-      },
-      {
-        '@type': 'ListItem',
-        'position': 3,
-        'name': 'Utility Projects',
-        'url': `${BASE_URL}/projects#utility-projects`,
-        'item': {
-          '@type': 'ItemList',
-          'name': 'Utility Projects',
-          'description': 'Tools and utilities developed to solve specific problems'
-        }
-      }
-    ]
-  },
-  'about': {
-    '@type': 'Thing',
-    'name': 'Web Development Projects',
-    'description': 'A showcase of full-stack development projects including web applications, APIs, and open-source contributions'
-  },
-  'offers': {
-    '@type': 'Offer',
-    'description': 'Available for freelance and consulting on similar projects',
-    'url': `${BASE_URL}/contact`
-  }
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    'name': `Projects - ${PERSON_NAME}`,
+    'description': `Collection of web development projects and applications built by ${PERSON_NAME}`,
+    'inLanguage': DEFAULT_LANG,
+    'datePublished': PUBLICATION_DATES.projects,
+    'url': `${BASE_URL}/projects`,
+    'image': createImageObject('/projects-og.png', '1200', '630'),
+    'author': {
+        ...createBasicPersonSchema(false),
+        'image': `${BASE_URL}/profile.jpg`
+    },
+    'breadcrumb': createBreadcrumbList([
+        {name: 'Home', url: ''},
+        {name: 'Projects', url: '/projects'}
+    ]),
+    'mainEntity': {
+        '@type': 'ItemList',
+        'itemListElement': [
+            {
+                '@type': 'ListItem',
+                'position': 1,
+                'name': 'Business Projects',
+                'url': `${BASE_URL}/projects#business-projects`,
+                'item': {
+                    '@type': 'ItemList',
+                    'name': 'Business Projects',
+                    'description': 'Professional applications developed for business use cases'
+                }
+            },
+            {
+                '@type': 'ListItem',
+                'position': 2,
+                'name': 'True Family Projects',
+                'url': `${BASE_URL}/projects#true-family-projects`,
+                'item': {
+                    '@type': 'ItemList',
+                    'name': 'True Family Projects',
+                    'description': 'Collaborative projects developed with a focus on team skills'
+                }
+            },
+            {
+                '@type': 'ListItem',
+                'position': 3,
+                'name': 'Utility Projects',
+                'url': `${BASE_URL}/projects#utility-projects`,
+                'item': {
+                    '@type': 'ItemList',
+                    'name': 'Utility Projects',
+                    'description': 'Tools and utilities developed to solve specific problems'
+                }
+            }
+        ]
+    },
+    'about': {
+        '@type': 'Thing',
+        'name': 'Web Development Projects',
+        'description': 'A showcase of full-stack development projects including web applications, APIs, and open-source contributions'
+    },
+    'offers': {
+        '@type': 'Offer',
+        'description': 'Available for freelance and consulting on similar projects',
+        'url': `${BASE_URL}/contact`
+    }
 };
 
 // Not Found page schema is entirely static (doesn't depend on date)
 const NOT_FOUND_PAGE_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  'name': `404 - Page Not Found | ${PERSON_NAME}`,
-  'description': 'The requested page could not be found.',
-  'url': `${BASE_URL}/404`,
-  'inLanguage': DEFAULT_LANG,
-  'breadcrumb': createBreadcrumbList([
-    { name: 'Home', url: '' },
-    { name: 'Not Found', url: '/404' }
-  ])
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    'name': `404 - Page Not Found | ${PERSON_NAME}`,
+    'description': 'The requested page could not be found.',
+    'url': `${BASE_URL}/404`,
+    'inLanguage': DEFAULT_LANG,
+    'breadcrumb': createBreadcrumbList([
+        {name: 'Home', url: ''},
+        {name: 'Not Found', url: '/404'}
+    ])
 };
 
 /**
@@ -335,18 +335,18 @@ const NOT_FOUND_PAGE_SCHEMA = {
  * Only recalculate when the date changes
  */
 export const getLandingPageSchema = memoize((currentDate) => ({
-  ...LANDING_PAGE_SCHEMA_STATIC,
-  'dateModified': currentDate
+    ...LANDING_PAGE_SCHEMA_STATIC,
+    'dateModified': currentDate
 }));
 
 export const getAboutPageSchema = memoize((currentDate) => ({
-  ...ABOUT_PAGE_SCHEMA_STATIC,
-  'dateModified': currentDate
+    ...ABOUT_PAGE_SCHEMA_STATIC,
+    'dateModified': currentDate
 }));
 
 export const getProjectsPageSchema = memoize((currentDate) => ({
-  ...PROJECTS_PAGE_SCHEMA_STATIC,
-  'dateModified': currentDate
+    ...PROJECTS_PAGE_SCHEMA_STATIC,
+    'dateModified': currentDate
 }));
 
 // Not Found page doesn't need modification date since it's not indexed

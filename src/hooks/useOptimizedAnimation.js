@@ -4,14 +4,14 @@ import {useInView} from 'react-intersection-observer';
 import {useReducedMotion} from 'framer-motion';
 
 const useDeviceDetection = (mobileBreakpoint) => {
-    const { width } = useWindowSize();
+    const {width} = useWindowSize();
     const isMobile = width <= mobileBreakpoint;
     const isLowEndDevice = useRef(
         typeof window !== 'undefined' &&
         (!window.matchMedia('(min-device-memory: 4gb)').matches ||
             navigator.hardwareConcurrency < 4)
     );
-    return { isMobile, isLowEndDevice: isLowEndDevice.current };
+    return {isMobile, isLowEndDevice: isLowEndDevice.current};
 };
 
 // noinspection t
@@ -30,7 +30,7 @@ const useOptimizationSettings = (isMobile, prefersReducedMotion, disabled) => {
 };
 
 const useIntersectionObserver = (options) => {
-    const { threshold, rootMargin, triggerOnce, disabled, prefersReducedMotion } = options;
+    const {threshold, rootMargin, triggerOnce, disabled, prefersReducedMotion} = options;
     return useInView({
         threshold,
         rootMargin,
@@ -50,7 +50,7 @@ const useAnimationFrame = () => {
 const useAnimationProgress = (duration, isLowEndDevice) => {
     const start = useRef(performance.now());
     const getDuration = useCallback(() => isLowEndDevice ? 400 : 800, [isLowEndDevice]);
-    
+
     return useCallback((currentTime) => {
         const elapsed = currentTime - start.current;
         return Math.min(elapsed / getDuration(), 1);
@@ -101,9 +101,9 @@ const useOptimizedAnimation = (options = {}) => {
     const elementRef = useRef(null);
     const prefersReducedMotion = useReducedMotion();
 
-    const { isMobile, isLowEndDevice } = useDeviceDetection(mobileBreakpoint);
+    const {isMobile, isLowEndDevice} = useDeviceDetection(mobileBreakpoint);
     const optimizationSettings = useOptimizationSettings(isMobile, prefersReducedMotion, disabled);
-    const [ref, inView] = useIntersectionObserver({ threshold, rootMargin, triggerOnce, disabled, prefersReducedMotion });
+    const [ref, inView] = useIntersectionObserver({threshold, rootMargin, triggerOnce, disabled, prefersReducedMotion});
 
     useAnimationEffect(inView, elementRef, optimizationSettings, isLowEndDevice);
 

@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import Background from '../components/Background/Background';
 import {FaHome, FaSearch} from 'react-icons/fa';
 import SEO from '../components/SEO/SEO';
-import { getNotFoundPageSchema } from "../data/schema.js";
+import {getNotFoundPageSchema} from "../data/schema.js";
 
 const NotFoundSEO = () => (
     <SEO
@@ -24,21 +24,21 @@ const NotFound = () => {
 
     return (
         <>
-            <Background />
-            <NotFoundSEO />
+            <Background/>
+            <NotFoundSEO/>
             <NotFoundContainer>
                 <NotFoundContent>
-                    <SearchIcon />
-                    <NotFoundHeader />
-                    <NotFoundMessage />
-                    <HomeButton navigate={navigate} />
+                    <SearchIcon/>
+                    <NotFoundHeader/>
+                    <NotFoundMessage/>
+                    <HomeButton navigate={navigate}/>
                 </NotFoundContent>
             </NotFoundContainer>
         </>
     );
 };
 
-const NotFoundContainer = memo(({ children }) => (
+const NotFoundContainer = memo(({children}) => (
     <div className="relative min-h-screen w-screen overflow-x-hidden">
         <div className="relative z-10 w-full min-h-screen flex items-center justify-center p-4">
             {children}
@@ -46,11 +46,11 @@ const NotFoundContainer = memo(({ children }) => (
     </div>
 ));
 
-const NotFoundContent = memo(({ children }) => (
+const NotFoundContent = memo(({children}) => (
     <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        initial={{opacity: 0, y: 20}}
+        animate={{opacity: 1, y: 0}}
+        transition={{duration: 0.5}}
         className="max-w-2xl w-full bg-[#f5f4f4]/80 dark:bg-surface/80 backdrop-blur-lg rounded-2xl p-8 shadow-xl text-center"
     >
         {children}
@@ -59,12 +59,12 @@ const NotFoundContent = memo(({ children }) => (
 
 const SearchIcon = memo(() => (
     <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        initial={{scale: 0}}
+        animate={{scale: 1}}
+        transition={{duration: 0.5, delay: 0.2}}
         className="w-24 h-24 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6"
     >
-        <FaSearch className="w-12 h-12 text-primary dark:text-primary-light" />
+        <FaSearch className="w-12 h-12 text-primary dark:text-primary-light"/>
     </motion.div>
 ));
 
@@ -86,14 +86,14 @@ const NotFoundMessage = memo(() => (
     </p>
 ));
 
-const HomeButton = memo(({ navigate }) => (
+const HomeButton = memo(({navigate}) => (
     <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{scale: 1.05}}
+        whileTap={{scale: 0.95}}
         onClick={() => navigate('/')}
         className="px-6 py-3 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-colors inline-flex items-center justify-center gap-2 text-lg font-semibold"
     >
-        <FaHome className="w-5 h-5" />
+        <FaHome className="w-5 h-5"/>
         Back to Home
     </motion.button>
 ));
