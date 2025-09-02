@@ -295,6 +295,48 @@ const ProjectList = memo(({ projects }) => (
     </div>
 ));
 
+const ViewAllProjectsButton = memo(() => {
+    const { settings } = useOptimizedAnimation();
+
+    return (
+        <motion.div
+            className="flex justify-center mt-12"
+            initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
+            whileInView={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true }}
+            transition={{
+                duration: settings.duration,
+                delay: 0.3,
+                ease: settings.ease,
+            }}
+        >
+            <motion.a
+                href="/projects"
+                className="group relative inline-flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-semibold"
+                whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
+                whileTap={settings.shouldAnimate ? { scale: 0.95 } : {}}
+            >
+                <span>View All Projects</span>
+                <svg
+                    className="w-5 h-5 transition-transform duration-300 transform group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                </svg>
+            </motion.a>
+        </motion.div>
+    );
+});
+
+ViewAllProjectsButton.displayName = 'ViewAllProjectsButton';
+
 const Projects = memo(() => {
     const projects = useMemo(() => getFeaturedProjectsData(), []);
 
@@ -303,6 +345,7 @@ const Projects = memo(() => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ProjectsHeader />
                 <ProjectList projects={projects} />
+                <ViewAllProjectsButton />
             </div>
         </section>
     );

@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import { OptimizedBlock, OptimizedLoop } from "../OptimizedMillion";
 import useOptimizedAnimation from "../../hooks/useOptimizedAnimation";
-import { EXPERIENCE_DATA, SKILLS_DATA } from "../../data/config.jsx";
+import { EXPERIENCE_DATA, EDUCATION_DATA, SKILLS_DATA } from "../../data/config.jsx";
 import { USER_CONFIG } from "../../data/user.js";
 
 const SkillIcon = memo(({ Icon }) => (
@@ -442,9 +442,9 @@ const ExperienceSection = () => (
     </OptimizedBlock>
 );
 
-const EducationSection = () => (
-    <OptimizedBlock className="mt-32 md:mt-48" id="about-education">
-        <section aria-label="Education" className="mt-32 md:mt-48">
+const TrainingSection = () => (
+    <OptimizedBlock className="mb-32 md:mb-48" id="about-training">
+        <section aria-label="Training" className="mb-32 md:mb-48">
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -452,7 +452,35 @@ const EducationSection = () => (
                 transition={{ delay: 0.6 }}
             >
                 <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-                    Education
+                    Training
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
+                    Academic programs, internships, and specialized training that have shaped my technical expertise and professional development.
+                </p>
+                <OptimizedLoop
+                    items={EDUCATION_DATA || []}
+                    renderItem={(edu, index) => (
+                        <ExperienceCard key={index} {...edu} />
+                    )}
+                    className="space-y-6"
+                    enableCache={true}
+                />
+            </motion.div>
+        </section>
+    </OptimizedBlock>
+);
+
+const EducationSection = () => (
+    <OptimizedBlock className="mt-32 md:mt-48" id="about-education">
+        <section aria-label="Education" className="mt-32 md:mt-48">
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.7 }}
+            >
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+                    Academic Background
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
                     My academic foundation in computer science and artificial intelligence, providing the theoretical knowledge that supports my practical expertise.
@@ -503,6 +531,7 @@ const About = () => {
                 <ContactSection />
                 <AboutSkillsSection />
                 <ExperienceSection />
+                <TrainingSection />
                 <EducationSection />
             </div>
         </section>

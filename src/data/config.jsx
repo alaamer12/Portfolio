@@ -66,12 +66,15 @@ export const EXPERIENCE_DATA = [
         technologies: ['Python', 'Next.js', 'ETL Pipelines', 'Data Processing', 'Dashboard Development', 'Real-time Analytics']
     },
     {
-        title: 'Academic Intern',
-        company: 'Benha University',
-        period: 'June 2024 - July 2024',
-        description: 'Built Python-based data applications with database integration, focusing on data aggregation and processing. Led ChitChat project team, developing data-driven chat applications with socket programming and MVC architecture.',
-        technologies: ['Python', 'Database Integration', 'Data Aggregation', 'Socket Programming', 'MVC Architecture', 'Team Leadership']
-    },
+        title: 'Open Source Contributor',
+        company: 'Multiple Organizations',
+        period: '2023 - Present',
+        description: 'Published 5+ PyPI packages enhancing data engineering workflows. Contributed to JsonAlchemy, T2FLabs, Tealim, and truefamily organizations with tools for dataset generation and processing.',
+        technologies: ['Python', 'PyPI Publishing', 'Data Engineering Tools', 'Dataset Generation', 'Open Source Development']
+    }
+];
+
+export const EDUCATION_DATA = [
     {
         title: 'DEPI Program Participant',
         company: 'Government Data Engineering Track',
@@ -80,11 +83,11 @@ export const EXPERIENCE_DATA = [
         technologies: ['Python', 'Data Engineering', 'ETL Processes', 'Database Design', 'Pipeline Construction', 'Data Optimization']
     },
     {
-        title: 'Open Source Contributor',
-        company: 'Multiple Organizations',
-        period: '2023 - Present',
-        description: 'Published 5+ PyPI packages enhancing data engineering workflows. Contributed to JsonAlchemy, T2FLabs, Tealim, and truefamily organizations with tools for dataset generation and processing.',
-        technologies: ['Python', 'PyPI Publishing', 'Data Engineering Tools', 'Dataset Generation', 'Open Source Development']
+        title: 'Academic Intern',
+        company: 'Benha University',
+        period: 'June 2024 - July 2024',
+        description: 'Built Python-based data applications with database integration, focusing on data aggregation and processing. Led ChitChat project team, developing data-driven chat applications with socket programming and MVC architecture.',
+        technologies: ['Python', 'Database Integration', 'Data Aggregation', 'Socket Programming', 'MVC Architecture', 'Team Leadership']
     }
 ]; // Route configurations
 export const ROUTES = {
