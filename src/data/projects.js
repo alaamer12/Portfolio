@@ -58,6 +58,38 @@ export const PROJECT_CATEGORIES = {
   }
 };
 
+// Organization configurations
+export const ORGANIZATIONS = {
+  T2F_LABS: {
+    id: 't2f_labs',
+    name: 'T2F-Labs',
+    displayName: 'T2F Labs',
+    url: 'https://github.com/T2F-Labs',
+    color: '#4F46E5'
+  },
+  JSON_ALCHEMY: {
+    id: 'json_alchemy', 
+    name: 'JsonAlchemy',
+    displayName: 'JsonAlchemy',
+    url: 'https://github.com/JsonAlchemy',
+    color: '#059669'
+  },
+  TRUEFAM: {
+    id: 'truefam',
+    name: 'Truefam',
+    displayName: 'TrueFam',
+    url: 'https://github.com/truefam',
+    color: '#DC2626'
+  },
+  SYMPHONY_AI: {
+    id: 'symphony_ai',
+    name: 'Symphony-ai',
+    displayName: 'Symphony AI',
+    url: 'https://github.com/Symphony-ai',
+    color: '#7C3AED'
+  }
+};
+
 /// Badge configurations
 export const PROJECT_BADGES = {
   HOT: {
@@ -692,6 +724,7 @@ export const PROJECTS_DATA = {
     "description": "Failed to fetch (404/Private)",
     "longDescription": "Failed to fetch (404/Private)",
     "category": PROJECT_CATEGORIES.DEVELOPER_TOOLS.id,
+    "organization": ORGANIZATIONS.T2F_LABS.id,
     "tags": [
       "Python",
       "Markdown",
@@ -1301,6 +1334,7 @@ export const PROJECTS_DATA = {
     "description": "Fast, lightweight binary JSON parser with small output size.",
     "longDescription": "High-performance binary JSON parser with compact binary format and seamless Python-C integration for data processing applications.",
     "category": PROJECT_CATEGORIES.DEVELOPER_TOOLS.id,
+    "organization": ORGANIZATIONS.JSON_ALCHEMY.id,
     "tags": [
       "Python",
       "C",
@@ -1374,6 +1408,7 @@ export const PROJECTS_DATA = {
     "description": "Generate professional LaTeX docs programmatically using Python + Jinja2.",
     "longDescription": "LaTeX document generation tool with template-based approach for automated document creation.",
     "category": PROJECT_CATEGORIES.DEVELOPER_TOOLS.id,
+    "organization": ORGANIZATIONS.T2F_LABS.id,
     "tags": [
       "Python",
       "LaTeX",
@@ -1817,6 +1852,7 @@ export const PROJECTS_DATA = {
     "description": "Failed to fetch (404/Private)",
     "longDescription": "Failed to fetch (404/Private)",
     "category": PROJECT_CATEGORIES.ML_AI.id,
+    "organization": ORGANIZATIONS.SYMPHONY_AI.id,
     "tags": [
       "Rust",
       "React",
@@ -1889,6 +1925,7 @@ export const PROJECTS_DATA = {
     "description": "Core library providing essential utilities and components for enterprise apps.",
     "longDescription": "Foundation library powering the True ecosystem with essential utilities, design patterns, and robust functionality for data engineering applications.",
     "category": PROJECT_CATEGORIES.TRUE_FAMILY.id,
+    "organization": ORGANIZATIONS.TRUEFAM.id,
     "tags": [
       "Python",
       "Utilities"
@@ -1927,6 +1964,7 @@ export const PROJECTS_DATA = {
     "description": "Advanced logging system with structured logging, log rotation, and multiple output formats support.",
     "longDescription": "Comprehensive logging solution with structured logging, rotation policies, and multiple output format support.",
     "category": PROJECT_CATEGORIES.TRUE_FAMILY.id,
+    "organization": ORGANIZATIONS.TRUEFAM.id,
     "tags": [
       "Python",
       "Logging",
@@ -1965,6 +2003,7 @@ export const PROJECTS_DATA = {
     "description": "Storage abstraction layer supporting multiple backend solutions.",
     "longDescription": "Sophisticated storage abstraction layer with automatic data migration, backup, recovery capabilities, and intelligent data placement algorithms.",
     "category": PROJECT_CATEGORIES.TRUE_FAMILY.id,
+    "organization": ORGANIZATIONS.TRUEFAM.id,
     "tags": [
       "Python",
       "Storage",
@@ -2068,6 +2107,14 @@ export const getCategoryConfig = (categoryId) => {
   return Object.values(PROJECT_CATEGORIES).find(cat => cat.id === categoryId);
 };
 
+export const getOrganizationConfig = (organizationId) => {
+  return Object.values(ORGANIZATIONS).find(org => org.id === organizationId);
+};
+
+export const getProjectsByOrganization = (organizationId) => {
+  return Object.values(PROJECTS_DATA).filter(project => project.organization === organizationId);
+};
+
 // Get all categories sorted by order
 export const getSortedCategories = () => {
   return Object.values(PROJECT_CATEGORIES).sort((a, b) => a.order - b.order);
@@ -2148,6 +2195,7 @@ export const getFeaturedProjectsData = () => {
       github: project.links.github,
       demo: project.links.demo,
       screenshots: project.images.screenshots || [],
+      organization: project.organization,
       delay: project.delay
     };
   }).filter(Boolean);

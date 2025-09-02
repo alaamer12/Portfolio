@@ -138,7 +138,7 @@ const ProjectCaption = memo(({ title, description }) => (
 
 ProjectCaption.displayName = 'ProjectCaption';
 
-const ProjectTags = memo(({ tags }) => {
+const ProjectTags = memo(({ tags, organization }) => {
     const { settings } = useOptimizedAnimation();
     const [hoveredTag, setHoveredTag] = useState(null);
 
@@ -168,6 +168,9 @@ const ProjectTags = memo(({ tags }) => {
 
     return (
         <div className="flex flex-wrap gap-1.5">
+            {organization && (
+                <OrganizationBadge organizationId={organization} />
+            )}
             {renderedTags}
         </div>
     );
@@ -212,7 +215,7 @@ const ProjectCard = memo(({ project, delay }) => {
 
                     <div className="flex-grow space-y-3">
                         <ProjectCaption title={project.title} description={project.description} />
-                        <ProjectTags tags={project.tags} />
+                        <ProjectTags tags={project.tags} organization={project.organization} />
                         <ProjectLinks
                             github={project.github}
                             demo={project.demo}

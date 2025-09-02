@@ -20,6 +20,7 @@ import {
     sortProjectsByBadge,
     getBadgeConfig
 } from "../data/config.jsx";
+import OrganizationBadge from "../components/OrganizationBadge/OrganizationBadge.jsx";
 
 const getBadgeIcon = (badgeId) => {
     switch (badgeId) {
@@ -92,8 +93,11 @@ const ProjectHeader = memo(({ icon, title }) => (
     </div>
 ));
 
-const ProjectTags = memo(({ tags }) => (
+const ProjectTags = memo(({ tags, organization }) => (
     <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+        {organization && (
+            <OrganizationBadge organizationId={organization} />
+        )}
         {tags.map((tag, index) => (
             <span
                 key={index}
@@ -261,7 +265,7 @@ const ProjectCard = ({ project, settings, onImageClick }) => {
                 <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-3 sm:mb-4">
                     {project.description}
                 </p>
-                <ProjectTags tags={project.tags} />
+                <ProjectTags tags={project.tags} organization={project.organization} />
                 <ProjectDetails details={project.details} />
                 <ProjectLinks project={project} settings={settings} />
             </div>
