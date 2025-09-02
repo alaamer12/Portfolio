@@ -328,37 +328,37 @@ const RegularSkillCard = ({ title, description }) => {
 
 const specializedSkills = [
     {
-        title: "Backend Development",
-        description: "Specialized in Python-based backend solutions with FastAPI and Django"
+        title: "Data Engineering",
+        description: "Expert in building scalable ETL/ELT pipelines and data processing workflows"
     },
     {
-        title: "Open Source",
-        description: "Creator of multiple PyPI packages including true-core ecosystem"
+        title: "Machine Learning",
+        description: "Specialized in ML model development, training, and deployment for analytics applications"
     },
     {
-        title: "Leadership",
-        description: "CEO of Tealim and Snippet, leading technical teams and projects"
+        title: "Data Visualization",
+        description: "Creating interactive dashboards and rich-terminal visualizations for data insights"
     }
 ];
 
 const additionalSkills = [
-    { name: 'JavaScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-    { name: 'TypeScript', url: 'https://www.typescriptlang.org/' },
-    { name: 'Node.js', url: 'https://nodejs.org/' },
+    { name: 'PyTorch', url: 'https://pytorch.org/' },
+    { name: 'TensorFlow', url: 'https://www.tensorflow.org/' },
+    { name: 'scikit-learn', url: 'https://scikit-learn.org/' },
+    { name: 'Plotly', url: 'https://plotly.com/' },
+    { name: 'Chart.js', url: 'https://www.chartjs.org/' },
+    { name: 'Streamlit', url: 'https://streamlit.io/' },
+    { name: 'Jupyter', url: 'https://jupyter.org/' },
     { name: 'MongoDB', url: 'https://www.mongodb.com/' },
-    { name: 'MySQL', url: 'https://www.mysql.com/' },
-    { name: 'Git', url: 'https://git-scm.com/' },
-    { name: 'REST APIs', url: 'https://restfulapi.net/' },
-    { name: 'TailwindCSS', url: 'https://tailwindcss.com/' },
-    { name: 'Bootstrap', url: 'https://getbootstrap.com/' },
+    { name: 'Supabase', url: 'https://supabase.com/' },
+    { name: 'PostgreSQL', url: 'https://www.postgresql.org/' },
+    { name: 'Redis', url: 'https://redis.io/' },
     { name: 'Docker', url: 'https://www.docker.com/' },
-    { name: 'Nginx', url: 'https://nginx.org/' },
-    { name: 'Yarn', url: 'https://yarnpkg.com/' },
-    { name: 'NPM', url: 'https://www.npmjs.com/' },
-    { name: 'Vite', url: 'https://vitejs.dev/' },
-    { name: 'Next.js', url: 'https://nextjs.org/' },
-    { name: 'System Architecture', url: 'https://en.wikipedia.org/wiki/Architecture_(computing)' },
-    { name: 'System Design', url: 'https://en.wikipedia.org/wiki/System_design' },
+    { name: 'Git', url: 'https://git-scm.com/' },
+    { name: 'Web Scraping', url: 'https://en.wikipedia.org/wiki/Web_scraping' },
+    { name: 'ETL Pipelines', url: 'https://en.wikipedia.org/wiki/Extract,_transform,_load' },
+    { name: 'Data Warehousing', url: 'https://en.wikipedia.org/wiki/Data_warehouse' },
+    { name: 'Statistical Analysis', url: 'https://en.wikipedia.org/wiki/Statistics' },
 ];
 
 const AboutSkillsSection = () => (

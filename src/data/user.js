@@ -12,13 +12,13 @@ export const USER_CONFIG = {
     fullName: 'Amr Muhamed',
     alternateName: 'Al-Aamer',
     displayName: 'Amr Muhamed',
-    jobTitle: 'Python and Backend Expert',
-    profession: 'Full Stack Developer',
-    bio: 'From building scalable web applications to architecting complex backend systems, I\'ve spent the last 5+ years mastering the art of Python development and system design. My journey began with a curiosity about how things work under the hood, which led me to specialize in backend technologies, API design, and database optimization. I believe in writing clean, maintainable code that not only solves today\'s problems but scales for tomorrow\'s challenges.',
+    jobTitle: 'Data Engineer & AI Specialist',
+    profession: 'Data Engineer',
+    bio: 'Data Engineer with extensive experience building scalable data pipelines, aggregating large-scale datasets, and optimizing data processing workflows. I develop and maintain robust ETL/ELT systems using Python, leveraging tools like Pandas, NumPy, and advanced frameworks for data manipulation and visualization. My expertise spans creating advanced data hubs, scraping frameworks, and integrating APIs for machine learning and analytics applications. I design and implement static code analysis tools with rich-terminal dashboards to enhance data quality and pipeline observability, driving data engineering innovation through strong team leadership and high-impact project delivery.',
     nationality: 'Egyptian',
     gender: 'Male',
     profileImage: '/images/hero.avif',
-    profileImageAlt: 'Amr Muhamed - Full Stack Developer'
+    profileImageAlt: 'Amr Muhamed - Data Engineer'
   },
 
   // Contact Information
@@ -87,9 +87,9 @@ export const USER_CONFIG = {
 
   // Professional Information
   professional: {
-    currentStatus: 'Available for freelance and consulting',
-    experience: '2+ years',
-    specialization: ['Full Stack Development', 'Backend Development', 'API Development'],
+    currentStatus: 'Available for data engineering and AI consulting',
+    experience: '3+ years',
+    specialization: ['Data Engineering', 'Machine Learning', 'ETL/ELT Pipelines', 'Data Analytics'],
     availability: 'Open to opportunities',
     workType: ['Remote', 'Freelance', 'Contract'],
     hourlyRate: '', // Optional
@@ -98,8 +98,8 @@ export const USER_CONFIG = {
 
   // Skills & Technologies
   skills: {
-    primary: ['Python', 'React', 'FastAPI', 'Django', 'JavaScript', 'PostgreSQL'],
-    secondary: ['React Native', 'TailwindCSS', 'Docker', 'Git', 'RESTful APIs'],
+    primary: ['Python', 'Pandas', 'NumPy', 'ETL/ELT', 'Machine Learning', 'Data Visualization'],
+    secondary: ['PyTorch', 'TensorFlow', 'MongoDB', 'Supabase', 'Streamlit', 'Plotly'],
     languages: [
       {
         name: 'Arabic',
@@ -119,19 +119,19 @@ export const USER_CONFIG = {
   // Statistics (for Hero section)
   stats: {
     githubRepos: {
-      count: '50+',
-      label: 'GitHub Repositories',
+      count: '55+',
+      label: 'Data Projects',
       color: 'text-gray-800 dark:text-white',
       hoverColor: 'text-primary dark:text-primary-light'
     },
     pythonProjects: {
-      count: '86%',
-      label: 'Python Projects',
+      count: '30+',
+      label: 'Python Tools',
       color: 'text-gray-800 dark:text-white',
       hoverColor: 'text-strawberry dark:text-strawberry-light'
     },
     pypiPackages: {
-      count: '10+',
+      count: '5+',
       label: 'PyPI Packages',
       color: 'text-gray-800 dark:text-white',
       hoverColor: 'text-cherry-pie dark:text-cherry-pie-light'
@@ -141,8 +141,8 @@ export const USER_CONFIG = {
   // SEO & Meta Information
   seo: {
     siteName: 'Amr Muhamed Portfolio',
-    siteDescription: 'Full Stack Developer Portfolio showcasing expertise in React, Django, FastAPI, and modern web technologies.',
-    keywords: ['Full Stack Developer', 'React Developer', 'Django Developer', 'FastAPI', 'Python Developer', 'Web Developer'],
+    siteDescription: 'Data Engineer Portfolio showcasing expertise in ETL pipelines, machine learning, data visualization, and scalable data processing systems.',
+    keywords: ['Data Engineer', 'Machine Learning', 'ETL Pipeline', 'Data Analytics', 'Python Developer', 'AI Specialist'],
     author: 'Amr Muhamed',
     canonicalUrl: 'https://amrmuhamed.com',
     ogImage: '/og-image.png',
@@ -179,10 +179,10 @@ export const USER_CONFIG = {
 
   // About Me Highlights/Bullet Points
   aboutHighlights: [
-    'Expert in Python, Django, FastAPI, and Flask',
-    'Experienced with cloud platforms (AWS, GCP, Azure)',
-    'Strong background in database design and optimization',
-    'Passionate about clean code and system architecture'
+    'Expert in building scalable ETL/ELT pipelines with Python, Pandas, and NumPy',
+    'Specialized in machine learning model development and deployment',
+    'Strong background in data visualization with Plotly, Chart.js, and Streamlit',
+    'Passionate about data quality, pipeline observability, and team leadership'
   ]
 };
 

@@ -55,11 +55,11 @@ ScrollToTopButton.displayName = 'ScrollToTopButton';
 
 const LandingPageSEO = () => (
     <SEO
-        title="Amr Muhamed | Full Stack Developer Portfolio"
-        description="Welcome to my portfolio! I'm Amr Muhamed, a Full Stack Developer specializing in Python, React, and modern web technologies. Explore my projects and expertise in web development."
+        title="Amr Muhamed | Data Engineer & AI Specialist Portfolio"
+        description="Welcome to my portfolio! I'm Amr Muhamed, a Data Engineer specializing in ETL pipelines, machine learning, data visualization, and scalable data processing systems. Explore my data engineering projects and AI expertise."
         type="website"
         image="/home-og.png"
-        keywords="full stack developer, react developer, django developer, fastapi developer, python, javascript, web development, portfolio, amr muhamed, software engineer, cairo"
+        keywords="data engineer, machine learning, etl pipeline, data analytics, python developer, ai specialist, data visualization, data processing, portfolio, amr muhamed, cairo"
         language="en"
         schema={getLandingPageSchema()}
     />

@@ -1,7 +1,7 @@
 // noinspection t
 
 import {lazy} from "react";
-import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from "react-icons/si";
+import {SiPython, SiPandas, SiNumpy, SiTensorflow, SiPytorch, SiMongodb, SiStreamlit, SiPlotly, SiJupyter} from "react-icons/si";
 import { USER_CONFIG } from "./user.js";
 
 // Import the centralized projects data
@@ -9,6 +9,7 @@ export {
     getProjectsData,
     getProjectsDataByCategories,
     getSortedCategories,
+    getProjectsByCategory,
     sortProjectsByBadge as sortProjects,
     getBadgeConfig as getBadgeContent,
     PROJECT_BADGES,
@@ -21,69 +22,69 @@ export const SKILLS_DATA = [
     {
         Icon: SiPython,
         name: 'Python',
-        description: 'Expert in Python development with extensive experience in automation, data processing, and backend development.',
+        description: 'Expert in Python for data engineering, ETL pipelines, machine learning, and automation with extensive experience in data processing frameworks.',
         url: 'https://www.python.org/'
     },
     {
-        Icon: SiDjango,
-        name: 'Django',
-        description: 'Proficient in building scalable web applications using Django and Django REST Framework.',
-        url: 'https://www.djangoproject.com/'
+        Icon: SiPandas,
+        name: 'Pandas & NumPy',
+        description: 'Advanced data manipulation, cleaning, and transformation using Pandas and NumPy for large-scale data processing workflows.',
+        url: 'https://pandas.pydata.org/'
     },
     {
-        Icon: SiFastapi,
-        name: 'FastAPI',
-        description: 'Proficient in building high-performance APIs with FastAPI and its extensions.',
-        url: 'https://fastapi.tiangolo.com/'
+        Icon: SiTensorflow,
+        name: 'Machine Learning',
+        description: 'Proficient in building ML models with TensorFlow, PyTorch, and scikit-learn for data analytics and AI applications.',
+        url: 'https://www.tensorflow.org/'
     },
     {
-        Icon: SiReact,
-        name: 'React and React Native',
-        description: 'Strong frontend development skills with React, including modern hooks and state management.',
-        url: 'https://reactjs.org/'
+        Icon: SiStreamlit,
+        name: 'Data Visualization',
+        description: 'Creating interactive dashboards and visualizations using Streamlit, Plotly, and Chart.js for data insights.',
+        url: 'https://streamlit.io/'
     },
     {
-        Icon: SiPostgresql,
-        name: 'PostgreSQL',
-        description: 'Expert in database design, optimization, and management with PostgreSQL.',
-        url: 'https://www.postgresql.org/'
+        Icon: SiMongodb,
+        name: 'Database Systems',
+        description: 'Expert in database design and optimization with MongoDB, Supabase, and SQL databases for data storage solutions.',
+        url: 'https://www.mongodb.com/'
     },
     {
-        Icon: SiTailwindcss,
-        name: 'TailwindCSS',
-        description: 'Proficient in creating responsive and visually stunning web interfaces with TailwindCSS.',
-        url: 'https://tailwindcss.com/'
+        Icon: SiJupyter,
+        name: 'Data Analysis',
+        description: 'Advanced data analysis and research using Jupyter notebooks, statistical analysis, and data science methodologies.',
+        url: 'https://jupyter.org/'
     }
 ];
 
 export const EXPERIENCE_DATA = [
     {
-        title: 'Cross-platform Developer',
-        company: 'MobileTech Solutions',
-        period: '2022 - Present',
-        description: 'Led the development of cross-platform mobile applications using React Native. Implemented shared codebase strategy, reducing development time by 40%.',
-        technologies: ['React Native', 'Zustand', 'Jest', 'Subpase', 'Expo', 'Reanimated']
-    },
-    {
-        title: 'Junior Backend Developer',
-        company: 'Tech Solutions Inc.',
-        period: '2023 - Present',
-        description: 'Contributing to the backend development team in building scalable microservices. Learning and implementing CI/CD practices while assisting in performance optimization efforts.',
-        technologies: ['Python', 'Django', 'Docker', 'FastAPI', 'PostgreSQL', 'Pytest']
-    },
-    {
         title: 'Full Stack Developer',
-        company: 'Innovation Labs',
-        period: '2023 - Present',
-        description: 'Developed and maintained multiple web applications. Reduced server response time by 60% through optimization and caching strategies.',
-        technologies: ['React', 'React Native', 'FastAPI', 'PostgreSQL', 'TailwindCSS', 'Styled-components']
+        company: 'Kab',
+        period: 'January 2025 - Present',
+        description: 'Design and maintain data-driven full-stack applications, integrating Python-based ETL pipelines for efficient data processing. Develop responsive dashboards using Next.js, enabling real-time data insights.',
+        technologies: ['Python', 'Next.js', 'ETL Pipelines', 'Data Processing', 'Dashboard Development', 'Real-time Analytics']
     },
     {
-        title: 'Founder & Lead Developer',
-        company: 'Personal Startup Projects',
-        period: '2025 - Present',
-        description: 'Initiated and developed multiple startup projects, focusing on innovative web applications. Led the entire development lifecycle from concept to deployment.',
-        technologies: ['React', 'Django', 'FastAPI', 'PostgreSQL', 'Docker', 'Authkit', 'Supabase']
+        title: 'Academic Intern',
+        company: 'Benha University',
+        period: 'June 2024 - July 2024',
+        description: 'Built Python-based data applications with database integration, focusing on data aggregation and processing. Led ChitChat project team, developing data-driven chat applications with socket programming and MVC architecture.',
+        technologies: ['Python', 'Database Integration', 'Data Aggregation', 'Socket Programming', 'MVC Architecture', 'Team Leadership']
+    },
+    {
+        title: 'DEPI Program Participant',
+        company: 'Government Data Engineering Track',
+        period: 'June 2025 - Present',
+        description: 'Advanced Python programming with focus on data engineering methodologies and pipeline construction. Database design, management, and optimization for large-scale data processing applications.',
+        technologies: ['Python', 'Data Engineering', 'ETL Processes', 'Database Design', 'Pipeline Construction', 'Data Optimization']
+    },
+    {
+        title: 'Open Source Contributor',
+        company: 'Multiple Organizations',
+        period: '2023 - Present',
+        description: 'Published 5+ PyPI packages enhancing data engineering workflows. Contributed to JsonAlchemy, T2FLabs, Tealim, and truefamily organizations with tools for dataset generation and processing.',
+        technologies: ['Python', 'PyPI Publishing', 'Data Engineering Tools', 'Dataset Generation', 'Open Source Development']
     }
 ]; // Route configurations
 export const ROUTES = {
@@ -95,8 +96,8 @@ export const ROUTES = {
     },
     PROJECTS: {
         path: '/projects',
-        title: `Projects | ${USER_CONFIG.personal.fullName}`,
-        description: `Explore my portfolio of web development projects, featuring ${USER_CONFIG.skills.primary.slice(0, 3).join(', ')} and other modern technologies.`,
+        title: `Data Engineering Projects | ${USER_CONFIG.personal.fullName}`,
+        description: `Explore my portfolio of data engineering projects, featuring ${USER_CONFIG.skills.primary.slice(0, 3).join(', ')} and other cutting-edge technologies.`,
         Component: lazy(() => import('../pages/Projects.jsx')),
     },
     NOT_FOUND: {

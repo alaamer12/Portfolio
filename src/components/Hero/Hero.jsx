@@ -215,7 +215,7 @@ const HeroText = memo(({ textAnimation }) => {
                 {USER_CONFIG.personal.jobTitle}
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto lg:mx-0">
-                Crafting scalable solutions with modern technologies and clean architecture
+                Building scalable data pipelines and ML solutions with cutting-edge technologies
             </p>
         </motion.div>
     );

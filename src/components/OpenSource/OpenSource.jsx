@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FaGithub, FaPython } from 'react-icons/fa';
 import { OptimizedBlock } from '../OptimizedMillion';
 import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
-import { getProjectsByCategory, PROJECT_CATEGORIES } from '../../data/projects';
+import { getProjectsByCategory, PROJECT_CATEGORIES } from '../../data/config.jsx';
 
 const PackageIcon = memo(({ Icon, className }) => (
     <Icon className={`text-accent text-xl md:text-2xl mr-2 ${className}`} />
@@ -80,7 +80,7 @@ const OpenSourceHeader = memo(({ settings }) => (
             Open Source Contributions
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-sm md:text-base max-w-2xl mx-auto">
-            Discover my published Python packages and libraries that contribute to the open-source ecosystem, helping developers build better applications.
+            Discover my published Python packages and libraries that enhance data engineering workflows, providing tools for dataset generation, data processing, and analytics applications.
         </p>
     </motion.div>
 ));

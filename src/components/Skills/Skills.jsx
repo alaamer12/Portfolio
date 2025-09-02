@@ -1,6 +1,6 @@
 import {memo, useState, useEffect} from 'react';
 import {motion} from 'framer-motion';
-import {SiDjango, SiFastapi, SiPostgresql, SiPython, SiReact, SiTailwindcss} from 'react-icons/si';
+import {SiPython, SiPandas, SiNumpy, SiTensorflow, SiPytorch, SiMongodb, SiStreamlit, SiPlotly, SiJupyter} from 'react-icons/si';
 import {OptimizedBlock} from '../OptimizedMillion';
 import {useDeviceDetect} from '../../hooks/useDeviceDetect';
 
@@ -92,46 +92,46 @@ const SkillChip = ({skill, url}) => (
 
 const skillsData = [
     {
-        title: "Backend Development",
-        description: "Specialized in Python-based backend solutions with FastAPI and Django"
+        title: "Data Engineering",
+        description: "Expert in building scalable ETL/ELT pipelines with Python, Pandas, and NumPy for large-scale data processing"
     },
     {
-        title: "Open Source",
-        description: "Creator of multiple PyPI packages including true-core ecosystem"
+        title: "Machine Learning",
+        description: "Specialized in ML model development and deployment using PyTorch, TensorFlow, and scikit-learn"
     },
     {
-        title: "Leadership",
-        description: "CEO of Tealim and Snippet, leading technical teams and projects"
+        title: "Data Visualization",
+        description: "Creating interactive dashboards and rich-terminal visualizations with Plotly, Chart.js, and Streamlit"
     }
 ];
 
 const mainSkills = [
     {Icon: SiPython, name: 'Python', url: 'https://www.python.org/'},
-    {Icon: SiReact, name: 'React', url: 'https://reactjs.org/'},
-    {Icon: SiTailwindcss, name: 'TailwindCSS', url: 'https://tailwindcss.com/'},
-    {Icon: SiDjango, name: 'Django', url: 'https://www.djangoproject.com/'},
-    {Icon: SiPostgresql, name: 'PostgreSQL', url: 'https://www.postgresql.org/'},
-    {Icon: SiFastapi, name: 'FastAPI', url: 'https://fastapi.tiangolo.com/'},
+    {Icon: SiPandas, name: 'Pandas', url: 'https://pandas.pydata.org/'},
+    {Icon: SiNumpy, name: 'NumPy', url: 'https://numpy.org/'},
+    {Icon: SiTensorflow, name: 'TensorFlow', url: 'https://www.tensorflow.org/'},
+    {Icon: SiStreamlit, name: 'Streamlit', url: 'https://streamlit.io/'},
+    {Icon: SiJupyter, name: 'Jupyter', url: 'https://jupyter.org/'},
 ];
 
 const otherSkills = [
-    {name: 'JavaScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript'},
-    {name: 'TypeScript', url: 'https://www.typescriptlang.org/'},
-    {name: 'Node.js', url: 'https://nodejs.org/'},
+    {name: 'PyTorch', url: 'https://pytorch.org/'},
+    {name: 'scikit-learn', url: 'https://scikit-learn.org/'},
+    {name: 'Plotly', url: 'https://plotly.com/'},
+    {name: 'Chart.js', url: 'https://www.chartjs.org/'},
     {name: 'MongoDB', url: 'https://www.mongodb.com/'},
-    {name: 'MySQL', url: 'https://www.mysql.com/'},
+    {name: 'Supabase', url: 'https://supabase.com/'},
+    {name: 'PostgreSQL', url: 'https://www.postgresql.org/'},
+    {name: 'Redis', url: 'https://redis.io/'},
+    {name: 'Docker', url: 'https://www.docker.com/'},
     {name: 'Git', url: 'https://git-scm.com/'},
     {name: 'REST APIs', url: 'https://restfulapi.net/'},
-    {name: 'TailwindCSS', url: 'https://tailwindcss.com/'},
-    {name: 'Bootstrap', url: 'https://getbootstrap.com/'},
-    {name: 'Docker', url: 'https://www.docker.com/'},
-    {name: 'Nginx', url: 'https://nginx.org/'},
-    {name: 'Yarn', url: 'https://yarnpkg.com/'},
-    {name: 'NPM', url: 'https://www.npmjs.com/'},
-    {name: 'Vite', url: 'https://vitejs.dev/'},
-    {name: 'Next.js', url: 'https://nextjs.org/'},
-    {name: 'System Architecture', url: 'https://en.wikipedia.org/wiki/Architecture_(computing)'},
-    {name: 'System Design', url: 'https://en.wikipedia.org/wiki/System_design'},
+    {name: 'Web Scraping', url: 'https://en.wikipedia.org/wiki/Web_scraping'},
+    {name: 'ETL Pipelines', url: 'https://en.wikipedia.org/wiki/Extract,_transform,_load'},
+    {name: 'Data Warehousing', url: 'https://en.wikipedia.org/wiki/Data_warehouse'},
+    {name: 'Statistical Analysis', url: 'https://en.wikipedia.org/wiki/Statistics'},
+    {name: 'Data Mining', url: 'https://en.wikipedia.org/wiki/Data_mining'},
+    {name: 'Big Data', url: 'https://en.wikipedia.org/wiki/Big_data'},
 ];
 
 const Skills = () => {

@@ -283,7 +283,7 @@ const HeaderDescription = memo(({ settings }) => (
             damping: settings.isMobile ? 15 : 10
         }}
     >
-        Explore my portfolio of innovative web applications, showcasing expertise in full-stack development, API design, and modern technologies.
+        Explore my portfolio of data engineering projects, showcasing expertise in ETL pipelines, machine learning, data visualization, and scalable data processing systems.
     </motion.p>
 ));
 

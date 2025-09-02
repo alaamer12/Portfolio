@@ -24,11 +24,11 @@ import {
 const getBadgeIcon = (badgeId) => {
     switch (badgeId) {
         case PROJECT_BADGES.HOT.id:
-            return <FaFire className="mr-1"/>;
+            return <FaFire className="mr-1" />;
         case PROJECT_BADGES.NEW.id:
-            return <IoSparkles className="mr-1"/>;
+            return <IoSparkles className="mr-1" />;
         case PROJECT_BADGES.COMING_SOON.id:
-            return <BsClock className="mr-1"/>;
+            return <BsClock className="mr-1" />;
         default:
             return null;
     }
@@ -145,7 +145,7 @@ const DisabledButton = memo(({ className, children }) => (
 const ProjectLinks = memo(({ project, settings }) => {
     const { github, demo, pypi } = project;
     const isActive = project.badge === PROJECT_BADGES.HOT.id || project.badge === PROJECT_BADGES.NEW.id;
-    
+
     return (
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
             {isActive ? (
@@ -201,10 +201,10 @@ const ProjectScreenshot = memo(({ screenshots, title, onImageClick }) => {
         console.log('No screenshots found for:', title);
         return null;
     }
-    
+
     return (
         <div className="mb-4 relative group">
-            <div 
+            <div
                 className="relative cursor-pointer overflow-hidden rounded-lg"
                 onClick={() => onImageClick(0)}
             >
@@ -218,14 +218,14 @@ const ProjectScreenshot = memo(({ screenshots, title, onImageClick }) => {
                     }}
                     onLoad={() => console.log('Image loaded successfully:', screenshots[0])}
                 />
-                
+
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
                         <FaExpand className="w-5 h-5 text-gray-800 dark:text-white" />
                     </div>
                 </div>
-                
+
                 {/* Multiple images indicator */}
                 {screenshots.length > 1 && (
                     <div className="absolute top-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
@@ -253,8 +253,8 @@ const ProjectCard = ({ project, settings, onImageClick }) => {
             <ProjectBanner banner={project.banner} />
             <div className="relative z-10">
                 <ProjectHeader icon={project.icon} title={project.title} />
-                <ProjectScreenshot 
-                    screenshots={project.screenshots} 
+                <ProjectScreenshot
+                    screenshots={project.screenshots}
                     title={project.title}
                     onImageClick={(index) => onImageClick(project, index)}
                 />
@@ -312,10 +312,10 @@ const ProjectsHeader = memo(({ settings }) => (
             }}
         >
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                All Projects
+                My Projects Portfolio
             </h1>
             <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">
-                Explore my complete portfolio of projects across different categories, from business applications to open-source contributions.
+                Explore my complete portfolio spanning data engineering, machine learning, web development, game development, and developer tools. From ETL pipelines to interactive applications.
             </p>
         </motion.div>
     </OptimizedBlock>
@@ -396,9 +396,9 @@ const Projects = () => {
                 useTransform: settings.useTransform,
             }}
         >
-            <ProjectCard 
-                project={project} 
-                settings={settings} 
+            <ProjectCard
+                project={project}
+                settings={settings}
                 onImageClick={handleImageClick}
             />
         </motion.div>
@@ -456,7 +456,7 @@ const Projects = () => {
                     <GitHubLink settings={settings} />
                 </div>
             </div>
-            
+
             {/* Image Modal */}
             <ImageModal
                 isOpen={modalState.isOpen}
@@ -471,11 +471,11 @@ const Projects = () => {
 
 const ProjectsSEO = () => (
     <SEO
-        title="Projects | Amr Muhamed - Full Stack Developer"
-        description="Explore my portfolio of web development projects, including full-stack applications, APIs, and open-source contributions."
+        title="Projects | Amr Muhamed - Data Engineer & Full-Stack Developer"
+        description="Explore my comprehensive portfolio including data engineering projects, machine learning models, web applications, games, and developer tools. From ETL pipelines to interactive experiences."
         type="website"
         image="/projects-og.png"
-        keywords="web development projects, full stack projects, react projects, django projects, fastapi projects, python projects, javascript projects, github repositories, software engineering, portfolio projects"
+        keywords="data engineering projects, machine learning projects, web development, game development, developer tools, etl pipeline projects, react applications, python projects, full-stack development, portfolio projects"
         language="en"
         schema={getProjectsPageSchema()}
     />
