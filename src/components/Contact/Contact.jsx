@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { OptimizedBlock } from "../OptimizedMillion";
 import { USER_CONFIG } from "../../data/user.js";
+import Checkpoint from "../Checkpoint/Checkpoint.jsx";
 import { sendContactEmail } from "../../services/emailService.js";
 import { showSuccessToast, showErrorToast, showLoadingToast, dismissToast } from "../../utils/toast.js";
 
@@ -43,6 +44,9 @@ const ContactForm = memo(() => {
             const mailtoLink = `mailto:${USER_CONFIG.contact.email}?subject=${subject}&body=${body}`;
             window.location.href = mailtoLink;
 
+            // Dispatch custom event for checkpoint tracking (assuming mailto success)
+            window.dispatchEvent(new CustomEvent('messageSent'));
+
             // Show success toast for mailto
             showSuccessToast('Opening your email client. Please send the message from your email app.');
         } catch (error) {
@@ -67,6 +71,9 @@ const ContactForm = memo(() => {
             if (emailResult.success) {
                 setSubmitStatus('success');
                 setFormData({ name: '', email: '', message: '' });
+                
+                // Dispatch custom event for checkpoint tracking
+                window.dispatchEvent(new CustomEvent('messageSent'));
                 
                 // Dismiss loading toast and show success
                 dismissToast(loadingToastId);
@@ -233,6 +240,10 @@ const DownloadCVButton = memo(() => {
 
     const handleClick = useCallback(() => {
         setIsLoading(true);
+        
+        // Dispatch custom event for checkpoint tracking
+        window.dispatchEvent(new CustomEvent('cvDownloaded'));
+        
         setTimeout(() => {
             setIsLoading(false);
         }, 1500);
@@ -374,6 +385,13 @@ const Contact = () => {
                         </div>
                     </OptimizedBlock>
                 </div>
+
+                {/* Checkpoint Component - Below Contact Form */}
+                <OptimizedBlock className="mt-16">
+                    <div className="flex justify-center">
+                        <Checkpoint />
+                    </div>
+                </OptimizedBlock>
             </div>
         </section>
     );

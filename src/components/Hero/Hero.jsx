@@ -107,6 +107,10 @@ const ResumeDownloadButton = memo(() => {
     
     const handleClick = useCallback(() => {
         setIsLoading(true);
+        
+        // Dispatch custom event for checkpoint tracking
+        window.dispatchEvent(new CustomEvent('cvDownloaded'));
+        
         setTimeout(() => {
             setIsLoading(false);
         }, 1500);
