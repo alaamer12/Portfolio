@@ -112,12 +112,12 @@ const DesktopNav = ({isDark, toggleTheme}) => {
             ) : (
                 <NavLink to="/#about">About</NavLink>
             )}
-            <NavLink to="/projects">Projects</NavLink>
-            {isHomePage ? (
+              {isHomePage ? (
                 <NavLink to="contact" isScroll={true}>Contact</NavLink>
             ) : (
                 <NavLink to="/#contact">Contact</NavLink>
             )}
+            <NavLink to="/projects">Projects Hub ⬈</NavLink>
             <ThemeToggle isDark={isDark} toggleTheme={toggleTheme}/>
         </div>
     );

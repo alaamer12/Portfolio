@@ -44,6 +44,11 @@ export const USER_CONFIG = {
             username: 'al-aamer-0b0709265',
             display: true
         },
+        PyPi: {
+            url: 'https://pypi.org/user/alaamer12/',
+            username: 'alaamer12',
+            display: false
+        },
         twitter: {
             url: '',
             username: '',
@@ -118,8 +123,8 @@ export const USER_CONFIG = {
     // Statistics (for Hero section)
     stats: {
         githubRepos: {
-            count: '55+',
-            label: 'Data Projects',
+            count: '60+',
+            label: 'Projects',
             color: 'text-gray-800 dark:text-white',
             hoverColor: 'text-primary dark:text-primary-light'
         },
