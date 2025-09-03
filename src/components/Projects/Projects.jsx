@@ -1,4 +1,4 @@
-import {memo, useMemo, useState} from 'react';
+import {memo, useMemo, useState, useEffect} from 'react';
 import {motion} from 'framer-motion';
 import {FaExternalLinkAlt, FaGithub, FaImages} from 'react-icons/fa';
 import {useTheme} from '../../context/ThemeContext';
@@ -6,6 +6,7 @@ import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
 import {OptimizedBlock} from '../OptimizedMillion';
 import {getFeaturedProjectsData} from '../../data/projects';
 import ImageModal from '../ImageModal/ImageModal.jsx';
+import useScreenshots from '../../hooks/useScreenshots';
 
 const ProjectLinks = memo(({github, demo, screenshots, onScreenshotsClick}) => {
     const {settings} = useOptimizedAnimation();
@@ -344,7 +345,8 @@ const ViewAllProjectsButton = memo(() => {
 ViewAllProjectsButton.displayName = 'ViewAllProjectsButton';
 
 const Projects = memo(() => {
-    const projects = useMemo(() => getFeaturedProjectsData(), []);
+    const { screenshotsLoaded } = useScreenshots();
+    const projects = useMemo(() => getFeaturedProjectsData(), [screenshotsLoaded]);
 
     return (
         <section className="py-32 md:py-48" id="projects">
