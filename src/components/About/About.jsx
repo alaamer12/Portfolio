@@ -376,6 +376,11 @@ const additionalSkills = [
     {name: 'Redis', url: 'https://redis.io/'},
     {name: 'SQLite', url: 'https://www.sqlite.org/'},
 
+    // Languages
+    { name: 'Python', url: 'https://www.python.org/' },
+    { name: 'JavaScript/TypeScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+    { name: 'Rust', url: 'https://www.rust-lang.org/' },
+
     // Web Technologies
     {name: 'React Three Fiber', url: 'https://docs.pmnd.rs/react-three-fiber'},
     {name: 'Three.js', url: 'https://threejs.org/'},
@@ -387,7 +392,6 @@ const additionalSkills = [
     {name: 'FastAPI', url: 'https://fastapi.tiangolo.com/'},
 
     // Systems & Performance
-    {name: 'OpenGL', url: 'https://www.opengl.org/'},
     {name: 'WebAssembly', url: 'https://webassembly.org/'},
     {name: 'Docker', url: 'https://www.docker.com/'},
     {name: 'Nginx', url: 'https://nginx.org/'},
@@ -584,7 +588,7 @@ const About = () => {
                 <AboutSkillsSection/>
                 <ExperienceSection/>
                 <TrainingSection/>
-                <EducationSection/>
+                {/* <EducationSection/> */}
             </div>
         </section>
     );
