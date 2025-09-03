@@ -2180,7 +2180,24 @@ export const sortProjectsByBadge = (projects) => {
         if (aHasScreenshots && !bHasScreenshots) return -1;
         if (!aHasScreenshots && bHasScreenshots) return 1;
         
-        // If both have or don't have screenshots, maintain original order
+        // If screenshots are equal, count total available links
+        const aLinkCount = [a.links?.github, a.links?.demo, a.links?.pypi].filter(Boolean).length;
+        const bLinkCount = [b.links?.github, b.links?.demo, b.links?.pypi].filter(Boolean).length;
+        
+        // Projects with more links get higher priority
+        if (aLinkCount !== bLinkCount) {
+            return bLinkCount - aLinkCount; // Descending order (more links first)
+        }
+        
+        // If everything else is equal, check for organization (as tiebreaker)
+        const aHasOrganization = Boolean(a.organization);
+        const bHasOrganization = Boolean(b.organization);
+        
+        // Projects with organization get slight priority as final tiebreaker
+        if (aHasOrganization && !bHasOrganization) return -1;
+        if (!aHasOrganization && bHasOrganization) return 1;
+        
+        // If all criteria are equal, maintain original order
         return 0;
     });
 };
