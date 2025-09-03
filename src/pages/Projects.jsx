@@ -147,7 +147,7 @@ const DisabledButton = memo(({className, children}) => (
 
 const ProjectLinks = memo(({project, settings}) => {
     const {github, demo, pypi} = project;
-    const isActive = project.badge === PROJECT_BADGES.HOT.id || project.badge === PROJECT_BADGES.NEW.id;
+    const isActive = project.available;
 
     return (
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
