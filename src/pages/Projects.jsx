@@ -1,4 +1,4 @@
-import {memo, useMemo, useState} from "react";
+import {memo, useMemo, useState, useEffect} from "react";
 import {motion} from "framer-motion";
 import {FaExpand, FaFire, FaGithub, FaPython} from "react-icons/fa";
 import {IoSparkles} from "react-icons/io5";
@@ -19,6 +19,7 @@ import {
     PROJECT_BADGES,
     sortProjectsByBadge
 } from "../data/config.jsx";
+import {initializeScreenshots} from "../data/projects.js";
 import OrganizationBadge from "../components/OrganizationBadge/OrganizationBadge.jsx";
 
 const getBadgeIcon = (badgeId) => {
@@ -374,6 +375,20 @@ const Projects = () => {
         initialIndex: 0,
         title: ''
     });
+    const [screenshotsLoaded, setScreenshotsLoaded] = useState(false);
+
+    // Initialize screenshots asynchronously without blocking UI
+    useEffect(() => {
+        // Load screenshots in background without blocking render
+        initializeScreenshots()
+            .then(() => {
+                setScreenshotsLoaded(true);
+            })
+            .catch((error) => {
+                console.error('Failed to initialize screenshots:', error);
+                setScreenshotsLoaded(true); // Continue anyway
+            });
+    }, []);
 
     const handleImageClick = (project, index) => {
         if (project.screenshots && project.screenshots.length > 0) {
@@ -412,6 +427,7 @@ const Projects = () => {
 
     // Get all projects organized by categories dynamically
     const projectsData = useMemo(() => {
+        // Always load projects immediately, screenshots will update when ready
         const categorizedData = getProjectsDataByCategories(baseUrl, isDark);
 
         // Sort projects within each category by badge priority
@@ -421,7 +437,7 @@ const Projects = () => {
         });
 
         return sortedData;
-    }, [baseUrl, isDark]);
+    }, [baseUrl, isDark, screenshotsLoaded]); // Re-compute when screenshots load
 
     // Generate project sections dynamically from all categories
     const projectSections = useMemo(() => {

@@ -3,21 +3,74 @@
  * This file contains all project data and configurations
  */
 
-// Screenshots manifest loader (browser-compatible)
+// Screenshots manifest loader with caching
 let screenshotsManifest = null;
 let screenshotsLoaded = false;
+const CACHE_KEY = 'portfolio_screenshots_manifest';
+const CACHE_VERSION_KEY = 'portfolio_screenshots_version';
+const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
 
 /**
- * Load screenshots manifest from the generated JSON file
+ * Get cached manifest from localStorage
+ */
+function getCachedManifest() {
+    try {
+        const cached = localStorage.getItem(CACHE_KEY);
+        const version = localStorage.getItem(CACHE_VERSION_KEY);
+        
+        if (cached && version) {
+            const cacheData = JSON.parse(cached);
+            const versionData = JSON.parse(version);
+            
+            // Check if cache is still valid
+            if (Date.now() - versionData.timestamp < CACHE_DURATION) {
+                console.log('📦 Using cached screenshots manifest');
+                return cacheData;
+            }
+        }
+    } catch (error) {
+        console.warn('⚠️  Error reading cache:', error.message);
+    }
+    return null;
+}
+
+/**
+ * Cache manifest to localStorage
+ */
+function cacheManifest(manifest) {
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(manifest));
+        localStorage.setItem(CACHE_VERSION_KEY, JSON.stringify({
+            timestamp: Date.now(),
+            version: '1.0'
+        }));
+        console.log('💾 Screenshots manifest cached successfully');
+    } catch (error) {
+        console.warn('⚠️  Error caching manifest:', error.message);
+    }
+}
+
+/**
+ * Load screenshots manifest from cache or fetch from server
  */
 async function loadScreenshotsManifest() {
     if (screenshotsLoaded) return screenshotsManifest;
 
+    // Try cache first
+    const cachedManifest = getCachedManifest();
+    if (cachedManifest) {
+        screenshotsManifest = cachedManifest;
+        screenshotsLoaded = true;
+        return screenshotsManifest;
+    }
+
+    // Fetch from server if not cached
     try {
         const response = await fetch('/screenshots-manifest.json');
         if (response.ok) {
             screenshotsManifest = await response.json();
-            console.log(`📸 Screenshots manifest loaded successfully with ${Object.keys(screenshotsManifest).length} projects`);
+            cacheManifest(screenshotsManifest); // Cache the result
+            console.log(`📸 Screenshots manifest loaded and cached with ${Object.keys(screenshotsManifest).length} projects`);
         } else {
             console.log('📁 No screenshots manifest found, using empty screenshots');
             screenshotsManifest = {};
