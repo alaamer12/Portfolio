@@ -2159,9 +2159,25 @@ export const getAllProjects = () => {
 
 export const sortProjectsByBadge = (projects) => {
     return [...projects].sort((a, b) => {
+        // Get badge priorities
         const aPriority = PROJECT_BADGES[a.badge?.toUpperCase()] || PROJECT_BADGES.NONE;
         const bPriority = PROJECT_BADGES[b.badge?.toUpperCase()] || PROJECT_BADGES.NONE;
-        return aPriority.priority - bPriority.priority;
+        
+        // If badges are different, sort by badge priority
+        if (aPriority.priority !== bPriority.priority) {
+            return aPriority.priority - bPriority.priority;
+        }
+        
+        // If badges are the same, check for screenshots
+        const aHasScreenshots = a.images?.screenshots?.length > 0;
+        const bHasScreenshots = b.images?.screenshots?.length > 0;
+        
+        // Projects with screenshots get higher priority
+        if (aHasScreenshots && !bHasScreenshots) return -1;
+        if (!aHasScreenshots && bHasScreenshots) return 1;
+        
+        // If both have or don't have screenshots, maintain original order
+        return 0;
     });
 };
 
