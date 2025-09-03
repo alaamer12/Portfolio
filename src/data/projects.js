@@ -3,7 +3,79 @@
  * This file contains all project data and configurations
  */
 
-// Project categories configuration
+// Screenshots manifest loader (browser-compatible)
+let screenshotsManifest = null;
+let screenshotsLoaded = false;
+
+/**
+ * Load screenshots manifest from the generated JSON file
+ */
+async function loadScreenshotsManifest() {
+    if (screenshotsLoaded) return screenshotsManifest;
+    
+    try {
+        const response = await fetch('/screenshots-manifest.json');
+        if (response.ok) {
+            screenshotsManifest = await response.json();
+            console.log(`📸 Screenshots manifest loaded successfully with ${Object.keys(screenshotsManifest).length} projects`);
+        } else {
+            console.log('📁 No screenshots manifest found, using empty screenshots');
+            screenshotsManifest = {};
+        }
+    } catch (error) {
+        console.warn('⚠️  Could not load screenshots manifest:', error.message);
+        screenshotsManifest = {};
+    }
+    
+    screenshotsLoaded = true;
+    return screenshotsManifest;
+}
+
+/**
+ * Apply screenshots from manifest to projects data
+ */
+function applyScreenshotsToProjects(manifest) {
+    if (!manifest) return;
+    
+    let totalApplied = 0;
+    
+    Object.keys(PROJECTS_DATA).forEach(projectId => {
+        if (manifest[projectId] && manifest[projectId].length > 0) {
+            PROJECTS_DATA[projectId].images.screenshots = manifest[projectId];
+            totalApplied += manifest[projectId].length;
+            console.log(`✅ Applied ${manifest[projectId].length} screenshots to project: ${projectId}`);
+        }
+    });
+    
+    if (totalApplied > 0) {
+        console.log(`🎉 Successfully applied ${totalApplied} screenshots to projects`);
+    }
+}
+
+/**
+ * Initialize screenshots (call this when you need the screenshots)
+ */
+export async function initializeScreenshots() {
+    const manifest = await loadScreenshotsManifest();
+    applyScreenshotsToProjects(manifest);
+    return PROJECTS_DATA;
+}
+
+/**
+ * Get screenshots for a specific project
+ */
+export function getProjectScreenshots(projectId) {
+    const project = PROJECTS_DATA[projectId];
+    return project?.images?.screenshots || [];
+}
+
+/**
+ * Check if screenshots are loaded
+ */
+export function areScreenshotsLoaded() {
+    return screenshotsLoaded;
+}
+
 // Project categories configuration
 export const PROJECT_CATEGORIES = {
     DATA_ENGINEERING: {
@@ -1346,7 +1418,7 @@ export const PROJECTS_DATA = {
             "JSON"
         ],
         "links": {
-            "github": "https://github.com/alaamer12/jsdfile",
+            "github": "https://github.com/JsonAlchemy/jsdfile",
             "demo": null,
             "pypi": "https://pypi.org/project/jsdfile"
         },
@@ -1935,7 +2007,7 @@ export const PROJECTS_DATA = {
             "Data Utilities"
         ],
         "links": {
-            "github": "https://github.com/alaamer12/true_core",
+            "github": "https://github.com/TrueFam/true_core",
             "demo": null,
             "pypi": "https://pypi.org/project/true-core"
         },
@@ -1974,7 +2046,7 @@ export const PROJECTS_DATA = {
             "Monitoring"
         ],
         "links": {
-            "github": "https://github.com/alaamer12/true-logging",
+            "github": "https://github.com/TrueFam/true-logging",
             "demo": null,
             "pypi": "https://pypi.org/project/true-logging"
         },
@@ -2015,7 +2087,7 @@ export const PROJECTS_DATA = {
             "Data Migration"
         ],
         "links": {
-            "github": "https://github.com/alaamer12/true_storage",
+            "github": "https://github.com/TrueFam/true_storage",
             "demo": null,
             "pypi": "https://pypi.org/project/true-storage"
         },

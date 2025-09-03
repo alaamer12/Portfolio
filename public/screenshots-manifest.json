@@ -1,0 +1,76 @@
+{
+  "artspace": [
+    "/images/screens/artspace/screen1 (1).png",
+    "/images/screens/artspace/screen1 (2).png",
+    "/images/screens/artspace/screen1 (3).png"
+  ],
+  "c4f": [
+    "/images/screens/c4f/screen1 (1).gif",
+    "/images/screens/c4f/screen1 (2).gif",
+    "/images/screens/c4f/screen1 (3).gif"
+  ],
+  "codelyzer": [
+    "/images/screens/codelyzer/screens1 (1).PNG",
+    "/images/screens/codelyzer/screens1 (2).PNG",
+    "/images/screens/codelyzer/screens1 (3).PNG",
+    "/images/screens/codelyzer/screens1 (4).PNG"
+  ],
+  "colab_print": [
+    "/images/screens/colab_print/screen1 (1).PNG",
+    "/images/screens/colab_print/screen1 (2).PNG"
+  ],
+  "easytypeface": [
+    "/images/screens/easytypeface/screen1.PNG"
+  ],
+  "ghrepolens": [
+    "/images/screens/ghrepolens/screen1 (1).PNG",
+    "/images/screens/ghrepolens/screen1 (10).png",
+    "/images/screens/ghrepolens/screen1 (11).png",
+    "/images/screens/ghrepolens/screen1 (12).png",
+    "/images/screens/ghrepolens/screen1 (13).png",
+    "/images/screens/ghrepolens/screen1 (14).png",
+    "/images/screens/ghrepolens/screen1 (15).png",
+    "/images/screens/ghrepolens/screen1 (2).PNG",
+    "/images/screens/ghrepolens/screen1 (3).PNG",
+    "/images/screens/ghrepolens/screen1 (4).png",
+    "/images/screens/ghrepolens/screen1 (5).png",
+    "/images/screens/ghrepolens/screen1 (6).png",
+    "/images/screens/ghrepolens/screen1 (7).png",
+    "/images/screens/ghrepolens/screen1 (8).png",
+    "/images/screens/ghrepolens/screen1 (9).png"
+  ],
+  "improcess": [
+    "/images/screens/improcess/1.PNG",
+    "/images/screens/improcess/2.PNG",
+    "/images/screens/improcess/3.PNG"
+  ],
+  "jsdfile": [
+    "/images/screens/jsdfile/execution_times.png",
+    "/images/screens/jsdfile/file_size_comparison.png",
+    "/images/screens/jsdfile/memory_heatmap.png",
+    "/images/screens/jsdfile/memory_usage.png",
+    "/images/screens/jsdfile/performance_ratios.png",
+    "/images/screens/jsdfile/radar_chart_100.png",
+    "/images/screens/jsdfile/radar_chart_1000.png",
+    "/images/screens/jsdfile/radar_chart_10000.png",
+    "/images/screens/jsdfile/radar_chart_100000.png",
+    "/images/screens/jsdfile/time_heatmap.png"
+  ],
+  "meddata": [
+    "/images/screens/meddata/1.PNG",
+    "/images/screens/meddata/2.PNG",
+    "/images/screens/meddata/3.PNG",
+    "/images/screens/meddata/4.PNG"
+  ],
+  "notashare": [
+    "/images/screens/notashare/1.PNG"
+  ],
+  "optimizedgallery": [
+    "/images/screens/optimizedgallery/Capture.PNG"
+  ],
+  "teamup": [
+    "/images/screens/teamup/1.PNG",
+    "/images/screens/teamup/2.PNG",
+    "/images/screens/teamup/3.PNG"
+  ]
+}
