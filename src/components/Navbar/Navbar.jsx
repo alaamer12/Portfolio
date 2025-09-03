@@ -107,13 +107,17 @@ const DesktopNav = ({isDark, toggleTheme}) => {
     return (
         <div className="hidden select-none md:flex items-center space-x-2">
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/projects">Projects</NavLink>
             {isHomePage ? (
                 <NavLink to="about" isScroll={true}>About</NavLink>
             ) : (
-                <NavLink to="/about">About</NavLink>
+                <NavLink to="/#about">About</NavLink>
             )}
-            <NavLink to="contact" isScroll={true}>Contact</NavLink>
+            <NavLink to="/projects">Projects</NavLink>
+            {isHomePage ? (
+                <NavLink to="contact" isScroll={true}>Contact</NavLink>
+            ) : (
+                <NavLink to="/#contact">Contact</NavLink>
+            )}
             <ThemeToggle isDark={isDark} toggleTheme={toggleTheme}/>
         </div>
     );
