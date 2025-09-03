@@ -151,11 +151,11 @@ export const ORGANIZATIONS = {
         url: 'https://github.com/truefam',
         color: '#DC2626'
     },
-    SYMPHONY_AI: {
-        id: 'symphony_ai',
-        name: 'Symphony-ai',
-        displayName: 'Symphony AI',
-        url: 'https://github.com/Symphony-ai',
+    SYMPHONY_AIDE: {
+        id: 'SYMPHONY_AIDE',
+        name: 'Symphony-aide',
+        displayName: 'Symphony AIDE',
+        url: 'https://github.com/Symphony-aide',
         color: '#7C3AED'
     }
 };
@@ -256,7 +256,7 @@ export const PROJECTS_DATA = {
             "banner": "/3d-studio-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NEW.id,
+        "badge": PROJECT_BADGES.NONE.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -290,7 +290,7 @@ export const PROJECTS_DATA = {
             "banner": "/artspace-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.HOT.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -614,7 +614,7 @@ export const PROJECTS_DATA = {
             "screenshots": []
         },
         "badge": PROJECT_BADGES.PRIVATE.id,
-        "available": false,
+        "available": true,
         "featured": false,
         "details": [],
         "delay": 0.2
@@ -742,8 +742,8 @@ export const PROJECTS_DATA = {
             "banner": "/dev-curator-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.PRIVATE.id,
-        "available": false,
+        "badge": PROJECT_BADGES.NONE.id,
+        "available": true,
         "featured": false,
         "details": [],
         "delay": 0.2
@@ -791,8 +791,8 @@ export const PROJECTS_DATA = {
     "docxify": {
         "id": "docxify",
         "title": "Docxify",
-        "description": "Failed to fetch (404/Private)",
-        "longDescription": "Failed to fetch (404/Private)",
+        "description": "Docxify is a powerful tool that seamlessly converts Markdown (.md) files into clean, well-formatted Word (.docx) documents.",
+        "longDescription": "Docxify is a powerful tool that seamlessly converts Markdown (.md) files into clean, well-formatted Word (.docx) documents. It provides a simple and intuitive interface for users to convert their Markdown files into fast still looking good Word documents with just a few commands.",
         "category": PROJECT_CATEGORIES.DEVELOPER_TOOLS.id,
         "organization": ORGANIZATIONS.T2F_LABS.id,
         "tags": [
@@ -805,7 +805,7 @@ export const PROJECTS_DATA = {
             "N/A"
         ],
         "links": {
-            "github": "https://github.com/alaamer12/Docxify",
+            "github": "https://github.com/T2F-Labs/Docxify",
             "demo": null,
             "pypi": null
         },
@@ -814,8 +814,8 @@ export const PROJECTS_DATA = {
             "banner": "/docxify-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.PRIVATE.id,
-        "available": false,
+        "badge": PROJECT_BADGES.NEW.id,
+        "available": true,
         "featured": false,
         "details": [],
         "delay": 0.2
@@ -879,7 +879,7 @@ export const PROJECTS_DATA = {
             "banner": "/easy-typeface-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.NEW.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -947,7 +947,7 @@ export const PROJECTS_DATA = {
             "banner": "/fastapiex-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.COMING_SOON.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -1198,8 +1198,8 @@ export const PROJECTS_DATA = {
             "banner": "/gigamon-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
-        "available": true,
+        "badge": PROJECT_BADGES.PRIVATE.id,
+        "available": false,
         "featured": false,
         "details": [],
         "delay": 0.2
@@ -1362,7 +1362,7 @@ export const PROJECTS_DATA = {
             "banner": "/isnippet-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.COMING_SOON.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -1493,7 +1493,7 @@ export const PROJECTS_DATA = {
             "Document Processing"
         ],
         "links": {
-            "github": "https://github.com/alaamer12/LaGen",
+            "github": "https://github.com/T2F-Labs/LaGen",
             "demo": null,
             "pypi": null
         },
@@ -1502,7 +1502,7 @@ export const PROJECTS_DATA = {
             "banner": "/lagen-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.COMING_SOON.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -1533,7 +1533,7 @@ export const PROJECTS_DATA = {
             "banner": "/mark-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.COMING_SOON.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -1564,7 +1564,7 @@ export const PROJECTS_DATA = {
         ],
         "links": {
             "github": "https://github.com/alaamer12/MedData",
-            "demo": null,
+            "demo": "https://alaamer12.github.io/MedData/",
             "pypi": null
         },
         "images": {
@@ -1606,8 +1606,8 @@ export const PROJECTS_DATA = {
             "banner": "/netice-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
-        "available": true,
+        "badge": PROJECT_BADGES.PRIVATE.id,
+        "available": false,
         "featured": false,
         "details": [],
         "delay": 0.2
@@ -1639,7 +1639,7 @@ export const PROJECTS_DATA = {
             "banner": "/nota-share-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.NEW.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -1706,7 +1706,7 @@ export const PROJECTS_DATA = {
             "banner": "/optimized-gallery-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.NEW.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -1919,10 +1919,14 @@ export const PROJECTS_DATA = {
     "symphony": {
         "id": "symphony",
         "title": "Symphony",
-        "description": "Failed to fetch (404/Private)",
-        "longDescription": "Failed to fetch (404/Private)",
+        "description": " A fully orchestrated, multi-agent IDE that composes and delivers complete software projects in a single, expressive prompt — with precision, harmony, and intelligence.",
+        "longDescription": `Agentic Symphony is a fully agent-driven IDE powered by a symphony of intelligent models, each acting like a musician in a grand orchestra. It enables users to:
+                Generate and deploy fully functional, production-quality software projects
+                From just one prompt — enhanced, expanded, and interpreted by multiple agents
+                With version control, task backlogs, documentation, and a deployed GitHub repository
+                The orchestration is directed by the Conductor model, with models communicating, activating, and reinforcing each other musically.`,
         "category": PROJECT_CATEGORIES.ML_AI.id,
-        "organization": ORGANIZATIONS.SYMPHONY_AI.id,
+        "organization": ORGANIZATIONS.SYMPHONY_AIDE.id,
         "tags": [
             "Rust",
             "React",
@@ -1946,7 +1950,7 @@ export const PROJECTS_DATA = {
             "banner": "/symphony-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.PRIVATE.id,
+        "badge": PROJECT_BADGES.COMING_SOON.id,
         "available": false,
         "featured": false,
         "details": [],
@@ -1983,7 +1987,7 @@ export const PROJECTS_DATA = {
             "banner": "/teamup-banner.svg",
             "screenshots": []
         },
-        "badge": PROJECT_BADGES.NONE.id,
+        "badge": PROJECT_BADGES.HOT.id,
         "available": true,
         "featured": false,
         "details": [],
@@ -2057,7 +2061,7 @@ export const PROJECTS_DATA = {
             "screenshots": []
         },
         "badge": PROJECT_BADGES.COMING_SOON.id,
-        "available": true,
+        "available": false,
         "featured": false,
         "details": [
             "Structured logging with customizable log formats",
@@ -2133,7 +2137,7 @@ export const PROJECTS_DATA = {
             "screenshots": []
         },
         "badge": PROJECT_BADGES.PRIVATE.id,
-        "available": false,
+        "available": true,
         "featured": false,
         "details": [],
         "delay": 0.2
