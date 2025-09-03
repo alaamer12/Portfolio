@@ -68,9 +68,9 @@
   "optimizedgallery": [
     "/images/screens/optimizedgallery/Capture.PNG"
   ],
-  "teamup": [
-    "/images/screens/teamup/1.PNG",
-    "/images/screens/teamup/2.PNG",
-    "/images/screens/teamup/3.PNG"
+  "team_up": [
+    "/images/screens/team_up/1.PNG",
+    "/images/screens/team_up/2.PNG",
+    "/images/screens/team_up/3.PNG"
   ]
 }
