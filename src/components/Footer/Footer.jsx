@@ -12,7 +12,7 @@ const socialLinks = [
     },
     {
         Icon: FaLinkedin,
-        href: 'https://www.linkedin.com/in/al-aamer-0b0709265/',
+        href: 'https://www.linkedin.com/in/amr-muhamed/',
         label: 'LinkedIn'
     },
     {
@@ -63,7 +63,8 @@ const Footer = () => {
                               className="hover:text-primary dark:hover:text-primary-light transition-colors">About</Link>
                         <span className="mx-2">·</span>
                         <Link to="/projects"
-                              className="hover:text-primary dark:hover:text-primary-light transition-colors">Projects ⬈</Link>
+                              className="hover:text-primary dark:hover:text-primary-light transition-colors">Projects
+                            ⬈</Link>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { initializeScreenshots } from '../data/projects';
+import {useEffect, useState} from 'react';
+import {initializeScreenshots} from '../data/projects';
 
 /**
  * Hook to initialize and manage screenshots loading
@@ -11,7 +11,7 @@ export const useScreenshots = () => {
 
     const loadScreenshots = async () => {
         if (screenshotsLoaded || loading) return;
-        
+
         setLoading(true);
         try {
             await initializeScreenshots();

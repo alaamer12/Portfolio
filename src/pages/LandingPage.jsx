@@ -1,4 +1,4 @@
-import {lazy, memo, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
+import {lazy, memo, Suspense, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {motion, useReducedMotion} from 'framer-motion';
 import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
@@ -83,14 +83,14 @@ const HeroSection = memo(() => {
 
 const ContentSections = memo(() => {
     const [isMounted, setIsMounted] = useState(false);
-    
+
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
     // Simple approach: just render the sections without complex intersection observer logic
     return (
-        <div style={{ opacity: isMounted ? 1 : 0, transition: 'opacity 0.5s ease-out' }}>
+        <div style={{opacity: isMounted ? 1 : 0, transition: 'opacity 0.5s ease-out'}}>
             <OptimizedBlock id="about-section" threshold={8}>
                 <About/>
             </OptimizedBlock>

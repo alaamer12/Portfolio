@@ -1,18 +1,7 @@
 import {memo, useCallback, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {AnimatePresence, motion} from 'framer-motion';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  X, 
-  Download, 
-  Play, 
-  Pause, 
-  Maximize, 
-  Minimize, 
-  Info,
-  Grid3X3
-} from 'lucide-react';
+import {ChevronLeft, ChevronRight, Download, Grid3X3, Info, Maximize, Minimize, Pause, Play, X} from 'lucide-react';
 
 const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
@@ -24,9 +13,9 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
     const [showControls, setShowControls] = useState(true);
     const [showInfo, setShowInfo] = useState(false);
     const [showThumbnails, setShowThumbnails] = useState(false);
-    const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
+    const [dragPosition, setDragPosition] = useState({x: 0, y: 0});
     const [isDragging, setIsDragging] = useState(false);
-    const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 });
+    const [lastMousePos, setLastMousePos] = useState({x: 0, y: 0});
 
     const imageRef = useRef(null);
     const containerRef = useRef(null);
@@ -191,14 +180,14 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
 
     const resetZoom = useCallback(() => {
         setZoomLevel(1);
-        setDragPosition({ x: 0, y: 0 });
+        setDragPosition({x: 0, y: 0});
     }, []);
 
     // Mouse drag for zoomed images
     const handleMouseDown = useCallback((e) => {
         if (zoomLevel > 1) {
             setIsDragging(true);
-            setLastMousePos({ x: e.clientX, y: e.clientY });
+            setLastMousePos({x: e.clientX, y: e.clientY});
         }
     }, [zoomLevel]);
 
@@ -214,7 +203,7 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                 y: prev.y + deltaY
             }));
 
-            setLastMousePos({ x: e.clientX, y: e.clientY });
+            setLastMousePos({x: e.clientX, y: e.clientY});
         }
     }, [isDragging, lastMousePos, zoomLevel]);
 
@@ -267,11 +256,11 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                 onMouseMove={handleMouseMove}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
-                style={{ cursor: isDragging ? 'grabbing' : zoomLevel > 1 ? 'grab' : 'default' }}
+                style={{cursor: isDragging ? 'grabbing' : zoomLevel > 1 ? 'grab' : 'default'}}
             >
                 {/* Top Controls Bar */}
                 <motion.div
-                    initial={{ opacity: 0, y: -20 }}
+                    initial={{opacity: 0, y: -20}}
                     animate={{
                         opacity: showControls ? 1 : 0,
                         y: showControls ? 0 : -20
@@ -286,7 +275,8 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                                 </span>
                             </div>
                             {title && (
-                                <div className="bg-black/60 backdrop-blur-md rounded-full px-4 py-2 border border-white/10">
+                                <div
+                                    className="bg-black/60 backdrop-blur-md rounded-full px-4 py-2 border border-white/10">
                                     <span className="text-white text-sm font-medium truncate max-w-xs">
                                         {title}
                                     </span>
@@ -297,10 +287,13 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                         <div className="flex items-center space-x-2">
                             {/* Info Toggle */}
                             <button
-                                onClick={(e) => { e.stopPropagation(); setShowInfo(!showInfo); }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowInfo(!showInfo);
+                                }}
                                 className={`p-3 rounded-full transition-all duration-200 border border-white/20 ${
-                                    showInfo 
-                                        ? 'bg-white/20 text-white' 
+                                    showInfo
+                                        ? 'bg-white/20 text-white'
                                         : 'bg-black/60 hover:bg-white/10 text-white/80 hover:text-white'
                                 }`}
                                 title="Toggle Info (I)"
@@ -311,10 +304,13 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                             {/* Thumbnail Grid Toggle */}
                             {images.length > 1 && (
                                 <button
-                                    onClick={(e) => { e.stopPropagation(); setShowThumbnails(!showThumbnails); }}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setShowThumbnails(!showThumbnails);
+                                    }}
                                     className={`p-3 rounded-full transition-all duration-200 border border-white/20 ${
-                                        showThumbnails 
-                                            ? 'bg-white/20 text-white' 
+                                        showThumbnails
+                                            ? 'bg-white/20 text-white'
                                             : 'bg-black/60 hover:bg-white/10 text-white/80 hover:text-white'
                                     }`}
                                     title="Toggle Grid (G)"
@@ -325,7 +321,10 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
 
                             {/* Download Button */}
                             <button
-                                onClick={(e) => { e.stopPropagation(); downloadImage(); }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    downloadImage();
+                                }}
                                 className="p-3 bg-black/60 hover:bg-white/10 text-white/80 hover:text-white rounded-full transition-all duration-200 border border-white/20"
                                 title="Download"
                             >
@@ -335,7 +334,10 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                             {/* Play/Pause for Videos */}
                             {currentMediaType === 'video' && (
                                 <button
-                                    onClick={(e) => { e.stopPropagation(); togglePlayPause(); }}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        togglePlayPause();
+                                    }}
                                     className="p-3 bg-black/60 hover:bg-white/10 text-white/80 hover:text-white rounded-full transition-all duration-200 border border-white/20"
                                     title={isPaused ? 'Play (Space)' : 'Pause (Space)'}
                                 >
@@ -345,7 +347,10 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
 
                             {/* Fullscreen Toggle */}
                             <button
-                                onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleFullscreen();
+                                }}
                                 className="p-3 bg-black/60 hover:bg-white/10 text-white/80 hover:text-white rounded-full transition-all duration-200 border border-white/20"
                                 title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen (F)'}
                             >
@@ -367,21 +372,27 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                 {/* Navigation Buttons */}
                 {images.length > 1 && (
                     <motion.div
-                        initial={{ opacity: 0 }}
+                        initial={{opacity: 0}}
                         animate={{
                             opacity: showControls ? 1 : 0
                         }}
                         className="absolute left-4 right-4 top-1/2 -translate-y-1/2 z-40 flex justify-between pointer-events-none"
                     >
                         <button
-                            onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                goToPrevious();
+                            }}
                             className="p-4 bg-black/60 hover:bg-black/80 text-white rounded-full transition-all duration-200 border border-white/20 pointer-events-auto backdrop-blur-md"
                             title="Previous (←)"
                         >
                             <ChevronLeft size={24}/>
                         </button>
                         <button
-                            onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                goToNext();
+                            }}
                             className="p-4 bg-black/60 hover:bg-black/80 text-white rounded-full transition-all duration-200 border border-white/20 pointer-events-auto backdrop-blur-md"
                             title="Next (→)"
                         >
@@ -402,13 +413,15 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                         {/* Loading Spinner */}
                         {isLoading && (
                             <div className="absolute inset-0 flex items-center justify-center z-30">
-                                <div className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin"/>
+                                <div
+                                    className="w-12 h-12 border-3 border-white/30 border-t-white rounded-full animate-spin"/>
                             </div>
                         )}
 
                         {/* Error State */}
                         {loadError && (
-                            <div className="flex flex-col items-center justify-center text-white p-12 bg-black/60 rounded-2xl backdrop-blur-md">
+                            <div
+                                className="flex flex-col items-center justify-center text-white p-12 bg-black/60 rounded-2xl backdrop-blur-md">
                                 <div className="text-6xl mb-4">⚠️</div>
                                 <h3 className="text-xl font-semibold mb-2">Failed to load media</h3>
                                 <p className="text-white/70 text-center">
@@ -470,7 +483,7 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
 
                 {/* Bottom Controls Bar */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{opacity: 0, y: 20}}
                     animate={{
                         opacity: showControls ? 1 : 0,
                         y: showControls ? 0 : 20
@@ -486,7 +499,7 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                         <div className="bg-black/60 backdrop-blur-md rounded-lg px-4 py-2 border border-white/10">
                             <span className="text-white/80 text-sm">
                                 {currentMediaType === 'gif' ? 'Animated GIF' :
-                                 currentMediaType === 'video' ? 'Video' : 'Image'}
+                                    currentMediaType === 'video' ? 'Video' : 'Image'}
                             </span>
                         </div>
                     </div>
@@ -496,9 +509,9 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                 <AnimatePresence>
                     {showInfo && (
                         <motion.div
-                            initial={{ opacity: 0, x: 300 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: 300 }}
+                            initial={{opacity: 0, x: 300}}
+                            animate={{opacity: 1, x: 0}}
+                            exit={{opacity: 0, x: 300}}
                             className="absolute top-20 right-4 bottom-20 w-80 bg-black/80 backdrop-blur-md rounded-2xl border border-white/20 p-6 z-40 overflow-y-auto"
                         >
                             <h3 className="text-white text-lg font-semibold mb-4">Image Information</h3>
@@ -556,9 +569,9 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                 <AnimatePresence>
                     {showThumbnails && images.length > 1 && (
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
+                            initial={{opacity: 0, scale: 0.9}}
+                            animate={{opacity: 1, scale: 1}}
+                            exit={{opacity: 0, scale: 0.9}}
                             className="absolute inset-4 bg-black/90 backdrop-blur-md rounded-2xl border border-white/20 z-40 p-6"
                             onClick={(e) => e.stopPropagation()}
                         >
@@ -571,8 +584,9 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                                     <X size={20}/>
                                 </button>
                             </div>
-                            
-                            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 max-h-[70vh] overflow-y-auto">
+
+                            <div
+                                className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 max-h-[70vh] overflow-y-auto">
                                 {images.map((image, index) => (
                                     <button
                                         key={index}
@@ -589,17 +603,20 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
                                             className="w-full h-full object-cover"
                                         />
                                         <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                            <span className="text-white text-xs font-medium bg-black/60 px-2 py-1 rounded">
+                                            <span
+                                                className="text-white text-xs font-medium bg-black/60 px-2 py-1 rounded">
                                                 {index + 1}
                                             </span>
                                         </div>
                                         {isGif(image) && (
-                                            <div className="absolute top-1 right-1 bg-green-500 text-white text-xs px-1 rounded">
+                                            <div
+                                                className="absolute top-1 right-1 bg-green-500 text-white text-xs px-1 rounded">
                                                 GIF
                                             </div>
                                         )}
                                         {isVideo(image) && (
-                                            <div className="absolute top-1 right-1 bg-blue-500 text-white text-xs px-1 rounded">
+                                            <div
+                                                className="absolute top-1 right-1 bg-blue-500 text-white text-xs px-1 rounded">
                                                 VID
                                             </div>
                                         )}

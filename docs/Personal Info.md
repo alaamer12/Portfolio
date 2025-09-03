@@ -16,11 +16,11 @@
         
     -   Academic internship at Benha University in 2024.
         
--   **Portfolio:** https://portfolio-qiw8.vercel.app.
+-   [**Portfolio**](https://amrmuhamed.vercel.app/).
     
--   **GitHub:** [github.com/alaamer12](https://github.com/alaamer12).
+-   [**GitHub**](https://github.com/alaamer12).
     
--   **LinkedIn:** [linkedin.com/in/amr-muhamed-0b0709265](https://www.linkedin.com/in/amr-muhamed-0b0709265?utm_source=chatgpt.com).
+-   [**LinkedIn**](https://www.linkedin.com/in/amr-muhamed/).
     
 -   **Achievements:**
     

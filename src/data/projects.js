@@ -12,7 +12,7 @@ let screenshotsLoaded = false;
  */
 async function loadScreenshotsManifest() {
     if (screenshotsLoaded) return screenshotsManifest;
-    
+
     try {
         const response = await fetch('/screenshots-manifest.json');
         if (response.ok) {
@@ -26,7 +26,7 @@ async function loadScreenshotsManifest() {
         console.warn('⚠️  Could not load screenshots manifest:', error.message);
         screenshotsManifest = {};
     }
-    
+
     screenshotsLoaded = true;
     return screenshotsManifest;
 }
@@ -36,9 +36,9 @@ async function loadScreenshotsManifest() {
  */
 function applyScreenshotsToProjects(manifest) {
     if (!manifest) return;
-    
+
     let totalApplied = 0;
-    
+
     Object.keys(PROJECTS_DATA).forEach(projectId => {
         if (manifest[projectId] && manifest[projectId].length > 0) {
             PROJECTS_DATA[projectId].images.screenshots = manifest[projectId];
@@ -46,7 +46,7 @@ function applyScreenshotsToProjects(manifest) {
             console.log(`✅ Applied ${manifest[projectId].length} screenshots to project: ${projectId}`);
         }
     });
-    
+
     if (totalApplied > 0) {
         console.log(`🎉 Successfully applied ${totalApplied} screenshots to projects`);
     }
@@ -2166,37 +2166,37 @@ export const sortProjectsByBadge = (projects) => {
         // Get badge priorities
         const aPriority = PROJECT_BADGES[a.badge?.toUpperCase()] || PROJECT_BADGES.NONE;
         const bPriority = PROJECT_BADGES[b.badge?.toUpperCase()] || PROJECT_BADGES.NONE;
-        
+
         // If badges are different, sort by badge priority
         if (aPriority.priority !== bPriority.priority) {
             return aPriority.priority - bPriority.priority;
         }
-        
+
         // If badges are the same, check for screenshots
         const aHasScreenshots = a.images?.screenshots?.length > 0;
         const bHasScreenshots = b.images?.screenshots?.length > 0;
-        
+
         // Projects with screenshots get higher priority
         if (aHasScreenshots && !bHasScreenshots) return -1;
         if (!aHasScreenshots && bHasScreenshots) return 1;
-        
+
         // If screenshots are equal, count total available links
         const aLinkCount = [a.links?.github, a.links?.demo, a.links?.pypi].filter(Boolean).length;
         const bLinkCount = [b.links?.github, b.links?.demo, b.links?.pypi].filter(Boolean).length;
-        
+
         // Projects with more links get higher priority
         if (aLinkCount !== bLinkCount) {
             return bLinkCount - aLinkCount; // Descending order (more links first)
         }
-        
+
         // If everything else is equal, check for organization (as tiebreaker)
         const aHasOrganization = Boolean(a.organization);
         const bHasOrganization = Boolean(b.organization);
-        
+
         // Projects with organization get slight priority as final tiebreaker
         if (aHasOrganization && !bHasOrganization) return -1;
         if (!aHasOrganization && bHasOrganization) return 1;
-        
+
         // If all criteria are equal, maintain original order
         return 0;
     });

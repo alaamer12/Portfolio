@@ -253,7 +253,7 @@ const DownloadCVButton = memo(() => {
     return (
         <motion.a
             href={USER_CONFIG.professional.resumeUrl}
-            download="resume.pdf"
+            download="Amr Muhamed Data Engineer Resume.pdf"
             onClick={handleClick}
             className="flex items-center justify-center w-full px-6 py-3 bg-primary dark:bg-primary-light text-white rounded-xl text-base font-medium hover:bg-primary/90 dark:hover:bg-primary-light/90 hover:shadow-lg transition-all duration-300"
             style={{textDecoration: "none"}}

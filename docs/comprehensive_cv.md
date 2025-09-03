@@ -1,7 +1,7 @@
 # AMR MUHAMED FATHY
 
 **Email:** amrmuhamed86@gmail.com · **Phone:** +20 111 127 6198 · **Location:** Cairo, Cairo, Egypt  
-**GitHub:** github.com/alaamer12 · **Portfolio:** portfolio-qiw8.vercel.app · **LinkedIn:** linkedin.com/in/amr-muhamed-0b0709265
+**GitHub:** github.com/alaamer12 · **Portfolio:** https://amrmuhamed.vercel.app/.app · **LinkedIn:** linkedin.com/in/amr-muhamed-0b0709265
 
 ### PROFESSIONAL SUMMARY
 

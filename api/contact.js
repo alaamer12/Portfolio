@@ -110,7 +110,7 @@ export default async function handler(req, res) {
             In the meantime, feel free to check out my latest projects on 
             <a href="https://github.com/alaamer12" style="color: #3B82F6; text-decoration: none;">GitHub</a> 
             or connect with me on 
-            <a href="https://www.linkedin.com/in/al-aamer-0b0709265/" style="color: #3B82F6; text-decoration: none;">LinkedIn</a>.
+            <a href="www.linkedin.com/in/amr-muhamed" style="color: #3B82F6; text-decoration: none;">LinkedIn</a>.
           </p>
           
           <div style="margin: 30px 0; padding: 20px; background-color: #f8f9fa; border-radius: 5px; border-left: 4px solid #3B82F6;">

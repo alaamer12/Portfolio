@@ -2,8 +2,6 @@
 
 A modern, responsive portfolio website built with React, Vite, and Tailwind CSS. Features SEO optimization, smooth animations, and a dark mode theme.
 
-![Portfolio Preview](public/screenshots/home.png)
-
 ## 🌟 Features
 
 - **Modern Design**
@@ -164,16 +162,12 @@ screens: {
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👤 Author
 
 **Amr Muhamed**
 - Website: [amrmuhamed.com](https://amrmuhamed.com)
 - GitHub: [@alaamer12](https://github.com/alaamer12)
-- LinkedIn: [@alaamer12](https://www.linkedin.com/in/al-aamer-0b0709265/)
+- LinkedIn: [@alaamer12](https://www.linkedin.com/in/amr-muhamed/)
 
 ## 🙏 Acknowledgments
 

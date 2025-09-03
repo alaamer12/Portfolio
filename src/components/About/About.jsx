@@ -377,9 +377,9 @@ const additionalSkills = [
     {name: 'SQLite', url: 'https://www.sqlite.org/'},
 
     // Languages
-    { name: 'Python', url: 'https://www.python.org/' },
-    { name: 'JavaScript/TypeScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-    { name: 'Rust', url: 'https://www.rust-lang.org/' },
+    {name: 'Python', url: 'https://www.python.org/'},
+    {name: 'JavaScript/TypeScript', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript'},
+    {name: 'Rust', url: 'https://www.rust-lang.org/'},
 
     // Web Technologies
     {name: 'React Three Fiber', url: 'https://docs.pmnd.rs/react-three-fiber'},

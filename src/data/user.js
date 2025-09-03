@@ -28,7 +28,7 @@ export const USER_CONFIG = {
             country: 'Egypt',
             countryCode: 'EG'
         },
-        website: 'https://amrmuhamed.com',
+        website: 'https://amrmuhamed.vercel.app/',
         timezone: 'Africa/Cairo'
     },
 
@@ -40,7 +40,7 @@ export const USER_CONFIG = {
             display: true
         },
         linkedin: {
-            url: 'https://www.linkedin.com/in/al-aamer-0b0709265/',
+            url: 'https://www.linkedin.com/in/amr-muhamed/',
             username: 'al-aamer-0b0709265',
             display: true
         },
@@ -97,7 +97,7 @@ export const USER_CONFIG = {
         availability: 'Open to opportunities',
         workType: ['Remote', 'Freelance', 'Contract'],
         hourlyRate: '', // Optional
-        resumeUrl: '/resume.pdf'
+        resumeUrl: '/Amr Muhamed Data Engineer Resume.pdf'
     },
 
     // Skills & Technologies
@@ -148,7 +148,7 @@ export const USER_CONFIG = {
         siteDescription: 'Data Engineer Portfolio showcasing expertise in ETL pipelines, machine learning, data visualization, and scalable data processing systems.',
         keywords: ['Data Engineer', 'Machine Learning', 'ETL Pipeline', 'Data Analytics', 'Python Developer', 'AI Specialist'],
         author: 'Amr Muhamed',
-        canonicalUrl: 'https://amrmuhamed.com',
+        canonicalUrl: 'https://amrmuhamed.vercel.app/',
         ogImage: '/og-image.png',
         twitterCard: 'summary_large_image',
         language: 'en-US',
@@ -165,35 +165,35 @@ export const USER_CONFIG = {
     },
 
 // Awards & Achievements
-achievements: [
-    'Publish 5+ PyPI packages enhancing data engineering workflows',
-    'Contribute and operate in multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AIDE)',
-    'Maintain 50+ GitHub repositories spanning multiple programming languages and domains',
-    'Complete government DEPI Data Engineering track',
-    'Build production-ready applications solving practical problems',
-    'Honor student at Benha Faculty of Computer Science and Artificial Intelligence'
-],
+    achievements: [
+        'Publish 5+ PyPI packages enhancing data engineering workflows',
+        'Contribute and operate in multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AIDE)',
+        'Maintain 50+ GitHub repositories spanning multiple programming languages and domains',
+        'Complete government DEPI Data Engineering track',
+        'Build production-ready applications solving practical problems',
+        'Honor student at Benha Faculty of Computer Science and Artificial Intelligence'
+    ],
 
 // Interests & Hobbies
-interests: [
-    'Open Source Development',
-    'Machine Learning',
-    'Web Technologies',
-    'Software Architecture',
-    'Technology Innovation'
-],
+    interests: [
+        'Open Source Development',
+        'Machine Learning',
+        'Web Technologies',
+        'Software Architecture',
+        'Technology Innovation'
+    ],
 
 // About Me Highlights/Bullet Points
-aboutHighlights: [
-    'Build comprehensive data engineering solutions including MedData hub aggregating datasets from HuggingFace, Kaggle, Medium, and Dev.to with automated ETL pipelines',
-    'Develop AI-powered tools like c4f for intelligent Git automation and Fragma for NLP sentence fragment detection using modern LLM integration',
-    'Create high-performance systems including CascadeSearch multi-language file utility (Rust/C/Python) and jsdfile binary JSON parser with C integration',
-    'Publish 5+ PyPI packages and contribute to multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AI)',
-    'Lead cross-functional teams through complex projects, managing members with structured communication, documentation, and agile methodologies',
-    'Specialize in full-stack development with React/TypeScript, 3D graphics experiences',
-    'Demonstrate advanced skills in machine learning frameworks (PyTorch, TensorFlow), data visualization (Plotly, Chart.js, Streamlit), and modern web technologies',
-    'Apply strong foundation in computer science fundamentals including data structures, algorithms, design patterns, and performance optimization techniques'
-]
+    aboutHighlights: [
+        'Build comprehensive data engineering solutions including MedData hub aggregating datasets from HuggingFace, Kaggle, Medium, and Dev.to with automated ETL pipelines',
+        'Develop AI-powered tools like c4f for intelligent Git automation and Fragma for NLP sentence fragment detection using modern LLM integration',
+        'Create high-performance systems including CascadeSearch multi-language file utility (Rust/C/Python) and jsdfile binary JSON parser with C integration',
+        'Publish 5+ PyPI packages and contribute to multiple open-source organizations (JsonAlchemy, T2F-Labs, TrueFam, Symphony AI)',
+        'Lead cross-functional teams through complex projects, managing members with structured communication, documentation, and agile methodologies',
+        'Specialize in full-stack development with React/TypeScript, 3D graphics experiences',
+        'Demonstrate advanced skills in machine learning frameworks (PyTorch, TensorFlow), data visualization (Plotly, Chart.js, Streamlit), and modern web technologies',
+        'Apply strong foundation in computer science fundamentals including data structures, algorithms, design patterns, and performance optimization techniques'
+    ]
 
 };
 export const getDisplayedSocialLinks = () => {

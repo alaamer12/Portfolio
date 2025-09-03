@@ -112,7 +112,7 @@ const DesktopNav = ({isDark, toggleTheme}) => {
             ) : (
                 <NavLink to="/#about">About</NavLink>
             )}
-              {isHomePage ? (
+            {isHomePage ? (
                 <NavLink to="contact" isScroll={true}>Contact</NavLink>
             ) : (
                 <NavLink to="/#contact">Contact</NavLink>

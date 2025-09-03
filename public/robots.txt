@@ -10,18 +10,6 @@ Sitemap: https://amrmuhamed.com/sitemap.xml
 # Optimize crawling
 Crawl-delay: 5
 
-# Block sensitive areas
-Disallow: /api/
-Disallow: /admin/
-Disallow: /private/
-Disallow: /temp/
-Disallow: /drafts/
-Disallow: /*.json$
-Disallow: /*?*
-Disallow: /*/search
-Disallow: /*/login
-Disallow: /*/logout
-
 # Allow specific files
 Allow: /*.js$
 Allow: /*.css$

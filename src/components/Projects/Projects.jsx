@@ -1,4 +1,4 @@
-import {memo, useMemo, useState, useEffect} from 'react';
+import {memo, useMemo, useState} from 'react';
 import {motion} from 'framer-motion';
 import {FaExternalLinkAlt, FaGithub, FaImages} from 'react-icons/fa';
 import {useTheme} from '../../context/ThemeContext';
@@ -345,7 +345,7 @@ const ViewAllProjectsButton = memo(() => {
 ViewAllProjectsButton.displayName = 'ViewAllProjectsButton';
 
 const Projects = memo(() => {
-    const { screenshotsLoaded } = useScreenshots();
+    const {screenshotsLoaded} = useScreenshots();
     const projects = useMemo(() => getFeaturedProjectsData(), [screenshotsLoaded]);
 
     return (
