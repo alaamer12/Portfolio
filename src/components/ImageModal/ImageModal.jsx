@@ -1,4 +1,5 @@
 import {memo, useCallback, useEffect, useRef, useState} from 'react';
+import {createPortal} from 'react-dom';
 import {AnimatePresence, motion} from 'framer-motion';
 import { 
   ChevronLeft, 
@@ -254,14 +255,14 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
 
     const currentMediaType = getCurrentMediaType();
 
-    return (
+    const modalContent = (
         <AnimatePresence>
             <motion.div
                 ref={containerRef}
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
-                className={`fixed inset-0 z-[9999] bg-black select-none ${isFullscreen ? '' : 'backdrop-blur-sm'}`}
+                className={`fixed inset-0 z-[99999] bg-black select-none ${isFullscreen ? '' : 'backdrop-blur-sm'}`}
                 onClick={onClose}
                 onMouseMove={handleMouseMove}
                 onMouseDown={handleMouseDown}
@@ -611,6 +612,9 @@ const ImageModal = memo(({isOpen, onClose, images, initialIndex = 0, title}) => 
             </motion.div>
         </AnimatePresence>
     );
+
+    // Use portal to render modal at document root to avoid z-index issues
+    return createPortal(modalContent, document.body);
 });
 
 ImageModal.displayName = 'ImageModal';
