@@ -1,9 +1,4 @@
 {
-    "version": 2,
-    "env": {
-      "RESEND_API_KEY": "@resend-api-key",
-      "CONTACT_EMAIL": "@contact-email",
-      "FROM_EMAIL": "@from-email"
-    }
+    "version": 2
   }
   
