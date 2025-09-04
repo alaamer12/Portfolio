@@ -66,7 +66,7 @@ export default defineConfig({
       manifest: {
         name: 'Amr Muhamed Portfolio',
         short_name: 'Portfolio',
-        description: 'Full Stack Developer Portfolio',
+        description: 'Date Engineer Developer Portfolio',
         theme_color: '#ffffff',
         icons: [
           {
@@ -83,6 +83,7 @@ export default defineConfig({
         ]
       },
       workbox: {
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
         globDirectory: 'dist',
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         runtimeCaching: [
