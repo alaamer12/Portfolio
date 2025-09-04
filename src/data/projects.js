@@ -554,7 +554,7 @@ export const PROJECTS_DATA = {
             "pypi": null
         },
         "images": {
-            "icon": "/images/codelyzer-icon.webp",
+            "icon": "/images/codelyzer/logo.png",
             "banner": "/codelyzer-banner.svg",
             "screenshots": []
         },
@@ -1209,8 +1209,8 @@ export const PROJECTS_DATA = {
             "pypi": null
         },
         "images": {
-            "icon": "/images/ghrepolens-icon.webp",
-            "banner": "/ghrepolens-banner.svg",
+            "icon": "/images/ghrepolens/light_logo.png",
+            "banner": "/images/ghrepolens/light_banner.png",
             "screenshots": []
         },
         "badge": PROJECT_BADGES.NEW.id,
@@ -1621,7 +1621,7 @@ export const PROJECTS_DATA = {
             "pypi": null
         },
         "images": {
-            "icon": "/images/meddata-icon.webp",
+            "icon": "/images/meddata/logo.svg",
             "banner": "/meddata-banner.svg",
             "screenshots": []
         },
@@ -1790,7 +1790,7 @@ export const PROJECTS_DATA = {
             "pypi": null
         },
         "images": {
-            "icon": "/images/pixcrawler-icon.webp",
+            "icon": "/images/pixcrawler/PixCrawler.png",
             "banner": "/pixcrawler-banner.svg",
             "screenshots": []
         },
