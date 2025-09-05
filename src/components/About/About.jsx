@@ -588,7 +588,7 @@ const About = () => {
                 <AboutSkillsSection/>
                 <ExperienceSection/>
                 <TrainingSection/>
-                {/* <EducationSection/> */}
+                <EducationSection/>
             </div>
         </section>
     );
