@@ -672,6 +672,37 @@ export const PROJECTS_DATA = {
         "details": [],
         "delay": 0.2
     },
+    "tealim": {
+        "id": "tealim",
+        "title": "Tealim",
+        "description": "Tealim E-Learning platform. Manages course content and user progress.",
+        "longDescription": "Tealim E-Learning platform. Manages course content and user progress.",
+        "category": PROJECT_CATEGORIES.EDUCATIONAL.id,
+        "tags": [
+            "Cross Platform",
+            "Educational",
+        ],
+        "technologies": [
+            "React Native",
+            "Next.js",
+            "Expo",
+        ],
+        "links": {
+            "github": "https://github.com/tealim",
+            "demo": null,
+            "pypi": null
+        },
+        "images": {
+            "icon": "/images/tealim-icon.webp",
+            "banner": "/tealim-banner.svg",
+            "screenshots": []
+        },
+        "badge": PROJECT_BADGES.PRIVATE.id,
+        "available": false,
+        "featured": false,
+        "details": [],
+        "delay": 0.2
+    },
     "cpp_dsa": {
         "id": "cpp_dsa",
         "title": "Cpp-DSA",
