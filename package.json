@@ -53,6 +53,7 @@
     "react-lazy-load-image-component": "^1.6.3",
     "react-markdown": "^10.0.0",
     "react-router-dom": "^7.1.1",
+    "react-select": "^5.10.2",
     "react-use": "^17.5.0",
     "react-virtuoso": "^4.12.5",
     "rehype-raw": "^7.0.0",

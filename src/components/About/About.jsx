@@ -177,7 +177,7 @@ const AboutHighlights = memo(() => (
 ));
 
 const Header = () => (
-    <OptimizedBlock className="mb-32 md:mb-48" id="about-header">
+    <OptimizedBlock className="mb-16 md:mb-24" id="about-header">
         <header className="text-center">
             <motion.div
                 initial={{opacity: 0, y: 20}}
@@ -199,21 +199,14 @@ const Header = () => (
 );
 
 const ContactSection = () => (
-    <OptimizedBlock className="mb-32 md:mb-48" id="about-contact">
-        <section aria-label="Contact Information" className="mb-32 md:mb-48">
+    <OptimizedBlock className="mb-16 md:mb-24" id="about-contact">
+        <section aria-label="Contact Information" className="mb-16 md:mb-24">
             <motion.div
                 initial={{opacity: 0, y: 20}}
                 whileInView={{opacity: 1, y: 0}}
                 viewport={{once: true}}
                 transition={{delay: 0.2}}
             >
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-                    Let's Connect
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
-                    Feel free to reach out through any of these channels. I'm always open to discussing new
-                    opportunities and interesting projects.
-                </p>
                 <div className="flex flex-wrap justify-center gap-20 md:gap-26">
                     <ContactLink
                         href={`mailto:${USER_CONFIG.contact.email}`}
@@ -284,7 +277,7 @@ const ContactLink = ({href, icon: Icon, text, delay = 0}) => (
             </div>
         </a>
         <span
-            className="text-sm text-gray-600 dark:text-gray-300 text-center max-w-[120px] leading-tight group-hover:text-gray-800 dark:group-hover:text-white transition-colors duration-300">
+            className="text-sm text-gray-600 dark:text-gray-300 text-center max-w-[120px] leading-tight group-hover:text-gray-800 dark:group-hover:text-white transition-colors duration-300 break-words">
             {text}
         </span>
     </motion.div>
@@ -347,7 +340,6 @@ const specializedSkills = [
         description: "Create comprehensive CLI tools and utilities including GHRepoLens for repository analysis, PixCrawler for dataset building, fScan for advanced file search, and multiple PyPI packages for developer productivity."
     },
 ];
-
 
 const additionalSkills = [
     // Machine Learning & AI
@@ -414,8 +406,8 @@ const additionalSkills = [
 ];
 
 const AboutSkillsSection = () => (
-    <OptimizedBlock className="mb-32 md:mb-48" id="about-skills">
-        <section aria-label="Skills and Expertise" className="mb-32 md:mb-48">
+    <OptimizedBlock className="mb-16 md:mb-24" id="about-skills">
+        <section aria-label="Skills and Expertise" className="mb-16 md:mb-24">
             <motion.div
                 initial={{opacity: 0}}
                 whileInView={{opacity: 1}}
@@ -468,8 +460,8 @@ const AboutSkillsSection = () => (
 );
 
 const ExperienceSection = () => (
-    <OptimizedBlock className="mb-32 md:mb-48" id="about-experience">
-        <section aria-label="Professional Experience" className="mb-32 md:mb-48">
+    <OptimizedBlock className="mb-16 md:mb-24" id="about-experience">
+        <section aria-label="Professional Experience" className="mb-16 md:mb-24">
             <motion.div
                 initial={{opacity: 0}}
                 whileInView={{opacity: 1}}
@@ -497,8 +489,8 @@ const ExperienceSection = () => (
 );
 
 const TrainingSection = () => (
-    <OptimizedBlock className="mb-32 md:mb-48" id="about-training">
-        <section aria-label="Training" className="mb-32 md:mb-48">
+    <OptimizedBlock className="mb-16 md:mb-24" id="about-training">
+        <section aria-label="Training" className="mb-16 md:mb-24">
             <motion.div
                 initial={{opacity: 0}}
                 whileInView={{opacity: 1}}
@@ -526,8 +518,8 @@ const TrainingSection = () => (
 );
 
 const EducationSection = () => (
-    <OptimizedBlock className="mt-32 md:mt-48" id="about-education">
-        <section aria-label="Education" className="mt-32 md:mt-48">
+    <OptimizedBlock className="mt-16 md:mt-24" id="about-education">
+        <section aria-label="Education" className="mt-16 md:mt-24">
             <motion.div
                 initial={{opacity: 0}}
                 whileInView={{opacity: 1}}
@@ -581,7 +573,7 @@ const EducationCard = ({
 
 const About = () => {
     return (
-        <section id="about" className="py-32 md:py-48">
+        <section id="about" className="py-20 md:py-32">
             <div className="container px-4 mx-auto">
                 <Header/>
                 <ContactSection/>

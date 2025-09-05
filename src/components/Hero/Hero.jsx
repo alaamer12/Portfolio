@@ -297,7 +297,7 @@ const Hero = memo(() => {
 });
 
 const HeroSection = ({children}) => (
-    <section className="w-full min-h-screen flex items-center justify-center py-20">
+    <section className="w-full flex items-center justify-center mt-12 mb-20">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {children}
         </div>

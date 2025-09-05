@@ -18,34 +18,55 @@ const PackageDescription = memo(({description}) => (
     <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-4">{description}</p>
 ));
 
-const PackageLink = memo(({href, Icon, settings}) => (
-    <motion.a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors"
-        whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-        whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
-    >
-        <Icon className="text-lg md:text-xl"/>
-    </motion.a>
-));
+
+const PackageLink = memo(({href, onClick, Icon, settings, title}) => {
+    const commonClasses = "text-gray-600 cursor-pointer dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors";
+    const buttonClasses = "text-gray-600 cursor-pointer dark:text-gray-400 hover:text-primary dark:hover:text-primary-light transition-colors bg-transparent border-none p-0 m-0 outline-none focus:outline-none";
+    
+    const commonProps = {
+        whileHover: settings.shouldAnimate ? {scale: settings.scale} : {},
+        whileTap: settings.shouldAnimate ? {scale: 0.95} : {},
+        title: title
+    };
+
+    // If it's a click handler (like screenshots), render as button
+    if (onClick) {
+        return (
+            <motion.button
+                onClick={onClick}
+                className={buttonClasses}
+                {...commonProps}
+            >
+                <Icon className="text-lg md:text-xl"/>
+            </motion.button>
+        );
+    }
+
+    // Otherwise render as link
+    return (
+        <motion.a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={commonClasses}
+            {...commonProps}
+        >
+            <Icon className="text-lg md:text-xl"/>
+        </motion.a>
+    );
+});
 
 const PackageLinks = memo(({github, pypi, screenshots, onScreenshotsClick, settings}) => (
-    <div className="flex space-x-4">
+    <div className="flex items-center space-x-4">
         {github && <PackageLink href={github} Icon={FaGithub} settings={settings}/>}
         {pypi && <PackageLink href={pypi} Icon={FaPython} settings={settings}/>}
         {screenshots && screenshots.length > 0 && (
-            <motion.button
-                onClick={onScreenshotsClick}
-                className="bg-[#e6e6e6] dark:bg-gray-800 hover:scale-105 transition-transform rounded-md p-2"
-                whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+            <PackageLink 
+                onClick={onScreenshotsClick} 
+                Icon={FaImages} 
+                settings={settings}
                 title="View Screenshots"
-            >
-                <FaImages
-                    className="text-lg sm:text-xl text-black dark:text-white/40 hover:text-primary dark:hover:text-primary-light transition-colors"/>
-            </motion.button>
+            />
         )}
     </div>
 ));
@@ -192,7 +213,7 @@ const OpenSource = memo(() => {
     try {
         return (
             <OptimizedBlock threshold={12}>
-                <section className="py-32 md:py-48">
+                <section className="py-20 md:py-32">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <OpenSourceHeader settings={settings}/>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">

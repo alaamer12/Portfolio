@@ -10,37 +10,66 @@ import useScreenshots from '../../hooks/useScreenshots';
 
 const ProjectLinks = memo(({github, demo, screenshots, onScreenshotsClick}) => {
     const {settings} = useOptimizedAnimation();
-    const links = useMemo(() => [
-        {url: github, Icon: FaGithub},
-        {url: demo, Icon: FaExternalLinkAlt}
-    ], [github, demo]);
+    
+    const ProjectLink = memo(({href, onClick, Icon, title}) => {
+        const commonClasses = "text-gray-600 dark:text-white/40 hover:text-primary dark:hover:text-primary-light transition-colors";
+        const buttonClasses = "text-gray-600 dark:text-white/40 hover:text-primary dark:hover:text-primary-light transition-colors bg-transparent border-none p-0 m-0 outline-none focus:outline-none";
+        
+        const commonProps = {
+            whileHover: settings.shouldAnimate ? {scale: settings.scale} : {},
+            whileTap: settings.shouldAnimate ? {scale: 0.95} : {},
+            title: title
+        };
 
-    return (
-        <div className="flex space-x-4 pt-2">
-            {links.map(({url, Icon}) => url && (
-                <motion.a
-                    key={url}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-white/40 hover:text-primary dark:hover:text-primary-light transition-colors"
-                    whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                    whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+        // If it's a click handler (like screenshots), render as button
+        if (onClick) {
+            return (
+                <motion.button
+                    onClick={onClick}
+                    className={buttonClasses}
+                    {...commonProps}
                 >
                     <Icon className="text-lg sm:text-xl"/>
-                </motion.a>
-            ))}
-            {screenshots && screenshots.length > 0 && (
-                <motion.button
-                    onClick={onScreenshotsClick}
-                    className="bg-[#e6e6e6] dark:bg-gray-800 hover:scale-105 transition-transform rounded-md p-2"
-                    whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                    whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
-                    title="View Screenshots"
-                >
-                    <FaImages
-                        className="text-lg sm:text-xl text-black dark:text-white/40 hover:text-primary dark:hover:text-primary-light transition-colors"/>
                 </motion.button>
+            );
+        }
+
+        // Otherwise render as link
+        return (
+            <motion.a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={commonClasses}
+                {...commonProps}
+            >
+                <Icon className="text-lg sm:text-xl"/>
+            </motion.a>
+        );
+    });
+
+    return (
+        <div className="flex items-center space-x-4 pt-2">
+            {github && (
+                <ProjectLink 
+                    href={github} 
+                    Icon={FaGithub} 
+                    title="View on GitHub"
+                />
+            )}
+            {demo && (
+                <ProjectLink 
+                    href={demo} 
+                    Icon={FaExternalLinkAlt} 
+                    title="View Demo"
+                />
+            )}
+            {screenshots && screenshots.length > 0 && (
+                <ProjectLink 
+                    onClick={onScreenshotsClick} 
+                    Icon={FaImages} 
+                    title="View Screenshots"
+                />
             )}
         </div>
     );
@@ -124,19 +153,45 @@ const ProjectImage = memo(({displayImage, title}) => {
 
 ProjectImage.displayName = 'ProjectImage';
 
-const ProjectCaption = memo(({title, description}) => (
-    <>
-        <h3 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-[#7d6b9b] group-hover:text-primary dark:group-hover:text-primary-light transition-colors sm:hidden">
-            {title}
-        </h3>
-        <h3 className="hidden sm:block text-2xl font-bold text-gray-900 dark:text-[#7d6b9b] group-hover:text-primary dark:group-hover:text-primary-light transition-colors">
-            {title}
-        </h3>
-        <p className="text-sm sm:text-base text-gray-600 dark:text-[#7d6b9b]/50 group-hover:text-gray-800 dark:group-hover:text-primary/55 transition-colors">
-            {description}
-        </p>
-    </>
-));
+const ProjectCaption = memo(({title, description, demo}) => {
+    const {settings} = useOptimizedAnimation();
+    
+    const TitleComponent = demo ? motion.a : motion.h3;
+    const titleProps = demo ? {
+        href: demo,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "text-lg sm:text-2xl font-bold text-gray-900 dark:text-[#7d6b9b] group-hover:text-primary dark:group-hover:text-primary-light hover:text-primary dark:hover:text-primary-light transition-colors sm:hidden cursor-pointer underline decoration-2 underline-offset-2 hover:decoration-primary dark:hover:decoration-primary-light",
+        whileHover: settings.shouldAnimate ? {scale: 1.02} : {},
+    } : {
+        className: "text-lg sm:text-2xl font-bold text-gray-900 dark:text-[#7d6b9b] group-hover:text-primary dark:group-hover:text-primary-light transition-colors sm:hidden"
+    };
+
+    const LargeTitleComponent = demo ? motion.a : motion.h3;
+    const largeTitleProps = demo ? {
+        href: demo,
+        target: "_blank", 
+        rel: "noopener noreferrer",
+        className: "hidden sm:block text-2xl font-bold text-gray-900 dark:text-[#7d6b9b] group-hover:text-primary dark:group-hover:text-primary-light hover:text-primary dark:hover:text-primary-light transition-colors cursor-pointer underline decoration-2 underline-offset-2 hover:decoration-primary dark:hover:decoration-primary-light",
+        whileHover: settings.shouldAnimate ? {scale: 1.02} : {},
+    } : {
+        className: "hidden sm:block text-2xl font-bold text-gray-900 dark:text-[#7d6b9b] group-hover:text-primary dark:group-hover:text-primary-light transition-colors"
+    };
+
+    return (
+        <>
+            <TitleComponent {...titleProps}>
+                {title}
+            </TitleComponent>
+            <LargeTitleComponent {...largeTitleProps}>
+                {title}
+            </LargeTitleComponent>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-[#7d6b9b]/50 group-hover:text-gray-800 dark:group-hover:text-primary/55 transition-colors">
+                {description}
+            </p>
+        </>
+    );
+});
 
 ProjectCaption.displayName = 'ProjectCaption';
 
@@ -216,7 +271,11 @@ const ProjectCard = memo(({project, delay}) => {
                     </div>
 
                     <div className="flex-grow space-y-3">
-                        <ProjectCaption title={project.title} description={project.description}/>
+                        <ProjectCaption 
+                            title={project.title} 
+                            description={project.description}
+                            demo={project.demo}
+                        />
                         <ProjectTags tags={project.tags} organization={project.organization}/>
                         <ProjectLinks
                             github={project.github}
@@ -239,7 +298,6 @@ const ProjectCard = memo(({project, delay}) => {
         </OptimizedBlock>
     );
 });
-
 ProjectCard.displayName = 'ProjectCard';
 
 const ProjectsHeader = memo(() => {
@@ -349,7 +407,7 @@ const Projects = memo(() => {
     const projects = useMemo(() => getFeaturedProjectsData(), [screenshotsLoaded]);
 
     return (
-        <section className="py-32 md:py-48" id="projects">
+        <section className="py-20 md:py-32" id="projects">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <ProjectsHeader/>
                 <ProjectList projects={projects}/>

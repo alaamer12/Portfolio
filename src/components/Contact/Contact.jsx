@@ -571,22 +571,68 @@ const ContactForm = memo(({ isAdvanced, onToggleMode }) => {
     // Handle mailto fallback
     const handleMailtoFallback = useCallback(() => {
         try {
-            const subject = encodeURIComponent(`Contact from ${formData.name}`);
-            let body = `Name: ${formData.name}\nEmail: ${formData.email}`;
+            const subject = encodeURIComponent(
+                isAdvanced 
+                    ? `Business Inquiry: ${formData.service?.label || 'Project Consultation'} - ${formData.name}`
+                    : `Contact from ${formData.name}`
+            );
+            
+            let body = '';
             
             if (isAdvanced) {
-                if (formData.company) body += `\nCompany: ${formData.company}`;
-                if (formData.service) {
-                    if (formData.service.value === 'other' && formData.otherService) {
-                        body += `\nService: ${formData.otherService}`;
-                    } else {
-                        body += `\nService: ${formData.service.label}`;
-                    }
-                }
-                if (formData.budget) body += `\nBudget: ${formData.budget.label}`;
+                // Professional business template
+                body = `Dear Amr,
+
+I hope this message finds you well. I am reaching out to discuss a potential collaboration opportunity.
+
+═══════════════════════════════════════
+📋 PROJECT INQUIRY DETAILS
+═══════════════════════════════════════
+
+👤 CONTACT INFORMATION:
+   • Name: ${formData.name}
+   • Email: ${formData.email}${formData.company ? `\n   • Company/Organization: ${formData.company}` : ''}
+
+🎯 SERVICE REQUIREMENTS:
+   • Service Type: ${formData.service?.value === 'other' && formData.otherService ? formData.otherService : formData.service?.label || 'Not specified'}${formData.budget ? `\n   • Project Budget: ${formData.budget.label}` : ''}
+
+💼 PROJECT DETAILS:
+${formData.message}
+
+═══════════════════════════════════════
+🚀 NEXT STEPS
+═══════════════════════════════════════
+
+I would appreciate the opportunity to discuss this project in more detail. Please let me know your availability for a consultation call or meeting.
+
+Looking forward to your response and the possibility of working together.
+
+Best regards,
+${formData.name}${formData.company ? `\n${formData.company}` : ''}
+${formData.email}`;
+            } else {
+                // Simple contact template
+                body = `Hi Amr,
+
+I hope you're doing well! I wanted to reach out regarding a potential project.
+
+═══════════════════════════════════════
+📝 CONTACT DETAILS
+═══════════════════════════════════════
+
+Name: ${formData.name}
+Email: ${formData.email}
+
+Message:
+${formData.message}
+
+═══════════════════════════════════════
+
+Looking forward to hearing from you!
+
+Best regards,
+${formData.name}`;
             }
-            
-            body += `\n\nMessage:\n${formData.message}`;
             
             const mailtoLink = `mailto:${USER_CONFIG.contact.email}?subject=${subject}&body=${encodeURIComponent(body)}`;
             window.location.href = mailtoLink;
