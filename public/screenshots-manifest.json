@@ -23,6 +23,7 @@
     "/images/screens/easytypeface/screen1.PNG"
   ],
   "ghrepolens": [
+    "/images/screens/ghrepolens/0.png",
     "/images/screens/ghrepolens/screen1 (1).PNG",
     "/images/screens/ghrepolens/screen1 (10).png",
     "/images/screens/ghrepolens/screen1 (11).png",
@@ -86,6 +87,7 @@
     "/images/screens/team_up/1 (2).PNG",
     "/images/screens/team_up/1 (3).PNG",
     "/images/screens/team_up/1 (4).PNG",
-    "/images/screens/team_up/1 (5).PNG"
+    "/images/screens/team_up/1 (5).PNG",
+    "/images/screens/team_up/card-screen.PNG"
   ]
 }

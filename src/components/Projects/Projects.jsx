@@ -1,4 +1,4 @@
-import {memo, useMemo, useState} from 'react';
+import {memo, useMemo, useState, forwardRef} from 'react';
 import {motion} from 'framer-motion';
 import {FaExternalLinkAlt, FaGithub, FaImages} from 'react-icons/fa';
 import {useTheme} from '../../context/ThemeContext';
@@ -7,6 +7,7 @@ import {OptimizedBlock} from '../OptimizedMillion';
 import {getFeaturedProjectsData} from '../../data/projects';
 import ImageModal from '../ImageModal/ImageModal.jsx';
 import useScreenshots from '../../hooks/useScreenshots';
+import { Link } from 'react-router-dom';
 
 const ProjectLinks = memo(({github, demo, screenshots, onScreenshotsClick}) => {
     const {settings} = useOptimizedAnimation();
@@ -360,26 +361,28 @@ const ProjectList = memo(({projects}) => (
     </div>
 ));
 
+const MotionLink = motion(forwardRef((props, ref) => <Link ref={ref} {...props} />));
+
 const ViewAllProjectsButton = memo(() => {
-    const {settings} = useOptimizedAnimation();
+    const { settings } = useOptimizedAnimation();
 
     return (
         <motion.div
             className="flex justify-center mt-12"
-            initial={settings.shouldAnimate ? {opacity: 0, y: settings.distance} : {}}
-            whileInView={settings.shouldAnimate ? {opacity: 1, y: 0} : {}}
-            viewport={{once: true}}
+            initial={settings.shouldAnimate ? { opacity: 0, y: settings.distance } : {}}
+            whileInView={settings.shouldAnimate ? { opacity: 1, y: 0 } : {}}
+            viewport={{ once: true }}
             transition={{
                 duration: settings.duration,
                 delay: 0.3,
                 ease: settings.ease,
             }}
         >
-            <motion.a
-                href="/projects"
+            <MotionLink
+                to="/projects"
                 className="group relative inline-flex items-center gap-2 px-8 py-4 bg-primary hover:bg-primary-light dark:bg-surface dark:hover:bg-primary text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-semibold"
-                whileHover={settings.shouldAnimate ? {scale: settings.scale} : {}}
-                whileTap={settings.shouldAnimate ? {scale: 0.95} : {}}
+                whileHover={settings.shouldAnimate ? { scale: settings.scale } : {}}
+                whileTap={settings.shouldAnimate ? { scale: 0.95 } : {}}
             >
                 <span>View All Projects</span>
                 <svg
@@ -395,7 +398,7 @@ const ViewAllProjectsButton = memo(() => {
                         d="M17 8l4 4m0 0l-4 4m4-4H3"
                     />
                 </svg>
-            </motion.a>
+            </MotionLink>
         </motion.div>
     );
 });
