@@ -20,6 +20,7 @@ const Hero = lazy(() => {
 });
 
 const About = lazy(() => import('../components/About/About'));
+const Services = lazy(() => import('../components/Services/Services'));
 
 const Projects = lazy(() => import('../components/Projects/Projects'));
 const OpenSource = lazy(() => import('../components/OpenSource/OpenSource'));
@@ -93,6 +94,10 @@ const ContentSections = memo(() => {
         <div style={{opacity: isMounted ? 1 : 0, transition: 'opacity 0.5s ease-out'}}>
             <OptimizedBlock id="about-section" threshold={8}>
                 <About/>
+            </OptimizedBlock>
+
+            <OptimizedBlock id="services-section" threshold={8}>
+                <Services/>
             </OptimizedBlock>
 
             <OptimizedBlock id="projects-section" threshold={8}>

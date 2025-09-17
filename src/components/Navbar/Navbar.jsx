@@ -113,6 +113,11 @@ const DesktopNav = ({isDark, toggleTheme}) => {
                 <NavLink to="/#about">About</NavLink>
             )}
             {isHomePage ? (
+                <NavLink to="services" isScroll={true}>Services</NavLink>
+            ) : (
+                <NavLink to="/#services">Services</NavLink>
+            )}
+            {isHomePage ? (
                 <NavLink to="contact" isScroll={true}>Contact</NavLink>
             ) : (
                 <NavLink to="/#contact">Contact</NavLink>
@@ -164,6 +169,11 @@ const MobileMenu = ({isOpen, isDark, toggleTheme}) => {
                             <NavLink to="about" isScroll={true}>About</NavLink>
                         ) : (
                             <NavLink to="/about">About</NavLink>
+                        )}
+                        {isHomePage ? (
+                            <NavLink to="services" isScroll={true}>Services</NavLink>
+                        ) : (
+                            <NavLink to="/#services">Services</NavLink>
                         )}
                         <NavLink to="contact" isScroll={true}>Contact</NavLink>
                         <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} isMobile/>

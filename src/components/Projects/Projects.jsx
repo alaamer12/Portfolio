@@ -361,7 +361,7 @@ const ProjectList = memo(({projects}) => (
     </div>
 ));
 
-const MotionLink = motion(forwardRef((props, ref) => <Link ref={ref} {...props} />));
+const MotionLink = motion.create(forwardRef((props, ref) => <Link ref={ref} {...props} />));
 
 const ViewAllProjectsButton = memo(() => {
     const { settings } = useOptimizedAnimation();
