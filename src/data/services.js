@@ -53,6 +53,15 @@ const PLATFORMS = {
         color: '#14A800',
         currency: 'USD',
         flag: '🌍'
+    },
+    MOSTAQL: {
+        id: 'mostaql',
+        name: 'Mostaql',
+        url: 'https://mostaql.com',
+        logo: '/images/platforms/mostaql-logo.svg',
+        color: '#2563EB',
+        currency: 'USD',
+        flag: '🇸🇦'
     }
 };
 
@@ -332,4 +341,60 @@ export const getAllServices = () => {
 
 export const getCategoryById = (categoryId) => {
     return Object.values(SERVICE_CATEGORIES).find(cat => cat.id === categoryId);
+};
+
+// Platform Profiles for the hero avatar section
+export const PLATFORM_PROFILES = {
+    khamasat: {
+        id: 'khamasat',
+        name: 'Khamasat',
+        profileUrl: 'https://khamsat.com/user/amr-muhamed',
+        description: 'Leading Arabic freelancing platform',
+        color: '#1DB584',
+        flag: '🇸🇦',
+        stats: {
+            rating: '4.9/5',
+            projects: '50+',
+            clients: '35+'
+        }
+    },
+    elharefa: {
+        id: 'elharefa',
+        name: 'elharefa',
+        profileUrl: 'https://elharefa.com/freelancer/amr-muhamed',
+        description: 'Egyptian freelancing marketplace',
+        color: '#FF6B35',
+        flag: '🇪🇬',
+        stats: {
+            rating: '4.8/5',
+            services: '12',
+            experience: '2+ years'
+        }
+    },
+    upwork: {
+        id: 'upwork',
+        name: 'Upwork',
+        profileUrl: 'https://upwork.com/freelancers/amr-muhamed',
+        description: 'Global freelancing platform',
+        color: '#14A800',
+        flag: '🌍',
+        stats: {
+            rating: '4.9/5',
+            hours: '500+',
+            clients: '25+'
+        }
+    },
+    mostaql: {
+        id: 'mostaql',
+        name: 'Mostaql',
+        profileUrl: 'https://mostaql.com/u/amr-muhamed',
+        description: 'Arabic freelancing community',
+        color: '#2563EB',
+        flag: '🇸🇦',
+        stats: {
+            rating: '4.7/5',
+            projects: '30+',
+            reviews: '28'
+        }
+    }
 };

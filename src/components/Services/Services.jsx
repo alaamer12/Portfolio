@@ -9,6 +9,7 @@ import {
     getCategoryById 
 } from '../../data/services';
 import useOptimizedAnimation from '../../hooks/useOptimizedAnimation';
+import PlatformProfilesSection from '../PlatformProfilesSection/PlatformProfilesSection';
 
 // Service Image Component
 const ServiceImage = memo(({ service, category, isExpanded, onToggleExpand }) => {
@@ -571,6 +572,9 @@ const Services = () => {
                         ))}
                     </AnimatePresence>
                 </motion.div>
+
+                {/* Platform Profiles Section */}
+                <PlatformProfilesSection />
 
                 {/* Custom Solution CTA */}
                 <CustomSolutionCTA />
