@@ -41,7 +41,7 @@ export default defineConfig({
     }),
 
     // vitePerformancePlugin(),
-    million.vite({ 
+    million.vite({
       auto: true,
       mute: true,
       threshold: 0.05, // Lower threshold for more aggressive optimization
@@ -51,7 +51,7 @@ export default defineConfig({
       jsxImportSource: 'react',
       babel: {
         plugins: [
-          ['@babel/plugin-transform-react-jsx', { 
+          ['@babel/plugin-transform-react-jsx', {
             runtime: 'automatic',
             importSource: 'react',
             throwIfNamespace: true,
@@ -185,7 +185,7 @@ export default defineConfig({
       template: 'treemap', // Use treemap for better visualization
     }),
   ].filter(Boolean),
-  
+
   build: {
     target: 'esnext',
     outDir: 'dist',
