@@ -1,12 +1,12 @@
-import {lazy, memo, Suspense, useEffect, useLayoutEffect, useRef, useState} from "react";
-import {motion, useReducedMotion} from 'framer-motion';
+import { lazy, memo, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from 'framer-motion';
 import Loading from '../components/Loading/Loading';
 import Background from '../components/Background/Background';
 import SEO from '../components/SEO/SEO';
-import {OptimizedBlock} from '../components/OptimizedMillion';
+import { OptimizedBlock } from '../components/OptimizedMillion';
 import useOptimizedAnimation from '../hooks/useOptimizedAnimation';
 import useScrollButtonAnimation from "../hooks/useScrollButtonAnimation.js";
-import {getLandingPageSchema} from "../data/schema.js";
+import { getLandingPageSchema } from "../data/schema.js";
 
 
 // Lazy load components with dynamic imports and prefetch
@@ -25,18 +25,19 @@ const Services = lazy(() => import('../components/Services/Services'));
 const Projects = lazy(() => import('../components/Projects/Projects'));
 const OpenSource = lazy(() => import('../components/OpenSource/OpenSource'));
 const Contact = lazy(() => import('../components/Contact/Contact'));
+const Testimonials = lazy(() => import('../components/Testimonials/Testimonials'));
 
 // Scroll button icon component
 const ScrollButtonIcon = () => (
     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
     </svg>
 );
 
 
 // Enhanced scroll button with optimized animations
-const ScrollToTopButton = memo(({isVisible, onClick}) => {
-    const {ref} = useOptimizedAnimation({threshold: 0.5, triggerOnce: false});
+const ScrollToTopButton = memo(({ isVisible, onClick }) => {
+    const { ref } = useOptimizedAnimation({ threshold: 0.5, triggerOnce: false });
     const animationProps = useScrollButtonAnimation(isVisible);
 
     // noinspection JSValidateTypes
@@ -47,7 +48,7 @@ const ScrollToTopButton = memo(({isVisible, onClick}) => {
             className="fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary dark:bg-primary-light text-white shadow-lg hover:shadow-xl transition-shadow"
             {...animationProps}
         >
-            <ScrollButtonIcon/>
+            <ScrollButtonIcon />
         </motion.button>
     );
 });
@@ -67,7 +68,7 @@ const LandingPageSEO = () => (
 );
 
 const HeroSection = memo(() => {
-    const {ref,} = useOptimizedAnimation({
+    const { ref, } = useOptimizedAnimation({
         threshold: 0,
         rootMargin: '-300px 0px 0px 0px',
         triggerOnce: false
@@ -76,7 +77,7 @@ const HeroSection = memo(() => {
     return (
         <OptimizedBlock id="hero-section" threshold={8}>
             <div ref={ref}>
-                <Hero/>
+                <Hero />
             </div>
         </OptimizedBlock>
     );
@@ -91,23 +92,26 @@ const ContentSections = memo(() => {
 
     // Simple approach: just render the sections without complex intersection observer logic
     return (
-        <div style={{opacity: isMounted ? 1 : 0, transition: 'opacity 0.5s ease-out'}}>
+        <div style={{ opacity: isMounted ? 1 : 0, transition: 'opacity 0.5s ease-out' }}>
             <OptimizedBlock id="about-section" threshold={8}>
-                <About/>
+                <About />
             </OptimizedBlock>
 
             <OptimizedBlock id="services-section" threshold={8}>
-                <Services/>
+                <Services />
             </OptimizedBlock>
 
             <OptimizedBlock id="projects-section" threshold={8}>
-                <Projects/>
+                <Projects />
             </OptimizedBlock>
             <OptimizedBlock id="opensource-section" threshold={8}>
-                <OpenSource/>
+                <OpenSource />
             </OptimizedBlock>
             <OptimizedBlock id="contact-section" threshold={8}>
-                <Contact/>
+                <Contact />
+            </OptimizedBlock>
+            <OptimizedBlock id="testimonials-section" threshold={8}>
+                <Testimonials />
             </OptimizedBlock>
         </div>
     );
@@ -172,22 +176,22 @@ const LandingPage = () => {
 
     return (
         <>
-            <LandingPageSEO/>
-            <Background/>
+            <LandingPageSEO />
+            <Background />
             <div className="relative z-10 w-full pt-24 pb-16">
                 <Suspense fallback={
                     <div className="min-h-screen flex items-center justify-center">
-                        <Loading/>
+                        <Loading />
                     </div>
                 }>
                     {isLoading ? (
                         <div className="min-h-screen flex items-center justify-center">
-                            <Loading/>
+                            <Loading />
                         </div>
                     ) : (
                         <>
-                            <HeroSection/>
-                            <ContentSections/>
+                            <HeroSection />
+                            <ContentSections />
                         </>
                     )}
                 </Suspense>

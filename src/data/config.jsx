@@ -1,8 +1,8 @@
 // noinspection t
 
-import {lazy} from "react";
-import {SiJupyter, SiMongodb, SiPandas, SiPython, SiStreamlit, SiTensorflow} from "react-icons/si";
-import {USER_CONFIG} from "./user.js";
+import { lazy } from "react";
+import { SiJupyter, SiMongodb, SiPandas, SiPython, SiStreamlit, SiTensorflow } from "react-icons/si";
+import { USER_CONFIG } from "./user.js";
 
 // Import the centralized projects data
 export {
@@ -102,6 +102,12 @@ export const ROUTES = {
         title: `Data Engineering Projects | ${USER_CONFIG.personal.fullName}`,
         description: `Explore my portfolio of data engineering projects, featuring ${USER_CONFIG.skills.primary.slice(0, 3).join(', ')} and other cutting-edge technologies.`,
         Component: lazy(() => import('../pages/Projects.jsx')),
+    },
+    BLOGS: {
+        path: '/blogs',
+        title: `Technical Blogs & Insights | ${USER_CONFIG.personal.fullName}`,
+        description: 'Read my latest thoughts on Data Engineering, Machine Learning, and Software Development.',
+        Component: lazy(() => import('../pages/Blogs.jsx')),
     },
     NOT_FOUND: {
         path: '*',
